@@ -1,8 +1,8 @@
-# Prism
+# ReportLens
 
 Uncertainty-aware verification of number-based chart claims in student technical reports.
 
-Prism checks whether the numbers written in a report match its own charts. Each chart value is read through four different tools, and the spread of those readings is calibrated against charts with known values. A claim is flagged only when the mismatch is clearly larger than the reading error. Unclear cases go to the TA instead of becoming a wrong accusation.
+ReportLens checks whether the numbers written in a report match its own charts. Each chart value is read through four different tools, and the spread of those readings is calibrated against charts with known values. A claim is flagged only when the mismatch is clearly larger than the reading error. Unclear cases go to the TA instead of becoming a wrong accusation.
 
 ## How it works
 
