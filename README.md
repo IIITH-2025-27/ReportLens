@@ -120,3 +120,7 @@ tests/
 ```
 
 
+
+## Repository history
+
+The code was first written jointly and kept on one member's machine. On creating this repository, each member committed their own modules from their own laptop, on their own branch, and merged them into main. As instructed by the TA, these commits are dated to the sessions in which the work was done (16-18 Oct and 24-28 Oct 2026); they were pushed to GitHub later.
