@@ -1,6 +1,6 @@
 # Run log: every action, and what it gained or lost
 
-One row per action, oldest first. "Gain/loss" is measured on the saved readings or a live run, never guessed. P3 = the informed planner (main method). Wrong flags = share of *correct* claims flagged as wrong. Details and reasons: `implementation.md` §22–§24.7. Numbers are on the split named; `dev` and `test` are development splits, `holdout*` are fresh.
+One row per action, oldest first. "Gain/loss" is measured on the saved readings or a live run, never guessed. P3 = the informed planner (main method). Wrong flags = share of the flagged claims (MISMATCH verdicts) that were not real errors, i.e. the false-discovery rate of the flags (the proposal's wrong-flag rate). Details and reasons: `implementation.md` §22–§24.7. Numbers are on the split named; `dev` and `test` are development splits, `holdout*` are fresh.
 
 ## A. Findings and fixes before this log was started (from implementation.md §24.5)
 
@@ -41,6 +41,15 @@ One row per action, oldest first. "Gain/loss" is measured on the saved readings 
 | C6 | 2026-10-28 | Reading error of `vlm_table` on the 51 calibration charts (1,063 readings), base → LoRA | answers 66.2% → 74.0%; median error 1.4% → 0.8% of the axis range; 90th-percentile error 17.3% → 8.7%; badly wrong (> 5% of range) 26.0% → 17.3%; answers on charts with a tick at x 95% → 87.5%, without a tick 31% → 47%; error correlation with DePlot 0.10 → 0.04, with vlm_crop 0.31 → 0.36 | **gain** |
 | C7 | 2026-10-28 | P3 informed, base → LoRA, per split (coverage / right when decided / wrong flags / missed) | test 74.1/99.3/1.2/0.0 → 74.1/100/0.0/0.0; dev 80.8/97.6/1.4/1.1 → 84.6/95.5/5.3/2.2; holdout 78.0/91.7/9.4/0.0 → 82.8/89.0/14.1/1.3; holdout2 83.7/97.7/1.2/0.9 → 86.1/97.8/1.1/0.9; holdout3 76.1/97.3/3.0/1.1 → 79.2/98.1/1.4/1.1 | mixed |
 | C8 | 2026-10-28 | P3 informed pooled over 1,000 claims, base → LoRA | coverage 78.6% → 81.4% (+2.8); right when decided 96.8% → 96.1%; wrong flags 3.0% [1.4, 4.8] → 4.1% [2.2, 6.2]; missed errors 0.6% → 1.1%; intervals overlap. P1 fixed order: coverage 79.5% → 82.4%, wrong flags 3.2% → 3.6% | **not a clear win**: better reading, more coverage, but no fewer wrong flags |
+
+## D. Checks made while writing the report (2026-10-30)
+
+| # | Action | Gain / loss | Kept? |
+|---|---|---|---|
+| D1 | Fix `evaluation/sweep.py`: the sweep built its rule config without `by_tool_set` and `drop_tied_legs`, so it used the rejected per-tool-set margins (U14) instead of the configured ones | the ours-vs-B5 sweep now matches the production rule | yes |
+| D2 | Offline sweep of the margin level (ours) against baseline B5 (margin = raw disagreement x a fixed factor), all-tools readings, all five splits pooled (1,000 claims; `runs/local/*_all_tools/sweep.json`) | **calibration did not beat B5.** Ours: 78.0% coverage at 4.9% wrong flags (level 0.95), 81.5% at 8.8% (level 0.9). B5 with factor 2: 80.8% coverage at 4.9% wrong flags, factor 1: 80.3% at 8.8%. At the same wrong-flag rate B5 covers about as much or slightly more. Test alone: ours 77.1% at 6.7% vs B5 75.6% at 2.5%. No intervals computed | finding, reported |
+| D3 | Same sweep with the Benjamini-Hochberg batch check at alpha 0.05, 0.10 and 0.20 | identical verdicts to the plain rule at all three (pooled 78.0% coverage, 4.9% wrong flags): the batch check changes nothing on these runs | finding, reported |
+| D4 | Corrected the definition of "wrong flags" in this log and in `implementation.md` §24.7: it is the share of flagged claims that were wrong (false-discovery rate), not the share of correct claims flagged | wording only; the numbers were always computed that way | yes |
 
 ## How this file is kept
 Add a row after every run, including failures and rejected ideas. `scripts/export_results.py` never overwrites this file.
