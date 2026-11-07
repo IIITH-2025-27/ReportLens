@@ -1,0 +1,377 @@
+{
+ "report_id": "holdout3_007",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_007_fig1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "IMDB",
+     "MNIST",
+     "SVHN",
+     "SST-2"
+    ],
+    "series": {
+     "MLP": [
+      70.4,
+      67.2,
+      91.7,
+      64.5,
+      83.0
+     ],
+     "VGG-16": [
+      59.7,
+      56.3,
+      78.6,
+      51.2,
+      67.4
+     ],
+     "ResNet-18": [
+      74.4,
+      70.1,
+      91.0,
+      59.2,
+      75.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.7,
+       2.9
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MLP": "#1b9e77",
+      "VGG-16": "#d95f02",
+      "ResNet-18": "#7570b3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_007_fig2",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24",
+     "26",
+     "28"
+    ],
+    "series": {
+     "MLP": [
+      52.1,
+      64.5,
+      74.8,
+      82.1,
+      85.8,
+      88.2,
+      91.7,
+      92.7,
+      93.5,
+      94.2,
+      94.8,
+      95.9,
+      96.1,
+      95.4
+     ],
+     "EfficientNet": [
+      50.2,
+      55.6,
+      58.7,
+      64.6,
+      65.2,
+      68.9,
+      68.9,
+      70.6,
+      71.7,
+      71.8,
+      73.1,
+      74.4,
+      72.1,
+      75.1
+     ],
+     "DistilBERT": [
+      58.5,
+      62.3,
+      65.2,
+      67.7,
+      68.8,
+      70.8,
+      71.7,
+      73.7,
+      74.1,
+      73.2,
+      74.4,
+      73.7,
+      72.6,
+      75.5
+     ],
+     "ResNet-50": [
+      37.5,
+      44.7,
+      50.2,
+      57.8,
+      60.3,
+      62.9,
+      66.4,
+      67.4,
+      68.0,
+      70.9,
+      71.9,
+      72.5,
+      72.7,
+      74.1
+     ],
+     "LSTM": [
+      48.3,
+      55.1,
+      59.4,
+      63.2,
+      66.9,
+      69.6,
+      73.4,
+      75.6,
+      76.7,
+      79.9,
+      80.7,
+      81.6,
+      83.0,
+      82.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     34.57,
+     99.03
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       5.1,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MLP": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "DistilBERT": "#2ca02c",
+      "ResNet-50": "#d62728",
+      "LSTM": "#9467bd"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_007_fig1_c0",
+   "sentence": "MLP reaches 92% accuracy on MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 91.7,
+   "claimed_value": 92.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_fig1_c1",
+   "sentence": "VGG-16 reaches 83.0% accuracy on SST-2.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 67.4,
+   "claimed_value": 83.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_fig1_c2",
+   "sentence": "ResNet-18 reaches 59% accuracy on SVHN (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.2,
+   "claimed_value": 59.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_007_fig2_c0",
+   "sentence": "EfficientNet attains a test accuracy of 48.9% at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 50.2,
+   "claimed_value": 48.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 64.46000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_fig2_c1",
+   "sentence": "LSTM outperforms ResNet-50 by 9.1 percentage points at epoch 24.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "24",
+   "series_b": "ResNet-50",
+   "x_b": "24",
+   "true_value": 9.1,
+   "claimed_value": 9.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 64.46000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_nofig",
+   "sentence": "Logistic Regression reaches 80.0% accuracy on SVHN.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 80.0,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_007_setup1",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

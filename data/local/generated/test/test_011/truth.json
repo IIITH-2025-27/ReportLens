@@ -1,0 +1,405 @@
+{
+ "report_id": "test_011",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of DistilBERT by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_011_fig1",
+    "kind": "bar",
+    "title": "F1 score of DistilBERT by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "IMDB",
+     "AG News",
+     "SVHN",
+     "CIFAR-10"
+    ],
+    "series": {
+     "DistilBERT": [
+      80.5,
+      77.7,
+      72.9,
+      85.8,
+      61.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     98.66999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.5,
+       3.3
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "DistilBERT": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_011_fig2",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "CIFAR-10",
+     "SVHN",
+     "SST-2",
+     "IMDB"
+    ],
+    "series": {
+     "BERT-base": [
+      58.5,
+      64.6,
+      75.0,
+      50.3,
+      83.3
+     ],
+     "Baseline": [
+      58.9,
+      73.2,
+      73.9,
+      53.5,
+      88.1
+     ],
+     "ViT-S": [
+      65.8,
+      71.2,
+      82.9,
+      53.9,
+      88.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.7,
+       3.1
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "Baseline": "#d95f02",
+      "ViT-S": "#7570b3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy of GRU by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_011_fig3",
+    "kind": "bar",
+    "title": "Accuracy of GRU by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "SVHN",
+     "MNIST",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "GRU": [
+      68.2,
+      76.8,
+      82.5,
+      62.7,
+      69.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     94.87499999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.3,
+       2.9
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "GRU": "#1f77b4"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "test_011_fig1_c0",
+   "sentence": "DistilBERT achieves 80.5% F1 score on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.7,
+   "claimed_value": 80.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 98.66999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_011_fig1_c1",
+   "sentence": "DistilBERT scores 54.6 points higher on SVHN than on MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "SVHN",
+   "series_b": "DistilBERT",
+   "x_b": "MNIST",
+   "true_value": 5.3,
+   "claimed_value": 54.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 98.66999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_fig2_c0",
+   "sentence": "ViT-S outperforms BERT-base by about 5 percentage points on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "BERT-base",
+   "x_b": "IMDB",
+   "true_value": 5.4,
+   "claimed_value": 5.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_fig2_c1",
+   "sentence": "BERT-base achieves 73.9% F1 score on SVHN (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 75.0,
+   "claimed_value": 73.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_011_fig2_c2",
+   "sentence": "On MNIST, BERT-base obtains a F1 score of 65.8% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 58.5,
+   "claimed_value": 65.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_011_fig3_c0",
+   "sentence": "GRU achieves 84.4% accuracy on MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.5,
+   "claimed_value": 84.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 94.87499999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_fig3_c1",
+   "sentence": "GRU scores 8 points higher on SVHN than on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "SVHN",
+   "series_b": "GRU",
+   "x_b": "CIFAR-10",
+   "true_value": 7.7,
+   "claimed_value": 8.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 94.87499999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_fig3_c2",
+   "sentence": "As shown in Figure 3, GRU reaches over 60% accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.7,
+   "claimed_value": 60.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 94.87499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_011_nofig",
+   "sentence": "On Yelp, XGBoost obtains an accuracy of 75.6%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "Yelp",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 75.6,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_setup0",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_011_setup1",
+   "sentence": "The learning rate was set to 0.01 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

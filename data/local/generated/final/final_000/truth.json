@@ -1,0 +1,496 @@
+{
+ "report_id": "final_000",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_000_fig1",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "series": {
+     "BERT-base": [
+      64.2,
+      66.5,
+      70.1,
+      69.7,
+      70.2,
+      71.3,
+      72.6,
+      73.7,
+      71.8
+     ],
+     "EfficientNet": [
+      69.3,
+      79.1,
+      83.4,
+      86.5,
+      87.1,
+      87.5,
+      88.7,
+      87.6,
+      86.3
+     ],
+     "DistilBERT": [
+      60.0,
+      63.3,
+      68.0,
+      69.5,
+      69.9,
+      70.1,
+      69.9,
+      71.5,
+      71.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     58.565,
+     90.135
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 10,
+      "figsize": [
+       6.5,
+       3.7
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "DistilBERT": "#2ca02c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_000_fig2",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18"
+    ],
+    "series": {
+     "VGG-16": [
+      62.5,
+      79.1,
+      88.3,
+      90.7,
+      92.6,
+      92.3,
+      95.6,
+      95.1,
+      96.1
+     ],
+     "CNN": [
+      51.5,
+      64.2,
+      71.5,
+      76.7,
+      82.2,
+      82.1,
+      85.9,
+      86.9,
+      88.3
+     ],
+     "ResNet-18": [
+      63.2,
+      73.5,
+      77.9,
+      79.9,
+      82.7,
+      81.7,
+      83.7,
+      83.9,
+      83.8
+     ],
+     "MobileNet": [
+      64.4,
+      71.7,
+      77.9,
+      82.2,
+      85.4,
+      87.2,
+      89.6,
+      90.2,
+      91.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     49.27,
+     98.33
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       6.0,
+       4.4
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "VGG-16": "#1b9e77",
+      "CNN": "#d95f02",
+      "ResNet-18": "#7570b3",
+      "MobileNet": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_000_fig3",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "MNIST",
+     "CIFAR-10",
+     "SST-2",
+     "AG News"
+    ],
+    "series": {
+     "CNN": [
+      71.6,
+      89.6,
+      72.7,
+      75.6,
+      80.9
+     ],
+     "EfficientNet": [
+      74.1,
+      98.2,
+      72.3,
+      83.1,
+      85.0
+     ],
+     "MLP": [
+      81.1,
+      98.1,
+      76.7,
+      87.4,
+      84.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       5.1,
+       3.4
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "CNN": "#0072b2",
+      "EfficientNet": "#d55e00",
+      "MLP": "#009e73"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "final_000_fig1_c0",
+   "sentence": "At epoch 9, EfficientNet is 30.3 points better than DistilBERT.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "9",
+   "series_b": "DistilBERT",
+   "x_b": "9",
+   "true_value": 14.5,
+   "claimed_value": 30.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 31.570000000000007,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_fig1_c1",
+   "sentence": "EfficientNet outperforms BERT-base by about 5 percentage points at epoch 1 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "1",
+   "series_b": "BERT-base",
+   "x_b": "1",
+   "true_value": 5.1,
+   "claimed_value": 5.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 31.570000000000007,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_000_fig1_c2",
+   "sentence": "BERT-base attains a test accuracy of about 70% at epoch 7 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "7",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.6,
+   "claimed_value": 70.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 31.570000000000007,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_000_fig1_c3",
+   "sentence": "EfficientNet outperforms BERT-base by 3.5 percentage points at epoch 1.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "1",
+   "series_b": "BERT-base",
+   "x_b": "1",
+   "true_value": 5.1,
+   "claimed_value": 3.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 31.570000000000007,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_fig2_c0",
+   "sentence": "As shown in Figure 2, VGG-16 outperforms CNN by 32.7 percentage points at epoch 16.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "VGG-16",
+   "x": "16",
+   "series_b": "CNN",
+   "x_b": "16",
+   "true_value": 8.2,
+   "claimed_value": 32.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 49.059999999999995,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_000_fig2_c1",
+   "sentence": "At epoch 12, VGG-16 achieves 116.8% test accuracy (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "12",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 92.3,
+   "claimed_value": 116.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 49.059999999999995,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_000_fig3_c0",
+   "sentence": "CNN reaches 69.6% test accuracy on MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 89.6,
+   "claimed_value": 69.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_fig3_c1",
+   "sentence": "EfficientNet achieves 48.2% test accuracy on MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 98.2,
+   "claimed_value": 48.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_fig3_c2",
+   "sentence": "As shown in Figure 3, EfficientNet achieves 72.1% test accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.1,
+   "claimed_value": 72.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_000_fig3_c3",
+   "sentence": "CNN reaches 92.7% test accuracy on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.7,
+   "claimed_value": 92.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_setup0",
+   "sentence": "The learning rate was set to 0.001 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_000_setup1",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

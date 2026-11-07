@@ -1,0 +1,431 @@
+{
+ "report_id": "holdout2_002",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of CNN by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_002_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of CNN by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "AG News",
+     "SVHN",
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "CNN": [
+      93.0,
+      68.4,
+      88.1,
+      88.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.9,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "CNN": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_002_fig2",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30"
+    ],
+    "series": {
+     "BERT-base": [
+      61.3,
+      66.8,
+      67.2,
+      70.2,
+      71.5,
+      71.8
+     ],
+     "EfficientNet": [
+      69.5,
+      78.9,
+      83.8,
+      86.8,
+      89.2,
+      90.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     59.855,
+     91.64500000000001
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 10,
+      "figsize": [
+       5.3,
+       4.4
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#0072b2",
+      "EfficientNet": "#d55e00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_002_fig3",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "CIFAR-10",
+     "IMDB",
+     "SST-2",
+     "AG News"
+    ],
+    "series": {
+     "LSTM": [
+      52.9,
+      81.4,
+      50.8,
+      78.3,
+      83.3
+     ],
+     "ResNet-50": [
+      63.6,
+      89.1,
+      63.5,
+      83.6,
+      91.3
+     ],
+     "Ours": [
+      60.6,
+      86.2,
+      47.1,
+      76.5,
+      86.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.9,
+       2.8
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "LSTM": "#1b9e77",
+      "ResNet-50": "#d95f02",
+      "Ours": "#7570b3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_002_fig1_c0",
+   "sentence": "On SST-2, CNN obtains a test accuracy of 88.9%.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.9,
+   "claimed_value": 88.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_fig1_c1",
+   "sentence": "As shown in Figure 1, CNN achieves 88.9% test accuracy on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.9,
+   "claimed_value": 88.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_002_fig1_c2",
+   "sentence": "CNN scores 54.1 points higher on AG News than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "AG News",
+   "series_b": "CNN",
+   "x_b": "SST-2",
+   "true_value": 4.1,
+   "claimed_value": 54.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_fig2_c0",
+   "sentence": "BERT-base reaches 90.2% validation accuracy at epoch 30.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "30",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.8,
+   "claimed_value": 90.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 31.790000000000013,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_fig2_c1",
+   "sentence": "As shown in Figure 2, at epoch 10, EfficientNet is 12.7 points better than BERT-base.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "10",
+   "series_b": "BERT-base",
+   "x_b": "10",
+   "true_value": 12.1,
+   "claimed_value": 12.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 31.790000000000013,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_002_fig3_c0",
+   "sentence": "On AG News, ResNet-50 is 8.0 points better than LSTM.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "AG News",
+   "series_b": "LSTM",
+   "x_b": "AG News",
+   "true_value": 8.0,
+   "claimed_value": 8.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_fig3_c1",
+   "sentence": "As shown in Figure 3, ResNet-50 reaches 78.3% test accuracy on SST-2.",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 83.6,
+   "claimed_value": 78.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_002_fig3_c2",
+   "sentence": "On CIFAR-10, ResNet-50 obtains a test accuracy of 69.1% (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 89.1,
+   "claimed_value": 69.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_002_fig3_c3",
+   "sentence": "As shown in Figure 3, LSTM achieves 63.6% test accuracy on SVHN.",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 52.9,
+   "claimed_value": 63.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_002_nofig",
+   "sentence": "Naive Bayes reaches 90.2% accuracy on IMDB.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Naive Bayes",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 90.2,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_setup0",
+   "sentence": "Each experiment was repeated 5 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_002_setup1",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

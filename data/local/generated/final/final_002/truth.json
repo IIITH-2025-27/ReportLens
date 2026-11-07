@@ -1,0 +1,454 @@
+{
+ "report_id": "final_002",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Training loss for the models in this experiment.",
+   "table": {
+    "table_id": "final_002_fig1",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "series": {
+     "Transformer": [
+      1.456,
+      1.062,
+      0.848,
+      0.717,
+      0.661,
+      0.588,
+      0.566
+     ],
+     "EfficientNet": [
+      1.259,
+      0.844,
+      0.635,
+      0.571,
+      0.607,
+      0.534,
+      0.554
+     ],
+     "CNN": [
+      1.754,
+      1.35,
+      1.077,
+      0.855,
+      0.75,
+      0.696,
+      0.634
+     ],
+     "ViT-S": [
+      1.183,
+      0.748,
+      0.506,
+      0.409,
+      0.335,
+      0.296,
+      0.285
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.21154999999999996,
+     1.82745
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 10,
+      "figsize": [
+       5.2,
+       3.5
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "Transformer": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "CNN": "#2ca02c",
+      "ViT-S": "#d62728"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_002_fig2",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50"
+    ],
+    "series": {
+     "VGG-16": [
+      57.4,
+      71.8,
+      80.8,
+      85.1,
+      89.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     55.78,
+     91.42
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.2,
+       3.6
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "VGG-16": "#1b9e77"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_002_fig3",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "CIFAR-10",
+     "IMDB"
+    ],
+    "series": {
+     "VGG-16": [
+      55.6,
+      55.2
+     ],
+     "LSTM": [
+      59.0,
+      64.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     74.06
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 12,
+      "figsize": [
+       5.1,
+       4.2
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "VGG-16": "#e41a1c",
+      "LSTM": "#377eb8"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "final_002_fig1_c0",
+   "sentence": "Transformer has a loss of about 1.5 at epoch 1.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.456,
+   "claimed_value": 1.5,
+   "tolerance": 0.1,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.6159000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig1_c1",
+   "sentence": "CNN has a loss of 1.754 at epoch 1.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.754,
+   "claimed_value": 1.754,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.6159000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig2_c0",
+   "sentence": "VGG-16 reaches over 75% test accuracy at epoch 30.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "30",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.8,
+   "claimed_value": 75.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 35.64,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig2_c1",
+   "sentence": "VGG-16 reaches 57.4% test accuracy at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 57.4,
+   "claimed_value": 57.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 35.64,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig2_c2",
+   "sentence": "VGG-16 scores about 9 points higher on 30 than on 20.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "VGG-16",
+   "x": "30",
+   "series_b": "VGG-16",
+   "x_b": "20",
+   "true_value": 9.0,
+   "claimed_value": 9.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 35.64,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig2_c3",
+   "sentence": "VGG-16 attains a test accuracy of over 85% at epoch 50.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "50",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 89.8,
+   "claimed_value": 85.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 35.64,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig3_c0",
+   "sentence": "VGG-16 reaches 55.2% F1 score on IMDB.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 55.2,
+   "claimed_value": 55.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 74.06,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig3_c1",
+   "sentence": "LSTM outperforms VGG-16 by 24.0 percentage points on IMDB (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": "VGG-16",
+   "x_b": "IMDB",
+   "true_value": 9.2,
+   "claimed_value": 24.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 74.06,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_002_fig3_c2",
+   "sentence": "LSTM outperforms VGG-16 by about 9 percentage points on IMDB.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": "VGG-16",
+   "x_b": "IMDB",
+   "true_value": 9.2,
+   "claimed_value": 9.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 74.06,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_fig3_c3",
+   "sentence": "On IMDB, LSTM obtains a F1 score of 101.4%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 64.4,
+   "claimed_value": 101.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 74.06,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_nofig",
+   "sentence": "On QQP, SVM obtains an accuracy of 77.7%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "QQP",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 77.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_setup0",
+   "sentence": "We trained each model for 100 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_002_setup1",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

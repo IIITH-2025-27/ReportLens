@@ -1,0 +1,535 @@
+{
+ "report_id": "dev_018",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_018_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "IMDB",
+     "SVHN",
+     "CIFAR-10",
+     "MNIST"
+    ],
+    "series": {
+     "Transformer": [
+      74.6,
+      71.9,
+      46.9,
+      78.1,
+      82.8
+     ],
+     "EfficientNet": [
+      77.4,
+      70.6,
+      46.4,
+      78.2,
+      82.7
+     ],
+     "MLP": [
+      82.4,
+      74.8,
+      55.7,
+      82.3,
+      85.0
+     ],
+     "GRU": [
+      78.8,
+      77.2,
+      51.2,
+      80.2,
+      84.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     97.74999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       5.1,
+       3.3
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "Transformer": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "MLP": "#2ca02c",
+      "GRU": "#d62728"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "dev_018_fig2",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60",
+     "70"
+    ],
+    "series": {
+     "ViT-S": [
+      67.4,
+      76.5,
+      80.8,
+      85.7,
+      86.3,
+      86.1,
+      86.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     66.45500000000001,
+     87.24499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       5.2,
+       4.0
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_018_fig3",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SST-2",
+     "CIFAR-10",
+     "AG News"
+    ],
+    "series": {
+     "VGG-16": [
+      56.4,
+      62.2,
+      71.7
+     ],
+     "GRU": [
+      59.1,
+      65.4,
+      69.5
+     ],
+     "LSTM": [
+      56.5,
+      59.6,
+      64.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     82.455
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       5.1,
+       3.5
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "VGG-16": "#1b9e77",
+      "GRU": "#d95f02",
+      "LSTM": "#7570b3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy of ResNet-18 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_018_fig4",
+    "kind": "bar",
+    "title": "Test accuracy of ResNet-18 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SST-2",
+     "MNIST",
+     "SVHN",
+     "IMDB",
+     "AG News"
+    ],
+    "series": {
+     "ResNet-18": [
+      74.6,
+      58.6,
+      46.9,
+      65.5,
+      69.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     85.78999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.6,
+       2.9
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ResNet-18": "#1b9e77"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "dev_018_fig1_c0",
+   "sentence": "As shown in Figure 1, Transformer reaches 25.7% validation accuracy on AG News.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.6,
+   "claimed_value": 25.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 97.74999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig1_c1",
+   "sentence": "On IMDB, MLP is 4.2 points better than EfficientNet.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "IMDB",
+   "series_b": "EfficientNet",
+   "x_b": "IMDB",
+   "true_value": 4.2,
+   "claimed_value": 4.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 97.74999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_018_fig1_c2",
+   "sentence": "MLP achieves over 80% validation accuracy on CIFAR-10 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.3,
+   "claimed_value": 80.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 97.74999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig2_c0",
+   "sentence": "ViT-S scores 10 points higher on 70 than on 20.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "70",
+   "series_b": "ViT-S",
+   "x_b": "20",
+   "true_value": 9.6,
+   "claimed_value": 10.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 20.789999999999978,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_018_fig2_c1",
+   "sentence": "As shown in Figure 2, ViT-S scores 18.9 points higher on 50 than on 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "50",
+   "series_b": "ViT-S",
+   "x_b": "10",
+   "true_value": 18.9,
+   "claimed_value": 18.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 20.789999999999978,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig2_c2",
+   "sentence": "As shown in Figure 2, ViT-S reaches 86.1% F1 score at epoch 70.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "70",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.1,
+   "claimed_value": 86.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 20.789999999999978,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig3_c0",
+   "sentence": "LSTM achieves 51.4% accuracy on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.6,
+   "claimed_value": 51.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 82.455,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_018_fig3_c1",
+   "sentence": "As shown in Figure 3, LSTM achieves 59.6% accuracy on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.6,
+   "claimed_value": 59.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 82.455,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig4_c0",
+   "sentence": "ResNet-18 reaches over 70% test accuracy on SST-2 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.6,
+   "claimed_value": 70.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 85.78999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig4_c1",
+   "sentence": "As shown in Figure 4, ResNet-18 scores 54.6 points higher on MNIST than on SVHN.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "MNIST",
+   "series_b": "ResNet-18",
+   "x_b": "SVHN",
+   "true_value": 11.7,
+   "claimed_value": 54.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 85.78999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_fig4_c2",
+   "sentence": "As shown in Figure 4, ResNet-18 reaches 66% test accuracy on IMDB.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.5,
+   "claimed_value": 66.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 85.78999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_018_nofig",
+   "sentence": "On CIFAR-10, XGBoost obtains an accuracy of 68.9%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 68.9,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_018_setup0",
+   "sentence": "All experiments were run on a single GPU with 12 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_018_setup1",
+   "sentence": "We trained each model for 100 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

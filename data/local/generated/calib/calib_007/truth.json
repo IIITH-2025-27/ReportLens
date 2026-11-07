@@ -1,0 +1,389 @@
+{
+ "report_id": "calib_007",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of ResNet-50 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_007_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "AG News",
+     "SVHN",
+     "IMDB",
+     "SST-2"
+    ],
+    "series": {
+     "ResNet-50": [
+      69.1,
+      59.6,
+      69.4,
+      65.4,
+      53.5,
+      65.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     79.81
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.9,
+       3.2
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ResNet-50": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of CNN by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_007_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of CNN by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "IMDB",
+     "CIFAR-10",
+     "SST-2"
+    ],
+    "series": {
+     "CNN": [
+      89.0,
+      91.8,
+      88.9,
+      94.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.3,
+       2.8
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "CNN": "#1b9e77"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_007_fig3",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News",
+     "MNIST",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "MobileNet": [
+      59.0,
+      65.6,
+      72.4,
+      74.1
+     ],
+     "DistilBERT": [
+      64.7,
+      66.6,
+      72.3,
+      71.2
+     ],
+     "Baseline": [
+      51.2,
+      56.4,
+      60.8,
+      64.3
+     ],
+     "Transformer": [
+      61.9,
+      57.3,
+      65.2,
+      70.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     85.21499999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.8,
+       3.4
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "MobileNet": "#0072b2",
+      "DistilBERT": "#d55e00",
+      "Baseline": "#009e73",
+      "Transformer": "#cc79a7"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_007_fig1_c0",
+   "sentence": "ResNet-50 reaches over 50% test accuracy on IMDB.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 53.5,
+   "claimed_value": 50.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 79.81,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_fig1_c1",
+   "sentence": "ResNet-50 reaches 81.4% test accuracy on SVHN.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.4,
+   "claimed_value": 81.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 79.81,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_fig1_c2",
+   "sentence": "ResNet-50 scores 27.9 points higher on SVHN than on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": "ResNet-50",
+   "x_b": "IMDB",
+   "true_value": 11.9,
+   "claimed_value": 27.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 79.81,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_007_fig2_c0",
+   "sentence": "CNN achieves 44.6% validation accuracy on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 94.6,
+   "claimed_value": 44.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_fig2_c1",
+   "sentence": "CNN scores 55.6 points higher on SST-2 than on AG News.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": "CNN",
+   "x_b": "AG News",
+   "true_value": 5.6,
+   "claimed_value": 55.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_fig3_c0",
+   "sentence": "As shown in Figure 3, Transformer reaches 57% accuracy on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 57.3,
+   "claimed_value": 57.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 85.21499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_007_fig3_c1",
+   "sentence": "Baseline reaches 57.3% accuracy on AG News (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 56.4,
+   "claimed_value": 57.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 85.21499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_007_nofig",
+   "sentence": "Random Forest reaches 72.9% accuracy on MNIST.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 72.9,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_setup0",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_007_setup1",
+   "sentence": "We trained each model for 100 epochs with a batch size of 128.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

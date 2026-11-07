@@ -1,0 +1,296 @@
+{
+ "report_id": "dev_004",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of Baseline by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_004_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of Baseline by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SST-2",
+     "AG News",
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "IMDB",
+     "MNIST"
+    ],
+    "series": {
+     "Baseline": [
+      49.6,
+      65.3,
+      79.9,
+      62.6,
+      62.2,
+      77.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     91.885
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.3,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "Baseline": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of ResNet-50 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_004_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "CIFAR-10",
+     "MNIST",
+     "SST-2",
+     "SVHN"
+    ],
+    "series": {
+     "ResNet-50": [
+      76.1,
+      86.2,
+      87.0,
+      69.1,
+      78.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.2,
+       3.3
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ResNet-50": "#1b9e77"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "dev_004_fig1_c0",
+   "sentence": "Baseline scores 26.5 points higher on Fashion-MNIST than on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Baseline",
+   "x": "Fashion-MNIST",
+   "series_b": "Baseline",
+   "x_b": "CIFAR-10",
+   "true_value": 17.3,
+   "claimed_value": 26.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 91.885,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_fig1_c1",
+   "sentence": "Baseline reaches 62.2% test accuracy on MNIST.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.5,
+   "claimed_value": 62.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.885,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_fig2_c0",
+   "sentence": "As shown in Figure 2, ResNet-50 scores 2 points higher on SVHN than on AG News.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": "ResNet-50",
+   "x_b": "AG News",
+   "true_value": 2.4,
+   "claimed_value": 2.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_004_fig2_c1",
+   "sentence": "ResNet-50 achieves 86% validation accuracy on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.2,
+   "claimed_value": 86.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_fig2_c2",
+   "sentence": "ResNet-50 scores 2.0 points higher on AG News than on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "AG News",
+   "series_b": "ResNet-50",
+   "x_b": "SST-2",
+   "true_value": 7.0,
+   "claimed_value": 2.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_fig2_c3",
+   "sentence": "As shown in Figure 2, ResNet-50 achieves 69.1% validation accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.5,
+   "claimed_value": 69.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_004_nofig",
+   "sentence": "Logistic Regression reaches 72.7% accuracy on MNIST.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 72.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_004_setup1",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

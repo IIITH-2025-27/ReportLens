@@ -1,0 +1,468 @@
+{
+ "report_id": "holdout2_019",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of LSTM by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_019_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of LSTM by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SST-2",
+     "SVHN",
+     "Fashion-MNIST",
+     "IMDB",
+     "AG News"
+    ],
+    "series": {
+     "LSTM": [
+      67.0,
+      74.2,
+      68.4,
+      78.0,
+      86.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     99.36
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 10,
+      "figsize": [
+       5.2,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "LSTM": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_019_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "Fashion-MNIST",
+     "SST-2",
+     "MNIST",
+     "IMDB"
+    ],
+    "series": {
+     "MobileNet": [
+      51.9,
+      63.9,
+      52.2,
+      51.2,
+      67.5
+     ],
+     "ResNet-50": [
+      57.3,
+      79.3,
+      64.4,
+      64.7,
+      74.2
+     ],
+     "BERT-base": [
+      53.1,
+      67.7,
+      58.3,
+      54.6,
+      68.8
+     ],
+     "Transformer": [
+      51.5,
+      69.8,
+      55.3,
+      49.8,
+      67.6
+     ],
+     "GRU": [
+      54.3,
+      69.5,
+      58.5,
+      60.0,
+      70.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     91.195
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.7,
+       3.1
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "MobileNet": "#1b9e77",
+      "ResNet-50": "#d95f02",
+      "BERT-base": "#7570b3",
+      "Transformer": "#e7298a",
+      "GRU": "#66a61e"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy of ViT-S by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_019_fig3",
+    "kind": "bar",
+    "title": "Test accuracy of ViT-S by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "MNIST",
+     "IMDB"
+    ],
+    "series": {
+     "ViT-S": [
+      59.0,
+      62.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     71.875
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 11,
+      "figsize": [
+       6.3,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#0072b2"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_019_fig1_c0",
+   "sentence": "LSTM achieves about 80% test accuracy on IMDB.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.0,
+   "claimed_value": 80.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 99.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig1_c1",
+   "sentence": "LSTM scores 3.4 points higher on Fashion-MNIST than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "Fashion-MNIST",
+   "series_b": "LSTM",
+   "x_b": "SST-2",
+   "true_value": 1.4,
+   "claimed_value": 3.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 99.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig1_c2",
+   "sentence": "As shown in Figure 1, LSTM scores about 19 points higher on AG News than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "AG News",
+   "series_b": "LSTM",
+   "x_b": "SST-2",
+   "true_value": 19.4,
+   "claimed_value": 19.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 99.36,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_019_fig1_c3",
+   "sentence": "LSTM scores 23.0 points higher on AG News than on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "AG News",
+   "series_b": "LSTM",
+   "x_b": "Fashion-MNIST",
+   "true_value": 18.0,
+   "claimed_value": 23.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 99.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig2_c0",
+   "sentence": "GRU outperforms MobileNet by 8.8 percentage points on MNIST.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "MNIST",
+   "series_b": "MobileNet",
+   "x_b": "MNIST",
+   "true_value": 8.8,
+   "claimed_value": 8.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.195,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig2_c1",
+   "sentence": "MobileNet achieves 51.9% validation accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 51.9,
+   "claimed_value": 51.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.195,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig2_c2",
+   "sentence": "Transformer reaches 5.9% validation accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 51.5,
+   "claimed_value": 5.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 91.195,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig2_c3",
+   "sentence": "ResNet-50 outperforms BERT-base by about 4 percentage points on SVHN (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": "BERT-base",
+   "x_b": "SVHN",
+   "true_value": 4.2,
+   "claimed_value": 4.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.195,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_019_fig3_c0",
+   "sentence": "ViT-S scores 7.1 points higher on IMDB than on MNIST (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "ViT-S",
+   "x_b": "MNIST",
+   "true_value": 3.5,
+   "claimed_value": 7.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 71.875,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_019_fig3_c1",
+   "sentence": "On MNIST, ViT-S obtains a test accuracy of over 55%.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.0,
+   "claimed_value": 55.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 71.875,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_fig3_c2",
+   "sentence": "On MNIST, ViT-S obtains a test accuracy of 62.5% (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.0,
+   "claimed_value": 62.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 71.875,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_019_nofig",
+   "sentence": "On IMDB, Random Forest obtains an accuracy of 74.8%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 74.8,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_setup0",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_019_setup1",
+   "sentence": "We trained each model for 50 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -11,3 +11,5 @@
   - `test_004`: every decided claim is right (test)
 
 Made by `python scripts/export_results.py` from the saved runs; no model is called.
+
+These are the E6 runs: `vlm_table` uses the LoRA adapter in `checkpoints/lora_chart2table` (918 charts, one epoch), the margins come from `calibration_tables/local_lora`, everything else is as in the main results (`configs/exp/local_lora.yaml`). Model times are estimated with the base tool profile. Why the LoRA tool raises wrong flags pooled although it reads better: `results/run_log.md`, rows E4 and E9.

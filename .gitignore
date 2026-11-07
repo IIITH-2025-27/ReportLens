@@ -2,12 +2,24 @@
 __pycache__/
 *.egg-info/
 .pytest_cache/
+.DS_Store
 
-# Generated data, caches, model weights and run outputs (kept on Kaggle / Drive)
+# Generated data, caches, model weights and run outputs.
+# Kept in git so the results replay from a clone without a model (9 Nov): the reading cache, the split lists and
+# the generated reports of the calibration and evaluation splits (with their parsed figures in data/local/work).
+# Left out: the fine-tuning pool (90 MB, regenerate with configs/exp/ft_pool.yaml), the rejected calib_grouped split,
+# run folders (results/ holds their exports), the LoRA weights and smoke-test data.
 data/*
 !data/splits/
+!data/local/
+data/local/generated/ft_pool/
+data/local/generated/calib_grouped/
+data/local/work/ft_pool/
+data/local/work/calib_grouped/
+data/local/work/check/
 runs/
-cache/
+cache/*
+!cache/local.sqlite
 checkpoints/
 
 # Calibration tables from real tools ARE committed (calibration_tables/*.json); simulated ones are not

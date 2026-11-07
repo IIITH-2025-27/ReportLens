@@ -1,0 +1,575 @@
+{
+ "report_id": "calib_easy_004",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_004_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ViT-S": [
+      88.2,
+      59.6
+     ],
+     "EfficientNet": [
+      95.9,
+      65.8
+     ],
+     "VGG-16": [
+      91.7,
+      56.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 10,
+      "figsize": [
+       6.2,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "EfficientNet": "#377eb8",
+      "VGG-16": "#4daf4a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_004_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "series": {
+     "Ours": [
+      61.0,
+      74.2,
+      81.2,
+      86.8,
+      89.0,
+      91.9,
+      91.8
+     ],
+     "Baseline": [
+      54.0,
+      68.1,
+      76.4,
+      82.0,
+      87.1,
+      87.3,
+      89.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.105,
+     93.795
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       5.1,
+       3.4
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "Ours": "#0072b2",
+      "Baseline": "#d55e00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_004_fig3",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "EfficientNet": [
+      59.2,
+      59.3
+     ],
+     "GRU": [
+      63.3,
+      63.7
+     ],
+     "MLP": [
+      62.1,
+      61.1
+     ],
+     "ResNet-18": [
+      62.5,
+      61.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     73.255
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       6.4,
+       3.7
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "EfficientNet": "#1b9e77",
+      "GRU": "#d95f02",
+      "MLP": "#7570b3",
+      "ResNet-18": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy of CNN by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_004_fig4",
+    "kind": "bar",
+    "title": "Test accuracy of CNN by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "IMDB",
+     "SVHN"
+    ],
+    "series": {
+     "CNN": [
+      76.4,
+      50.6,
+      64.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     87.86
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       5.1,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "CNN": "#1f77b4"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_easy_004_fig1_c0",
+   "sentence": "EfficientNet achieves 91.7% validation accuracy on MNIST (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 95.9,
+   "claimed_value": 91.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_fig1_c1",
+   "sentence": "On MNIST, EfficientNet is about 4 points better than VGG-16.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": "VGG-16",
+   "x_b": "MNIST",
+   "true_value": 4.2,
+   "claimed_value": 4.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig1_c2",
+   "sentence": "EfficientNet outperforms ViT-S by 6.2 percentage points on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "CIFAR-10",
+   "series_b": "ViT-S",
+   "x_b": "CIFAR-10",
+   "true_value": 6.2,
+   "claimed_value": 6.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig2_c0",
+   "sentence": "At epoch 6, Ours is 3.8 points better than Baseline.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "6",
+   "series_b": "Baseline",
+   "x_b": "6",
+   "true_value": 4.6,
+   "claimed_value": 3.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 41.690000000000005,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig2_c1",
+   "sentence": "From epoch 4 to epoch 7, the accuracy of Ours improves by a relative 5.8%.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "4",
+   "series_b": null,
+   "x_b": "7",
+   "true_value": 5.760369,
+   "claimed_value": 5.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 41.690000000000005,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig2_c2",
+   "sentence": "As shown in Figure 2, from epoch 2 to epoch 7, the accuracy of Ours improves by a relative 35.0%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "2",
+   "series_b": null,
+   "x_b": "7",
+   "true_value": 23.719677,
+   "claimed_value": 35.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 41.690000000000005,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_fig2_c3",
+   "sentence": "As shown in Figure 2, from epoch 4 to epoch 6, the accuracy of Ours improves by a relative 6%.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "4",
+   "series_b": null,
+   "x_b": "6",
+   "true_value": 5.875576,
+   "claimed_value": 6.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 41.690000000000005,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_fig3_c0",
+   "sentence": "MLP outperforms EfficientNet by 2.9 percentage points on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "Fashion-MNIST",
+   "series_b": "EfficientNet",
+   "x_b": "Fashion-MNIST",
+   "true_value": 2.9,
+   "claimed_value": 2.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 73.255,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig3_c1",
+   "sentence": "On CIFAR-10, EfficientNet obtains a accuracy of 61.7%.",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.3,
+   "claimed_value": 61.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 73.255,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig3_c2",
+   "sentence": "As shown in Figure 3, MLP achieves 54.8% accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.1,
+   "claimed_value": 54.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 73.255,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_fig3_c3",
+   "sentence": "MLP achieves over 60% accuracy on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.1,
+   "claimed_value": 60.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 73.255,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig4_c0",
+   "sentence": "On IMDB, CNN obtains a test accuracy of 50.6% (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 50.6,
+   "claimed_value": 50.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 87.86,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_fig4_c1",
+   "sentence": "CNN scores 43.4 points higher on Fashion-MNIST than on IMDB.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "Fashion-MNIST",
+   "series_b": "CNN",
+   "x_b": "IMDB",
+   "true_value": 25.8,
+   "claimed_value": 43.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 87.86,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_fig4_c2",
+   "sentence": "CNN scores 5.3 points higher on SVHN than on IMDB (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SVHN",
+   "series_b": "CNN",
+   "x_b": "IMDB",
+   "true_value": 14.1,
+   "claimed_value": 5.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 87.86,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_004_nofig",
+   "sentence": "On SVHN, Random Forest obtains an accuracy of 90.7%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 90.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_setup0",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_004_setup1",
+   "sentence": "All experiments were run on a single GPU with 12 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

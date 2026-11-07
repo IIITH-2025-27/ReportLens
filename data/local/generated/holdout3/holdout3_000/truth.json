@@ -1,0 +1,684 @@
+{
+ "report_id": "holdout3_000",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_000_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "MNIST",
+     "AG News",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-50": [
+      65.2,
+      76.8,
+      86.7,
+      80.7
+     ],
+     "GRU": [
+      49.9,
+      59.6,
+      69.1,
+      68.9
+     ],
+     "LSTM": [
+      62.0,
+      69.2,
+      90.5,
+      82.4
+     ],
+     "VGG-16": [
+      54.8,
+      66.5,
+      78.5,
+      72.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.7,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ResNet-50": "#e41a1c",
+      "GRU": "#377eb8",
+      "LSTM": "#4daf4a",
+      "VGG-16": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_000_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35",
+     "40"
+    ],
+    "series": {
+     "MobileNet": [
+      77.1,
+      85.4,
+      90.1,
+      90.0,
+      92.2,
+      92.4,
+      92.3,
+      92.5
+     ],
+     "Transformer": [
+      54.2,
+      66.4,
+      73.2,
+      79.3,
+      80.8,
+      82.4,
+      83.8,
+      84.3
+     ],
+     "ViT-S": [
+      49.7,
+      59.0,
+      65.8,
+      71.0,
+      73.9,
+      76.2,
+      76.6,
+      75.5
+     ],
+     "ResNet-50": [
+      67.0,
+      74.4,
+      77.8,
+      80.3,
+      82.6,
+      81.9,
+      81.1,
+      80.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     47.56,
+     94.64
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       6.1,
+       3.8
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "MobileNet": "#0072b2",
+      "Transformer": "#d55e00",
+      "ViT-S": "#009e73",
+      "ResNet-50": "#cc79a7"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_000_fig3",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24"
+    ],
+    "series": {
+     "MobileNet": [
+      60.5,
+      63.2,
+      65.9,
+      65.7,
+      67.1,
+      67.7,
+      68.1,
+      69.5,
+      69.3,
+      68.7,
+      69.0,
+      69.6
+     ],
+     "EfficientNet": [
+      51.7,
+      59.0,
+      68.3,
+      72.1,
+      76.0,
+      79.0,
+      81.7,
+      82.9,
+      83.0,
+      84.3,
+      84.4,
+      84.4
+     ],
+     "MLP": [
+      53.6,
+      61.2,
+      69.1,
+      73.6,
+      75.6,
+      76.7,
+      81.2,
+      81.1,
+      81.7,
+      84.5,
+      84.0,
+      84.9
+     ],
+     "ViT-S": [
+      64.1,
+      71.1,
+      76.4,
+      80.8,
+      85.2,
+      87.1,
+      89.0,
+      89.9,
+      90.7,
+      93.0,
+      92.0,
+      93.4
+     ],
+     "Transformer": [
+      54.4,
+      58.9,
+      60.4,
+      65.2,
+      65.3,
+      69.5,
+      71.4,
+      71.9,
+      71.9,
+      72.2,
+      73.5,
+      74.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     49.615,
+     95.485
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       2.9
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MobileNet": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "MLP": "#2ca02c",
+      "ViT-S": "#d62728",
+      "Transformer": "#9467bd"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_000_fig4",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24"
+    ],
+    "series": {
+     "Ours": [
+      52.5,
+      57.3,
+      60.9,
+      66.2,
+      69.6,
+      72.2,
+      72.8,
+      76.4,
+      75.1,
+      76.7,
+      77.9,
+      77.0
+     ],
+     "LSTM": [
+      56.0,
+      65.8,
+      69.6,
+      74.7,
+      74.9,
+      76.7,
+      77.4,
+      78.6,
+      76.6,
+      77.6,
+      77.8,
+      78.4
+     ],
+     "MLP": [
+      51.6,
+      61.0,
+      67.2,
+      70.1,
+      74.5,
+      77.6,
+      79.4,
+      78.5,
+      79.9,
+      81.3,
+      80.4,
+      82.0
+     ],
+     "Transformer": [
+      43.9,
+      52.1,
+      57.1,
+      61.2,
+      65.6,
+      68.4,
+      70.5,
+      71.3,
+      72.7,
+      72.9,
+      75.0,
+      74.7
+     ],
+     "CNN": [
+      51.0,
+      61.8,
+      69.6,
+      75.0,
+      78.2,
+      81.7,
+      84.3,
+      85.3,
+      86.4,
+      85.9,
+      85.5,
+      87.5
+     ],
+     "GRU": [
+      50.2,
+      62.4,
+      69.2,
+      72.1,
+      76.7,
+      77.4,
+      76.1,
+      77.7,
+      77.6,
+      79.2,
+      79.8,
+      80.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     41.72,
+     89.68
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.4,
+       3.0
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "Ours": "#1b9e77",
+      "LSTM": "#d95f02",
+      "MLP": "#7570b3",
+      "Transformer": "#e7298a",
+      "CNN": "#66a61e",
+      "GRU": "#e6ab02"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_000_fig1_c0",
+   "sentence": "On CIFAR-10, VGG-16 obtains a test accuracy of over 70%.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.9,
+   "claimed_value": 70.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_000_fig1_c1",
+   "sentence": "ResNet-50 reaches 63.2% test accuracy on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.2,
+   "claimed_value": 63.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_000_fig2_c0",
+   "sentence": "As shown in Figure 2, Transformer outperforms ResNet-50 by 26.2 percentage points at epoch 35.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "35",
+   "series_b": "ResNet-50",
+   "x_b": "35",
+   "true_value": 2.7,
+   "claimed_value": 26.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 47.08,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig2_c1",
+   "sentence": "As shown in Figure 2, at epoch 20, ViT-S achieves 71.0% accuracy.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "20",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.0,
+   "claimed_value": 71.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 47.08,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig3_c0",
+   "sentence": "As shown in Figure 3, MLP outperforms Transformer by 8.7 percentage points at epoch 6.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "6",
+   "series_b": "Transformer",
+   "x_b": "6",
+   "true_value": 8.7,
+   "claimed_value": 8.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 45.87,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig3_c1",
+   "sentence": "ViT-S attains a accuracy of about 90% at epoch 12 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "12",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 87.1,
+   "claimed_value": 90.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 45.87,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig4_c0",
+   "sentence": "At epoch 2, MLP achieves 52% accuracy (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 51.6,
+   "claimed_value": 52.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 47.96000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig4_c1",
+   "sentence": "As shown in Figure 4, CNN outperforms Ours by 32.9 percentage points at epoch 16.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "16",
+   "series_b": "Ours",
+   "x_b": "16",
+   "true_value": 8.9,
+   "claimed_value": 32.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 47.96000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_fig4_c2",
+   "sentence": "At epoch 10, CNN is 9.6 points better than Ours (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "10",
+   "series_b": "Ours",
+   "x_b": "10",
+   "true_value": 8.6,
+   "claimed_value": 9.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 47.96000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_000_nofig",
+   "sentence": "Logistic Regression reaches 76.7% accuracy on STL-10.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "STL-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 76.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_000_setup0",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_000_setup1",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

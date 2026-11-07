@@ -1,0 +1,615 @@
+{
+ "report_id": "test_005",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "test_005_fig1",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14"
+    ],
+    "series": {
+     "MobileNet": [
+      55.8,
+      60.1,
+      62.4,
+      64.7,
+      65.6,
+      68.0,
+      68.8,
+      69.7,
+      69.6,
+      72.1,
+      70.4,
+      73.8,
+      72.8,
+      71.8
+     ],
+     "CNN": [
+      38.4,
+      45.2,
+      46.8,
+      52.8,
+      55.6,
+      59.1,
+      62.3,
+      62.0,
+      65.1,
+      65.3,
+      66.8,
+      67.9,
+      69.4,
+      67.8
+     ],
+     "ResNet-50": [
+      41.5,
+      55.8,
+      63.2,
+      69.2,
+      75.0,
+      78.1,
+      81.7,
+      84.5,
+      87.2,
+      87.1,
+      89.0,
+      89.7,
+      89.3,
+      88.7
+     ],
+     "GRU": [
+      49.7,
+      60.4,
+      68.3,
+      73.9,
+      76.3,
+      79.7,
+      82.4,
+      85.2,
+      84.9,
+      86.5,
+      88.3,
+      87.0,
+      88.8,
+      87.4
+     ],
+     "DistilBERT": [
+      50.2,
+      56.3,
+      61.9,
+      65.2,
+      70.0,
+      73.5,
+      75.8,
+      77.5,
+      78.9,
+      80.4,
+      82.0,
+      81.1,
+      84.4,
+      83.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     35.835,
+     92.265
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.7,
+       3.0
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "MobileNet": "#1f77b4",
+      "CNN": "#ff7f0e",
+      "ResNet-50": "#2ca02c",
+      "GRU": "#d62728",
+      "DistilBERT": "#9467bd"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy of BERT-base by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_005_fig2",
+    "kind": "bar",
+    "title": "Accuracy of BERT-base by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "SVHN",
+     "AG News",
+     "SST-2",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "BERT-base": [
+      76.3,
+      71.3,
+      90.3,
+      73.2,
+      87.0,
+      76.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.8,
+       2.8
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "BERT-base": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy of ResNet-18 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_005_fig3",
+    "kind": "bar",
+    "title": "Test accuracy of ResNet-18 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "IMDB",
+     "MNIST",
+     "AG News",
+     "Fashion-MNIST",
+     "SVHN",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-18": [
+      81.8,
+      73.0,
+      95.5,
+      65.9,
+      89.7,
+      63.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.0,
+       3.1
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ResNet-18": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_005_fig4",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "MNIST",
+     "AG News",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "Baseline": [
+      67.8,
+      58.6,
+      70.7,
+      73.6
+     ],
+     "MobileNet": [
+      68.2,
+      60.4,
+      74.2,
+      76.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     87.86
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 10,
+      "figsize": [
+       5.4,
+       3.5
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "Baseline": "#1b9e77",
+      "MobileNet": "#d95f02"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "test_005_fig1_c0",
+   "sentence": "ResNet-50 reaches 60.4% accuracy at epoch 2 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 55.8,
+   "claimed_value": 60.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 56.43,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig1_c1",
+   "sentence": "As shown in Figure 1, CNN reaches about 70% accuracy at epoch 13.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "13",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.4,
+   "claimed_value": 70.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 56.43,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig1_c2",
+   "sentence": "CNN reaches 45.2% accuracy at epoch 2.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 45.2,
+   "claimed_value": 45.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 56.43,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_fig1_c3",
+   "sentence": "At epoch 6, ResNet-50 is 15.9 points better than DistilBERT.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "6",
+   "series_b": "DistilBERT",
+   "x_b": "6",
+   "true_value": 4.6,
+   "claimed_value": 15.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 56.43,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_fig2_c0",
+   "sentence": "BERT-base scores 4.0 points higher on AG News than on IMDB.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": "BERT-base",
+   "x_b": "IMDB",
+   "true_value": 14.0,
+   "claimed_value": 4.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_fig2_c1",
+   "sentence": "As shown in Figure 2, BERT-base scores 67.1 points higher on AG News than on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": "BERT-base",
+   "x_b": "SST-2",
+   "true_value": 17.1,
+   "claimed_value": 67.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig2_c2",
+   "sentence": "As shown in Figure 2, BERT-base achieves 87% accuracy on Fashion-MNIST.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 87.0,
+   "claimed_value": 87.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig2_c3",
+   "sentence": "BERT-base reaches 71.3% accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.3,
+   "claimed_value": 71.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_fig3_c0",
+   "sentence": "As shown in Figure 3, ResNet-18 scores 55.8 points higher on AG News than on SVHN.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "AG News",
+   "series_b": "ResNet-18",
+   "x_b": "SVHN",
+   "true_value": 5.8,
+   "claimed_value": 55.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig3_c1",
+   "sentence": "ResNet-18 reaches 73.0% test accuracy on MNIST (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.0,
+   "claimed_value": 73.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_fig4_c0",
+   "sentence": "On SST-2, MobileNet obtains a validation accuracy of 67.8%.",
+   "figure_id": "fig4",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 68.2,
+   "claimed_value": 67.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 87.86,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_fig4_c1",
+   "sentence": "On Fashion-MNIST, MobileNet is 2.8 points better than Baseline (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "Fashion-MNIST",
+   "series_b": "Baseline",
+   "x_b": "Fashion-MNIST",
+   "true_value": 2.8,
+   "claimed_value": 2.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 87.86,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_005_nofig",
+   "sentence": "XGBoost reaches 50.2% accuracy on AG News.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 50.2,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_setup0",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_005_setup1",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -1,0 +1,538 @@
+{
+ "report_id": "dev_014",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_014_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "SVHN",
+     "MNIST",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "DistilBERT": [
+      92.4,
+      84.4,
+      83.7,
+      63.4,
+      84.2
+     ],
+     "BERT-base": [
+      83.3,
+      71.6,
+      71.5,
+      51.7,
+      77.9
+     ],
+     "LSTM": [
+      90.0,
+      81.8,
+      82.4,
+      67.4,
+      86.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       6.2,
+       3.9
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "DistilBERT": "#e41a1c",
+      "BERT-base": "#377eb8",
+      "LSTM": "#4daf4a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_014_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "MNIST",
+     "IMDB",
+     "AG News",
+     "SVHN",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "ResNet-50": [
+      82.7,
+      77.9,
+      65.9,
+      65.9,
+      60.4
+     ],
+     "CNN": [
+      85.0,
+      82.4,
+      64.2,
+      62.0,
+      55.9
+     ],
+     "Transformer": [
+      78.7,
+      71.7,
+      61.5,
+      58.4,
+      53.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     97.74999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.8,
+       2.8
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ResNet-50": "#0072b2",
+      "CNN": "#d55e00",
+      "Transformer": "#009e73"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_014_fig3",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ViT-S": [
+      56.8,
+      93.1
+     ],
+     "EfficientNet": [
+      50.8,
+      78.0
+     ],
+     "Transformer": [
+      57.3,
+      91.0
+     ],
+     "Baseline": [
+      55.0,
+      85.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "center right",
+      "font_size": 9,
+      "figsize": [
+       5.1,
+       4.2
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#1b9e77",
+      "EfficientNet": "#d95f02",
+      "Transformer": "#7570b3",
+      "Baseline": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_014_fig4",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "AG News",
+     "MNIST",
+     "SVHN",
+     "SST-2"
+    ],
+    "series": {
+     "GRU": [
+      82.1,
+      78.9,
+      69.7,
+      58.2
+     ],
+     "Baseline": [
+      90.9,
+      84.3,
+      79.4,
+      70.3
+     ],
+     "Transformer": [
+      89.3,
+      81.7,
+      70.2,
+      64.1
+     ],
+     "BERT-base": [
+      91.5,
+      92.3,
+      80.5,
+      67.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 11,
+      "figsize": [
+       5.6,
+       4.2
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#e41a1c",
+      "Baseline": "#377eb8",
+      "Transformer": "#4daf4a",
+      "BERT-base": "#984ea3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "dev_014_fig1_c0",
+   "sentence": "As shown in Figure 1, on Fashion-MNIST, LSTM obtains a validation accuracy of over 65%.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 67.4,
+   "claimed_value": 65.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig1_c1",
+   "sentence": "DistilBERT outperforms LSTM by 2.4 percentage points on AG News.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "AG News",
+   "series_b": "LSTM",
+   "x_b": "AG News",
+   "true_value": 2.4,
+   "claimed_value": 2.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_014_fig1_c2",
+   "sentence": "On SVHN, DistilBERT is 12.8 points better than BERT-base (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "SVHN",
+   "series_b": "BERT-base",
+   "x_b": "SVHN",
+   "true_value": 12.8,
+   "claimed_value": 12.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig1_c3",
+   "sentence": "DistilBERT achieves 42.4% validation accuracy on AG News (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 92.4,
+   "claimed_value": 42.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig2_c0",
+   "sentence": "On IMDB, CNN obtains a validation accuracy of 131.3%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.4,
+   "claimed_value": 131.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 97.74999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_014_fig2_c1",
+   "sentence": "As shown in Figure 2, CNN reaches 62.0% validation accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.0,
+   "claimed_value": 62.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 97.74999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig3_c0",
+   "sentence": "EfficientNet reaches 55.0% accuracy on Fashion-MNIST (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 50.8,
+   "claimed_value": 55.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig3_c1",
+   "sentence": "On CIFAR-10, Baseline obtains a accuracy of 78.0% (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.9,
+   "claimed_value": 78.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig4_c0",
+   "sentence": "As shown in Figure 4, BERT-base outperforms Transformer by 15.6 percentage points on MNIST.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "MNIST",
+   "series_b": "Transformer",
+   "x_b": "MNIST",
+   "true_value": 10.6,
+   "claimed_value": 15.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_014_fig4_c1",
+   "sentence": "Baseline achieves 70.3% test accuracy on SST-2.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.3,
+   "claimed_value": 70.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_014_nofig",
+   "sentence": "On SVHN, XGBoost obtains an accuracy of 52.6%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 52.6,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_014_setup0",
+   "sentence": "We trained each model for 100 epochs with a batch size of 128.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_014_setup1",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

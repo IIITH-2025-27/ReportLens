@@ -1,0 +1,615 @@
+{
+ "report_id": "holdout3_019",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_019_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "MNIST",
+     "IMDB",
+     "AG News",
+     "CIFAR-10",
+     "SST-2"
+    ],
+    "series": {
+     "VGG-16": [
+      56.4,
+      89.7,
+      53.5,
+      80.4,
+      80.9
+     ],
+     "ResNet-50": [
+      61.2,
+      84.8,
+      49.9,
+      76.2,
+      78.5
+     ],
+     "Transformer": [
+      68.0,
+      87.7,
+      64.3,
+      83.0,
+      85.3
+     ],
+     "Ours": [
+      50.0,
+      78.0,
+      49.7,
+      75.2,
+      74.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.3,
+       3.4
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "VGG-16": "#1b9e77",
+      "ResNet-50": "#d95f02",
+      "Transformer": "#7570b3",
+      "Ours": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of LSTM by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_019_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of LSTM by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "MNIST",
+     "CIFAR-10",
+     "IMDB",
+     "SVHN"
+    ],
+    "series": {
+     "LSTM": [
+      72.5,
+      55.2,
+      44.3,
+      52.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     83.375
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "center right",
+      "font_size": 11,
+      "figsize": [
+       6.5,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "LSTM": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_019_fig3",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "MNIST",
+     "SST-2",
+     "IMDB",
+     "AG News"
+    ],
+    "series": {
+     "BERT-base": [
+      86.6,
+      86.6,
+      64.5,
+      77.0
+     ],
+     "LSTM": [
+      82.3,
+      87.0,
+      65.9,
+      75.2
+     ],
+     "DistilBERT": [
+      78.8,
+      87.5,
+      67.5,
+      69.8
+     ],
+     "CNN": [
+      87.7,
+      85.8,
+      69.4,
+      74.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.5,
+       3.1
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "LSTM": "#d95f02",
+      "DistilBERT": "#7570b3",
+      "CNN": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_019_fig4",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "IMDB",
+     "MNIST",
+     "Fashion-MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "MLP": [
+      66.0,
+      73.9,
+      86.8,
+      87.8,
+      81.7
+     ],
+     "ViT-S": [
+      67.6,
+      70.9,
+      85.7,
+      86.5,
+      77.6
+     ],
+     "Transformer": [
+      65.2,
+      70.7,
+      85.8,
+      86.5,
+      86.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.0,
+       3.0
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "MLP": "#0072b2",
+      "ViT-S": "#d55e00",
+      "Transformer": "#009e73"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_019_fig1_c0",
+   "sentence": "On IMDB, Ours obtains a validation accuracy of over 75% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.0,
+   "claimed_value": 75.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig1_c1",
+   "sentence": "Ours reaches 54.6% validation accuracy on SST-2 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.6,
+   "claimed_value": 54.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig1_c2",
+   "sentence": "On MNIST, ResNet-50 obtains a validation accuracy of 71.2%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.2,
+   "claimed_value": 71.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig1_c3",
+   "sentence": "Transformer achieves 68.0% validation accuracy on MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 68.0,
+   "claimed_value": 68.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig2_c0",
+   "sentence": "On IMDB, LSTM obtains a validation accuracy of 44.3%.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 44.3,
+   "claimed_value": 44.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 83.375,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig2_c1",
+   "sentence": "On IMDB, LSTM obtains a validation accuracy of 2.6%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 44.3,
+   "claimed_value": 2.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 83.375,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig2_c2",
+   "sentence": "LSTM scores 17.3 points higher on MNIST than on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "MNIST",
+   "series_b": "LSTM",
+   "x_b": "CIFAR-10",
+   "true_value": 17.3,
+   "claimed_value": 17.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 83.375,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig3_c0",
+   "sentence": "On MNIST, BERT-base is 4.3 points better than LSTM (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "MNIST",
+   "series_b": "LSTM",
+   "x_b": "MNIST",
+   "true_value": 4.3,
+   "claimed_value": 4.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig3_c1",
+   "sentence": "As shown in Figure 3, BERT-base reaches 77.0% accuracy on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.0,
+   "claimed_value": 77.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig3_c2",
+   "sentence": "BERT-base achieves 75.2% accuracy on AG News (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.0,
+   "claimed_value": 75.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig3_c3",
+   "sentence": "On IMDB, LSTM obtains a accuracy of 55.9%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.9,
+   "claimed_value": 55.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig4_c0",
+   "sentence": "ViT-S outperforms Transformer by 52.4 percentage points on SVHN (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": "Transformer",
+   "x_b": "SVHN",
+   "true_value": 2.4,
+   "claimed_value": 52.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig4_c1",
+   "sentence": "MLP achieves 71.0% test accuracy on SVHN.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 66.0,
+   "claimed_value": 71.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_fig4_c2",
+   "sentence": "MLP reaches 87% test accuracy on MNIST (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.8,
+   "claimed_value": 87.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_fig4_c3",
+   "sentence": "As shown in Figure 4, on SVHN, MLP obtains a test accuracy of 67.6%.",
+   "figure_id": "fig4",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 66.0,
+   "claimed_value": 67.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_019_setup0",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_019_setup1",
+   "sentence": "We trained each model for 20 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

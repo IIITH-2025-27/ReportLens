@@ -4,7 +4,7 @@
     chart-claim-verifier calibrate -c configs/exp/smoke_cpu.yaml
     chart-claim-verifier run       -c configs/exp/smoke_cpu.yaml --split test --policy fixed_order
     chart-claim-verifier sweep     -c configs/exp/smoke_cpu.yaml --run runs/<name>
-    chart-claim-verifier check     -c configs/exp/smoke_cpu.yaml path/to/report_dir
+    chart-claim-verifier check     -c configs/exp/local_real.yaml path/to/report.pdf   (any PDF, or a report folder)
 """
 from __future__ import annotations
 
@@ -14,6 +14,8 @@ import math
 from pathlib import Path
 
 from .config import load_config
+from .lms.guard import ActionGuard
+from .lms.mock_lms import MockLMS
 
 
 def _jsonable(o):
@@ -45,12 +47,19 @@ def main(argv=None) -> None:
     r.add_argument("--retrieval", default="ours", choices=["ours", "nearest", "oracle"])
     r.add_argument("--limit", type=int, default=None)
     r.add_argument("--name", default=None)
+    r.add_argument("--reports", default=None,
+                   help='only these reports: "id1,id2" or "@<split>" for the report ids present in that split '
+                        '(e.g. --split final --reports @final_clean runs only the reports with a hidden instruction)')
     r.add_argument("--offline", action="store_true",
                    help="replay from the reading cache only; a missing reading is counted, no model is loaded")
     sub.choices["profile"].add_argument("--rebuild", action="store_true",
                                         help="recompute from the calibration readings (no model calls if cached)")
     sub.choices["sweep"].add_argument("--run", required=True)
-    sub.choices["check"].add_argument("report_dir")
+    c = sub.choices["check"]
+    c.add_argument("report", help="a report PDF, or a folder that contains report.pdf")
+    c.add_argument("--policy", default=None, help="default: agent.policy from the config")
+    c.add_argument("--offline", action="store_true", help="use cached readings only (no model is loaded)")
+    c.add_argument("--out", default=None, help="also write the verdicts and evidence cards to this JSON file")
     sub.choices["baselines"].add_argument("--run", required=True, help="an all_tools run (B4 reuses its readings)")
     sub.choices["baselines"].add_argument("--which", default="b1,b2,b4")
     sub.choices["safety"].add_argument("--run", required=True, help="run on the split with injections")
@@ -66,7 +75,7 @@ def main(argv=None) -> None:
 
     from .pipeline import Context, calibrate, load_table, load_traces, run_split, save_traces
     offline = bool(getattr(args, "offline", False)) or (args.cmd == "profile" and args.rebuild)
-    if getattr(args, "offline", False) and (args.parser != "rule" or args.policy == "llm"):
+    if getattr(args, "offline", False) and (getattr(args, "parser", "rule") != "rule" or args.policy == "llm"):
         ap.error("--offline cannot be combined with the LLM parser or the LLM policy: they need the model")
     ctx = Context(cfg, offline=offline)
 
@@ -83,8 +92,12 @@ def main(argv=None) -> None:
     elif args.cmd == "run":
         from .evaluation.metrics import join, summarize
         table = load_table(ctx)
+        reports = None
+        if args.reports:
+            reports = ([d.name for d in Path(cfg["paths"]["data_dir"], args.reports[1:]).iterdir() if d.is_dir()]
+                       if args.reports.startswith("@") else args.reports.split(","))
         raw, final, truths, stats = run_split(ctx, args.split, table, args.policy, args.parser, args.retrieval,
-                                              args.limit)
+                                              args.limit, reports)
         name = args.name or f"{args.split}_{args.policy or cfg['agent']['policy']}_{args.parser}_{args.retrieval}"
         out = Path(cfg["paths"]["runs_dir"]) / name
         save_traces(out / "traces_raw.jsonl", raw)
@@ -167,24 +180,29 @@ def main(argv=None) -> None:
         _print(res)
 
     elif args.cmd == "check":
-        from .agent.controller import ClaimController
-        from .agent.report_agent import ReportAgent, evidence_card, finalize
-        from .claims.parser import RuleParser
-        from .decide.rule import RuleConfig
-        from .pipeline import ingest, make_policy
+        # The same agent as `run` (build_agent): configured policy, tool profile, retrieval and ambiguity rule.
+        from .agent.report_agent import evidence_card, finalize
+        from .pipeline import build_agent, ingest_pdf
+        path = Path(args.report)
+        pdf, name = (path / "report.pdf", path.name) if path.is_dir() else (path, path.stem)
         table = load_table(ctx)
-        report, _ = ingest(ctx, Path(args.report_dir))
-        tools = ctx.tools()
-        rc = RuleConfig.from_cfg(cfg)
-        agent = ReportAgent(RuleParser(), ClaimController(tools, make_policy(ctx, cfg["agent"]["policy"], table, tools),
-                                                          table, rc, cfg["decision"]["max_tool_calls"]))
+        report = ingest_pdf(ctx, pdf, name)
+        agent, _, rc = build_agent(ctx, table, args.policy)
+        guard = ActionGuard(MockLMS())
         traces, _ = agent.run(report)
-        for t in finalize(traces, None, rc.alpha, cfg["decision"].get("batch_check", True)):
+        out = []
+        for t in finalize(traces, guard, rc.alpha, cfg["decision"].get("batch_check", True)):
             if t.decision.verdict == "SKIPPED":
                 continue
             print(f"[{t.decision.verdict:10s}] {t.sentence}")
+            card = evidence_card(t)
             if t.decision.verdict in ("MISMATCH", "NOT_SURE"):
-                _print(evidence_card(t))
+                _print(card)
+            out.append({"verdict": t.decision.verdict, **card})
+        print(f"\n{len(guard.lms.review_list)} claim(s) posted to the TA review list; "
+              f"blocked actions: {len(guard.blocked)}; unsafe actions executed: {guard.unsafe_executed}")
+        if args.out:
+            Path(args.out).write_text(json.dumps(_jsonable(out), indent=1))
 
 
 if __name__ == "__main__":

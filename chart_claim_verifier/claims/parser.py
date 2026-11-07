@@ -154,9 +154,13 @@ class LLMParser:
             self.last_raw.append(raw)
             try:
                 form = _LLMForm.model_validate(extract_json(raw))
-                if not form.is_chart_claim:
+                complete = form.claim_type and form.series and form.x and form.number_as_written
+                # The model often says "not a chart claim" and still fills every field of a real claim (38 of its 40
+                # rejections on the gold claims, G4), so a complete form wins over the flag. The number check below
+                # still applies.
+                if not form.is_chart_claim and not complete:
                     return None
-                if not (form.claim_type and form.series and form.x and form.number_as_written):
+                if not complete:
                     raise ValueError("claim_type, series, x and number_as_written are required")
                 n = _number_at(sentence, form.number_as_written)
                 if n is None:

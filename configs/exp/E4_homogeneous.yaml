@@ -2,6 +2,8 @@
 # Calibrate and run exactly like main_gpu.yaml, then compare correlation and coverage at 10%.
 tools:
   enabled: [vlm_crop@s1, vlm_crop@s2, vlm_crop@s3, vlm_crop@s4]
+calibration:
+  order: random          # the four samples are exchangeable: a seeded random subset per k (as before 9 Nov)
 agent:
   policy: all_tools
   fixed_order: [vlm_crop@s1, vlm_crop@s2, vlm_crop@s3, vlm_crop@s4]

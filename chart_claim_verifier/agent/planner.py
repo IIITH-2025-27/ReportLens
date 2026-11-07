@@ -54,11 +54,17 @@ class Thresholds:
     min_figures: int = 5
     min_pair_agreements: int = 20
     min_repair_success: float = 0.5
+    never_pair: tuple = ()          # pairs of tools that share one model: never each other's cross-check
 
     @classmethod
     def from_cfg(cls, cfg: dict) -> "Thresholds":
-        d = (cfg.get("agent") or {}).get("informed") or {}
+        d = dict((cfg.get("agent") or {}).get("informed") or {})
+        if "never_pair" in d:
+            d["never_pair"] = tuple(frozenset(p) for p in d["never_pair"] or ())
         return cls(**{f.name: d[f.name] for f in fields(cls) if f.name in d})
+
+    def shares_model(self, a: str, b: str) -> bool:
+        return frozenset((a, b)) in self.never_pair
 
 
 TH = Thresholds()
@@ -102,11 +108,15 @@ def pair_info(profile: dict, situation: str, a: str, b: str, th: Thresholds = TH
 
 
 def wrong_when_agree(profile: dict, situation: str, a: str, b: str, th: Thresholds = TH) -> float | None:
+    if th.shares_model(a, b):        # one model's two readings repeat its mistakes: treated as always wrong together
+        return 1.0
     p = pair_info(profile, situation, a, b, th)
     return None if p is None else p["wrong_when_agree"]
 
 
 def pair_note(profile: dict, situation: str, a: str, b: str, th: Thresholds = TH) -> str:
+    if th.shares_model(a, b):
+        return f"{a}+{b} share one model, so they are never a cross-check"
     p = pair_info(profile, situation, a, b, th)
     if p is None:
         return f"{a}+{b} wrong-agreement not measured enough"
@@ -176,8 +186,8 @@ class InformedPolicy(Policy):
         if not scored:
             why = "decision still unclear and no usable tool left"
             if excluded:
-                why += " (" + "; ".join(f"{t} agrees wrongly with {', '.join(f'{u} {r:.1%}' for u, r in b.items())}"
-                                        for t, b in excluded.items()) + " of the time)"
+                why += " (" + "; ".join(f"{t} agrees wrongly with {', '.join(self._risk(t, u, r) for u, r in b.items())}"
+                                        for t, b in excluded.items()) + ")"
             return self._repair_or_handoff(state, sit, on_tick, {"action": "handoff", "why": why + why_blocked})
 
         scored.sort(reverse=True)
@@ -192,7 +202,8 @@ class InformedPolicy(Policy):
             why += f"; not calling {self._fmt(skipped)} (would almost surely refuse here)"
         if excluded:
             why += "; not a cross-check: " + ", ".join(
-                f"{t} (wrong-agreement {max(b.values()):.1%})" for t, b in excluded.items())
+                f"{t} ({'same model as ' + ', '.join(u for u in b if self.th.shares_model(t, u)) if any(self.th.shares_model(t, u) for u in b) else f'wrong-agreement {max(b.values()):.1%}'})"
+                for t, b in excluded.items())
         return {"action": "read", "tool": best, "why": why + why_blocked}
 
     def _first_read(self, state, sit, on_tick, where, plan, why_blocked) -> dict:
@@ -244,6 +255,9 @@ class InformedPolicy(Policy):
                     "why": (f"{tool} failed with {code}; {rep['repair']} fixed {rep['fixed']:.0%} of such failures in calibration "
                             f"({rep['n']} points, {rep.get('seconds', 0):.0f}s); then {pair_note(self.profile, sit, tool, u, self.th)}")}
         return handoff
+
+    def _risk(self, t: str, u: str, r: float) -> str:
+        return f"{u} (same model)" if self.th.shares_model(t, u) else f"{u} {r:.1%} of the time"
 
     @staticmethod
     def _fmt(d: dict, digits: int = 0) -> str:

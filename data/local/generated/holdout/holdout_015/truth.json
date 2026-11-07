@@ -1,0 +1,327 @@
+{
+ "report_id": "holdout_015",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of EfficientNet by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_015_fig1",
+    "kind": "bar",
+    "title": "F1 score of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "CIFAR-10",
+     "MNIST",
+     "IMDB",
+     "SST-2"
+    ],
+    "series": {
+     "EfficientNet": [
+      77.6,
+      79.3,
+      86.2,
+      54.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     99.13
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.6,
+       4.1
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "EfficientNet": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_015_fig2",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "series": {
+     "ViT-S": [
+      57.7,
+      71.8,
+      77.4,
+      79.2,
+      82.3,
+      80.9
+     ],
+     "VGG-16": [
+      52.1,
+      59.5,
+      63.5,
+      66.1,
+      67.3,
+      68.2
+     ],
+     "Transformer": [
+      55.0,
+      66.9,
+      70.3,
+      71.7,
+      72.9,
+      74.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     50.59,
+     83.81
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 12,
+      "figsize": [
+       5.9,
+       3.5
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#1b9e77",
+      "VGG-16": "#d95f02",
+      "Transformer": "#7570b3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_015_fig1_c0",
+   "sentence": "EfficientNet scores 14.6 points higher on MNIST than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": "EfficientNet",
+   "x_b": "SST-2",
+   "true_value": 24.5,
+   "claimed_value": 14.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 99.13,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_fig1_c1",
+   "sentence": "On MNIST, EfficientNet obtains a F1 score of 77.6%.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.3,
+   "claimed_value": 77.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 99.13,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_fig1_c2",
+   "sentence": "On IMDB, EfficientNet obtains a F1 score of 84.2%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.2,
+   "claimed_value": 84.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 99.13,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_fig1_c3",
+   "sentence": "As shown in Figure 1, EfficientNet scores 17.8 points higher on CIFAR-10 than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "CIFAR-10",
+   "series_b": "EfficientNet",
+   "x_b": "SST-2",
+   "true_value": 22.8,
+   "claimed_value": 17.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 99.13,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_015_fig2_c0",
+   "sentence": "As shown in Figure 2, at epoch 6, ViT-S is 13 points better than VGG-16.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "6",
+   "series_b": "VGG-16",
+   "x_b": "6",
+   "true_value": 12.7,
+   "claimed_value": 13.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 33.22,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_015_fig2_c1",
+   "sentence": "At epoch 3, VGG-16 achieves about 60% test accuracy.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.5,
+   "claimed_value": 60.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 33.22,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_fig2_c2",
+   "sentence": "As shown in Figure 2, Transformer attains a test accuracy of 67% at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 66.9,
+   "claimed_value": 67.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 33.22,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_015_nofig",
+   "sentence": "On STL-10, XGBoost obtains an accuracy of 79.0%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "STL-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 79.0,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_setup0",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_015_setup1",
+   "sentence": "Each experiment was repeated 5 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

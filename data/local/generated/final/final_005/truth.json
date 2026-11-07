@@ -1,0 +1,633 @@
+{
+ "report_id": "final_005",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of BERT-base by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_005_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of BERT-base by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "Fashion-MNIST",
+     "MNIST",
+     "AG News",
+     "IMDB"
+    ],
+    "series": {
+     "BERT-base": [
+      86.5,
+      79.8,
+      69.3,
+      86.7,
+      86.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     99.705
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 9,
+      "figsize": [
+       5.5,
+       4.0
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#1b9e77"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_005_fig2",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24",
+     "26"
+    ],
+    "series": {
+     "GRU": [
+      48.0,
+      59.1,
+      64.5,
+      70.1,
+      74.5,
+      75.7,
+      76.9,
+      78.8,
+      77.7,
+      78.5,
+      77.9,
+      77.9,
+      78.7
+     ],
+     "MobileNet": [
+      37.6,
+      42.6,
+      50.6,
+      54.6,
+      57.8,
+      61.8,
+      62.0,
+      66.9,
+      68.6,
+      69.8,
+      70.8,
+      72.3,
+      73.9
+     ],
+     "ViT-S": [
+      49.6,
+      62.7,
+      69.5,
+      74.4,
+      80.0,
+      78.8,
+      80.6,
+      81.0,
+      82.6,
+      82.2,
+      82.9,
+      82.1,
+      83.0
+     ],
+     "ResNet-50": [
+      61.1,
+      68.7,
+      73.4,
+      77.5,
+      79.8,
+      82.2,
+      84.2,
+      87.3,
+      85.9,
+      87.3,
+      88.4,
+      89.1,
+      90.5
+     ],
+     "DistilBERT": [
+      46.6,
+      50.9,
+      56.4,
+      59.0,
+      62.7,
+      62.9,
+      64.8,
+      68.9,
+      68.8,
+      69.9,
+      71.2,
+      71.3,
+      71.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     34.955,
+     93.145
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.8,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "GRU": "#e41a1c",
+      "MobileNet": "#377eb8",
+      "ViT-S": "#4daf4a",
+      "ResNet-50": "#984ea3",
+      "DistilBERT": "#ff7f00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy of CNN by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_005_fig3",
+    "kind": "bar",
+    "title": "Test accuracy of CNN by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SST-2",
+     "AG News"
+    ],
+    "series": {
+     "CNN": [
+      78.1,
+      58.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     89.81499999999998
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       6.5,
+       3.7
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "CNN": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_005_fig4",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25"
+    ],
+    "series": {
+     "GRU": [
+      59.7,
+      68.5,
+      73.4,
+      75.5,
+      77.3
+     ],
+     "MLP": [
+      65.4,
+      73.0,
+      78.1,
+      79.5,
+      81.5
+     ],
+     "EfficientNet": [
+      55.0,
+      61.0,
+      65.7,
+      67.6,
+      68.6
+     ],
+     "CNN": [
+      53.9,
+      65.2,
+      71.1,
+      72.3,
+      74.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.519999999999996,
+     82.88
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       6.0,
+       3.7
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#1b9e77",
+      "MLP": "#d95f02",
+      "EfficientNet": "#7570b3",
+      "CNN": "#e7298a"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "final_005_fig1_c0",
+   "sentence": "BERT-base reaches 86.7% test accuracy on IMDB.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.6,
+   "claimed_value": 86.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 99.705,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig1_c1",
+   "sentence": "BERT-base achieves 66.7% test accuracy on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.6,
+   "claimed_value": 66.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 99.705,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_fig2_c0",
+   "sentence": "ResNet-50 attains a F1 score of 49.6% at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.1,
+   "claimed_value": 49.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 58.19,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig2_c1",
+   "sentence": "ViT-S reaches 85.8% F1 score at epoch 22 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "22",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.9,
+   "claimed_value": 85.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 58.19,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_fig2_c2",
+   "sentence": "At epoch 22, MobileNet achieves 65.0% F1 score.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "22",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.8,
+   "claimed_value": 65.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 58.19,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig2_c3",
+   "sentence": "GRU attains a F1 score of 81.7% at epoch 8.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.1,
+   "claimed_value": 81.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 58.19,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig3_c0",
+   "sentence": "As shown in Figure 3, CNN scores 28.8 points higher on SST-2 than on AG News.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": "CNN",
+   "x_b": "AG News",
+   "true_value": 19.8,
+   "claimed_value": 28.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 89.81499999999998,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_fig3_c1",
+   "sentence": "CNN scores 1.8 points higher on SST-2 than on AG News.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": "CNN",
+   "x_b": "AG News",
+   "true_value": 19.8,
+   "claimed_value": 1.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 89.81499999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig3_c2",
+   "sentence": "CNN scores 19.8 points higher on SST-2 than on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SST-2",
+   "series_b": "CNN",
+   "x_b": "AG News",
+   "true_value": 19.8,
+   "claimed_value": 19.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 89.81499999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig4_c0",
+   "sentence": "From epoch 10 to epoch 20, the validation accuracy of CNN improves by a relative 10.9%.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "CNN",
+   "x": "10",
+   "series_b": null,
+   "x_b": "20",
+   "true_value": 10.889571,
+   "claimed_value": 10.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 30.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_fig4_c1",
+   "sentence": "CNN outperforms EfficientNet by 6 percentage points at epoch 25 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "25",
+   "series_b": "EfficientNet",
+   "x_b": "25",
+   "true_value": 5.7,
+   "claimed_value": 6.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 30.36,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_fig4_c2",
+   "sentence": "CNN reaches 38.7% validation accuracy at epoch 5 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "5",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 53.9,
+   "claimed_value": 38.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 30.36,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_fig4_c3",
+   "sentence": "As shown in Figure 4, at epoch 10, EfficientNet achieves 61.0% validation accuracy.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.0,
+   "claimed_value": 61.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 30.36,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_005_nofig",
+   "sentence": "SVM reaches 88.8% accuracy on Yelp.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "Yelp",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 88.8,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_005_setup1",
+   "sentence": "We trained each model for 30 epochs with a batch size of 128.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

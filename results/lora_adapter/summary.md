@@ -1,8 +1,8 @@
 # Results
 
-Main method: **informed** (the planner picks tools from the measured profile). Runs: `lora_test_<policy>` (test), `lora_dev_<policy>` (dev), `lora_holdout_<policy>` (holdout), `lora_holdout2_<policy>` (holdout2), `lora_holdout3_<policy>` (holdout3).
+Main method: **informed** (the planner picks tools from the measured profile). Runs: `lora_test_<policy>` (test), `lora_dev_<policy>` (dev), `lora_holdout_<policy>` (holdout), `lora_holdout2_<policy>` (holdout2), `lora_holdout3_<policy>` (holdout3), `lora_final_<policy>` (final).
 Intervals are 95% bootstrap intervals that resample whole reports.
-How far each split can be trusted: `test` and `dev` are development splits (design choices were made while looking at them). `holdout` was run once with a frozen configuration and then used to diagnose a calibration problem, so it is no longer unbiased. `holdout2` and `holdout3` are fresh reports; the only things changed after seeing `holdout2` were two bug fixes (page-break sentence join, cut comparison guard), and `holdout3` was used once to choose between two calibration tables, so it is nearly but not fully unbiased (implementation.md §24.7).
+How far each split can be trusted: `test` and `dev` are development splits (design choices were made while looking at them). `holdout` was run once with a frozen configuration and then used to diagnose a calibration problem, so it is no longer unbiased. `holdout2` and `holdout3` are fresh reports; the only things changed after seeing `holdout2` were two bug fixes (page-break sentence join, cut comparison guard), and `holdout3` was used once to choose between two calibration tables, so it is nearly but not fully unbiased (implementation.md §24.7). `final` was generated on 9 November after the method was frozen and was run once: it is the only untouched split.
 Accuracy overall counts a hand-off to the TA as not right; accuracy when decided counts only claims the system decided.
 
 ### test
@@ -345,7 +345,83 @@ Accuracy overall counts a hand-off to the TA as not right; accuracy when decided
 | holdout3_018 | 16 | 11 | 0 | 5 |
 | holdout3_019 | 15 | 9 | 1 | 5 |
 
+### final
+
+| Method | Claims | Coverage | Accuracy when decided | Accuracy overall | Wrong flags | Missed errors | Model time |
+|---|---|---|---|---|---|---|---|
+| all_tools | 205 | 85.4% [76.8%, 92.5%] | 97.7% [95.5%, 99.5%] | 83.4% [75.0%, 91.0%] | 4.3% [1.0%, 8.3%] | 0.0% [0.0%, 0.0%] | 44.7 min |
+| fixed_order | 205 | 87.8% [80.4%, 94.2%] | 97.2% [95.2%, 99.4%] | 85.4% [77.9%, 92.4%] | 4.3% [1.0%, 8.3%] | 1.0% [0.0%, 3.0%] | 21.3 min |
+| informed (main) | 205 | 86.8% [79.7%, 93.5%] | 97.2% [95.1%, 99.4%] | 84.4% [77.0%, 91.6%] | 4.3% [1.0%, 8.3%] | 1.0% [0.0%, 3.0%] | 21.8 min |
+
+#### final: what the main method said, against the truth
+
+| Truth \ Verdict | CONSISTENT | MISMATCH | NOT_SURE | NO_FIGURE |
+|---|---|---|---|---|
+| claim is right | 71 | 4 | 12 | 0 |
+| claim is wrong | 1 | 88 | 15 | 0 |
+| no chart shows it | 0 | 0 | 0 | 14 |
+
+#### final: by claim type
+
+| Claim type | Claims | Decided | Right of decided | Handed off |
+|---|---|---|---|---|
+| difference | 50 | 47 | 46/47 | 3 |
+| point | 148 | 127 | 123/127 | 21 |
+| relative_change | 7 | 4 | 4/4 | 3 |
+
+#### final: by chart type
+
+| Chart type | Claims | Decided | Right of decided | Handed off |
+|---|---|---|---|---|
+| bar | 38 | 37 | 36/37 | 1 |
+| grouped_bar | 58 | 52 | 52/52 | 6 |
+| line | 95 | 75 | 71/75 | 20 |
+| unknown | 14 | 14 | 14/14 | 0 |
+
+#### final: planted errors by size
+
+| Planted error size | Errors | Measured (2+ readings) | Flagged of measured | Flagged of all |
+|---|---|---|---|---|
+| 0.02 | 15 | 13 | 9/13 | 9/15 |
+| 0.05 | 17 | 16 | 13/16 | 13/17 |
+| 0.1 | 22 | 20 | 20/20 | 20/22 |
+| 0.2 | 17 | 17 | 17/17 | 17/17 |
+| 0.5 | 26 | 24 | 24/24 | 24/26 |
+
+#### final: by report
+
+| Report | Claims | Right | Wrong | Handed off |
+|---|---|---|---|---|
+| final_000 | 10 | 10 | 0 | 0 |
+| final_001 | 7 | 5 | 0 | 2 |
+| final_002 | 11 | 11 | 0 | 0 |
+| final_003 | 11 | 10 | 0 | 1 |
+| final_004 | 6 | 6 | 0 | 0 |
+| final_005 | 14 | 12 | 1 | 1 |
+| final_006 | 14 | 12 | 0 | 2 |
+| final_007 | 10 | 8 | 0 | 2 |
+| final_008 | 6 | 3 | 1 | 2 |
+| final_009 | 8 | 8 | 0 | 0 |
+| final_010 | 10 | 10 | 0 | 0 |
+| final_011 | 6 | 4 | 1 | 1 |
+| final_012 | 9 | 9 | 0 | 0 |
+| final_013 | 10 | 7 | 0 | 3 |
+| final_014 | 15 | 13 | 1 | 1 |
+| final_015 | 10 | 10 | 0 | 0 |
+| final_016 | 14 | 6 | 0 | 8 |
+| final_017 | 12 | 10 | 1 | 1 |
+| final_018 | 12 | 9 | 0 | 3 |
+| final_019 | 10 | 10 | 0 | 0 |
+
 ### All splits pooled
+
+| Method | Claims | Coverage | Accuracy when decided | Wrong flags | Missed errors |
+|---|---|---|---|---|---|
+| all_tools | 1205 | 79.6% [76.6%, 82.6%] | 96.2% [94.9%, 97.5%] | 4.4% [2.6%, 6.5%] | 0.7% [0.2%, 1.4%] |
+| fixed_order | 1205 | 83.3% [80.2%, 86.3%] | 96.1% [94.9%, 97.4%] | 3.8% [2.1%, 5.6%] | 1.8% [0.9%, 3.0%] |
+| informed (main) | 1205 | 82.3% [79.0%, 85.6%] | 96.3% [95.0%, 97.5%] | 4.2% [2.4%, 6.1%] | 1.1% [0.3%, 1.9%] |
+
+### The 5 earlier splits pooled (without `final`)
 
 | Method | Claims | Coverage | Accuracy when decided | Wrong flags | Missed errors |
 |---|---|---|---|---|---|

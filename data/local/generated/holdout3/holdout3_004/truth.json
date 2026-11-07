@@ -1,0 +1,615 @@
+{
+ "report_id": "holdout3_004",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_004_fig1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "SVHN",
+     "MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "LSTM": [
+      87.0,
+      83.5,
+      82.3,
+      74.5
+     ],
+     "DistilBERT": [
+      88.7,
+      89.6,
+      84.8,
+      85.4
+     ],
+     "CNN": [
+      84.9,
+      78.0,
+      82.0,
+      74.0
+     ],
+     "MobileNet": [
+      88.9,
+      82.5,
+      83.3,
+      78.1
+     ],
+     "ViT-S": [
+      98.0,
+      90.6,
+      96.3,
+      86.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.8,
+       3.1
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "LSTM": "#e41a1c",
+      "DistilBERT": "#377eb8",
+      "CNN": "#4daf4a",
+      "MobileNet": "#984ea3",
+      "ViT-S": "#ff7f00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score of MLP by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_004_fig2",
+    "kind": "bar",
+    "title": "F1 score of MLP by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "SST-2",
+     "SVHN",
+     "CIFAR-10"
+    ],
+    "series": {
+     "MLP": [
+      71.5,
+      62.2,
+      69.2,
+      89.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.7,
+       3.0
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MLP": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_004_fig3",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "series": {
+     "CNN": [
+      58.0,
+      69.9,
+      78.7,
+      80.9,
+      82.6,
+      83.2,
+      84.2,
+      84.7
+     ],
+     "ResNet-50": [
+      53.3,
+      59.8,
+      62.9,
+      66.2,
+      67.5,
+      69.7,
+      68.7,
+      70.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     51.73,
+     86.27000000000001
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       6.5,
+       4.0
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "CNN": "#1b9e77",
+      "ResNet-50": "#d95f02"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_004_fig4",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15"
+    ],
+    "series": {
+     "Baseline": [
+      38.1,
+      49.0,
+      56.0,
+      64.2,
+      69.4,
+      73.7,
+      77.1,
+      79.5,
+      83.8,
+      83.1,
+      86.1,
+      86.7,
+      87.0,
+      88.9,
+      89.7
+     ],
+     "MobileNet": [
+      50.2,
+      59.2,
+      65.1,
+      69.9,
+      72.5,
+      75.6,
+      77.7,
+      77.0,
+      78.0,
+      79.3,
+      80.2,
+      79.0,
+      78.5,
+      80.9,
+      79.9
+     ],
+     "VGG-16": [
+      38.7,
+      47.2,
+      54.6,
+      62.0,
+      65.4,
+      68.3,
+      71.1,
+      74.5,
+      77.4,
+      78.0,
+      79.5,
+      80.9,
+      81.8,
+      82.4,
+      82.6
+     ],
+     "GRU": [
+      49.8,
+      55.6,
+      61.3,
+      64.7,
+      67.3,
+      70.2,
+      72.0,
+      75.2,
+      74.8,
+      76.2,
+      76.8,
+      76.7,
+      78.7,
+      79.5,
+      78.7
+     ],
+     "BERT-base": [
+      49.1,
+      65.8,
+      75.9,
+      82.7,
+      86.3,
+      89.3,
+      91.1,
+      93.2,
+      94.3,
+      93.9,
+      95.0,
+      96.3,
+      94.9,
+      95.1,
+      95.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     35.19,
+     99.21
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.8,
+       3.0
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "Baseline": "#1b9e77",
+      "MobileNet": "#d95f02",
+      "VGG-16": "#7570b3",
+      "GRU": "#e7298a",
+      "BERT-base": "#66a61e"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_004_fig1_c0",
+   "sentence": "ViT-S reaches about 90% accuracy on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.7,
+   "claimed_value": 90.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_fig1_c1",
+   "sentence": "As shown in Figure 1, ViT-S reaches 84.7% accuracy on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.7,
+   "claimed_value": 84.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig1_c2",
+   "sentence": "As shown in Figure 1, on SVHN, ViT-S obtains a accuracy of 85.6%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.6,
+   "claimed_value": 85.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig2_c0",
+   "sentence": "As shown in Figure 2, MLP achieves 62.2% F1 score on SST-2.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.2,
+   "claimed_value": 62.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig2_c1",
+   "sentence": "On MNIST, MLP obtains a F1 score of 21.5%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.5,
+   "claimed_value": 21.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_fig3_c0",
+   "sentence": "From epoch 3 to epoch 4, the validation accuracy of ResNet-50 improves by a relative 10.7%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "ResNet-50",
+   "x": "3",
+   "series_b": null,
+   "x_b": "4",
+   "true_value": 5.246423,
+   "claimed_value": 10.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 34.54000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_fig3_c1",
+   "sentence": "ResNet-50 reaches 62.8% validation accuracy at epoch 6 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "6",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.7,
+   "claimed_value": 62.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 34.54000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig3_c2",
+   "sentence": "As shown in Figure 3, at epoch 3, CNN is 16 points better than ResNet-50.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "3",
+   "series_b": "ResNet-50",
+   "x_b": "3",
+   "true_value": 15.8,
+   "claimed_value": 16.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 34.54000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig4_c0",
+   "sentence": "Baseline reaches 60.9% validation accuracy at epoch 6 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "6",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.7,
+   "claimed_value": 60.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 64.02,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_004_fig4_c1",
+   "sentence": "BERT-base outperforms VGG-16 by about 16 percentage points at epoch 10.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "10",
+   "series_b": "VGG-16",
+   "x_b": "10",
+   "true_value": 15.9,
+   "claimed_value": 16.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 64.02,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_nofig",
+   "sentence": "Logistic Regression reaches 86.2% accuracy on SVHN.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 86.2,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_004_setup1",
+   "sentence": "Each experiment was repeated 5 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -1,5 +1,8 @@
 """LoRA fine-tuning of the VLM for chart -> table (implementation.md §10). Runs on a T4 (fp16).
 
+The adapter in checkpoints/lora_chart2table was trained with scripts/finetune_lora.py (Apple silicon, one epoch,
+the tool's exact prompt), not with this script; this one is the original T4 plan and has not been run.
+
     python finetune/train_lora.py --data data/finetune --out checkpoints/lora_chart2table
 
 Then set `models.lora_adapter: checkpoints/lora_chart2table` in the config and

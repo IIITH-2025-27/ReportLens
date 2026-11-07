@@ -1,0 +1,281 @@
+{
+ "report_id": "calib_010",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_010_fig1",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60"
+    ],
+    "series": {
+     "MobileNet": [
+      69.8,
+      82.1,
+      89.0,
+      90.3,
+      92.8,
+      92.2
+     ],
+     "ViT-S": [
+      49.9,
+      60.4,
+      66.4,
+      70.9,
+      71.4,
+      72.8
+     ],
+     "BERT-base": [
+      57.8,
+      66.8,
+      70.2,
+      72.4,
+      71.9,
+      73.4
+     ],
+     "GRU": [
+      79.3,
+      84.4,
+      90.6,
+      92.8,
+      92.3,
+      92.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     47.754999999999995,
+     94.945
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       5.8,
+       3.6
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "MobileNet": "#0072b2",
+      "ViT-S": "#d55e00",
+      "BERT-base": "#009e73",
+      "GRU": "#cc79a7"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_010_fig2",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25"
+    ],
+    "series": {
+     "Baseline": [
+      71.5,
+      79.8,
+      83.5,
+      85.8,
+      87.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     70.71,
+     88.09
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 11,
+      "figsize": [
+       5.4,
+       4.0
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "Baseline": "#0072b2"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_010_fig1_c0",
+   "sentence": "GRU outperforms BERT-base by 19.0 percentage points at epoch 60 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "60",
+   "series_b": "BERT-base",
+   "x_b": "60",
+   "true_value": 19.0,
+   "claimed_value": 19.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 47.19,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_010_fig1_c1",
+   "sentence": "MobileNet outperforms ViT-S by 24.1 percentage points at epoch 40.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "40",
+   "series_b": "ViT-S",
+   "x_b": "40",
+   "true_value": 19.4,
+   "claimed_value": 24.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 47.19,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_010_fig2_c0",
+   "sentence": "At epoch 10, Baseline achieves 71.5% F1 score.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.8,
+   "claimed_value": 71.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 17.38000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_010_fig2_c1",
+   "sentence": "Baseline attains a F1 score of 80% at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.8,
+   "claimed_value": 80.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 17.38000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_010_nofig",
+   "sentence": "On Yelp, Random Forest obtains an accuracy of 84.6%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "Yelp",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 84.6,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_010_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_010_setup1",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

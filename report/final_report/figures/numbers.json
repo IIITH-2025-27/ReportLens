@@ -1,0 +1,705 @@
+{
+ "per_split_informed": {
+  "test": {
+   "n_claims": 201,
+   "coverage": 0.7412935323383084,
+   "accuracy_when_decided": 0.9932885906040269,
+   "wrong_flag_rate": 0.012345679012345678,
+   "missed_errors": 0.0,
+   "n_flagged": 81
+  },
+  "dev": {
+   "n_claims": 208,
+   "coverage": 0.8076923076923077,
+   "accuracy_when_decided": 0.9761904761904762,
+   "wrong_flag_rate": 0.014084507042253521,
+   "missed_errors": 0.011111111111111112,
+   "n_flagged": 71
+  },
+  "holdout": {
+   "n_claims": 186,
+   "coverage": 0.7795698924731183,
+   "accuracy_when_decided": 0.9172413793103448,
+   "wrong_flag_rate": 0.09375,
+   "missed_errors": 0.0,
+   "n_flagged": 64
+  },
+  "holdout2": {
+   "n_claims": 208,
+   "coverage": 0.8365384615384616,
+   "accuracy_when_decided": 0.9770114942528736,
+   "wrong_flag_rate": 0.011904761904761904,
+   "missed_errors": 0.009433962264150943,
+   "n_flagged": 84
+  },
+  "holdout3": {
+   "n_claims": 197,
+   "coverage": 0.7614213197969543,
+   "accuracy_when_decided": 0.9733333333333334,
+   "wrong_flag_rate": 0.029850746268656716,
+   "missed_errors": 0.011111111111111112,
+   "n_flagged": 67
+  },
+  "final": {
+   "n_claims": 205,
+   "coverage": 0.848780487804878,
+   "accuracy_when_decided": 0.9655172413793104,
+   "wrong_flag_rate": 0.056179775280898875,
+   "missed_errors": 0.009615384615384616,
+   "n_flagged": 89
+  },
+  "five earlier": {
+   "n_claims": 1000,
+   "coverage": 0.786,
+   "accuracy_when_decided": 0.9681933842239185,
+   "wrong_flag_rate": 0.02997275204359673,
+   "missed_errors": 0.0064516129032258064,
+   "n_flagged": 367
+  }
+ },
+ "catch_rate": {
+  "0.02": {
+   "of_all": 60.7,
+   "of_measured": 79.4,
+   "errors_measured_caught_accepted": [
+    89,
+    68,
+    54,
+    0
+   ]
+  },
+  "0.05": {
+   "of_all": 76.5,
+   "of_measured": 86.1,
+   "errors_measured_caught_accepted": [
+    81,
+    72,
+    62,
+    0
+   ]
+  },
+  "0.1": {
+   "of_all": 80.0,
+   "of_measured": 94.4,
+   "errors_measured_caught_accepted": [
+    105,
+    89,
+    84,
+    0
+   ]
+  },
+  "0.2": {
+   "of_all": 74.7,
+   "of_measured": 92.5,
+   "errors_measured_caught_accepted": [
+    99,
+    80,
+    74,
+    0
+   ]
+  },
+  "0.5": {
+   "of_all": 90.4,
+   "of_measured": 98.1,
+   "errors_measured_caught_accepted": [
+    115,
+    106,
+    104,
+    0
+   ]
+  }
+ },
+ "tradeoff_all_six": {
+  "ours_levels_0.8_to_0.99": [
+   [
+    13.8,
+    85.3
+   ],
+   [
+    11.4,
+    84.1
+   ],
+   [
+    8.9,
+    82.2
+   ],
+   [
+    7.4,
+    81.2
+   ],
+   [
+    5.1,
+    78.6
+   ],
+   [
+    3.9,
+    75.8
+   ],
+   [
+    3.3,
+    70.0
+   ]
+  ],
+  "b5_factors_0.5_to_5": [
+   [
+    18.2,
+    82.7
+   ],
+   [
+    8.7,
+    81.0
+   ],
+   [
+    5.9,
+    81.2
+   ],
+   [
+    4.9,
+    81.2
+   ],
+   [
+    3.8,
+    76.6
+   ],
+   [
+    4.0,
+    68.4
+   ]
+  ],
+  "ours_lower_level_plus_bh": [
+   [
+    8.3,
+    79.0
+   ],
+   [
+    8.2,
+    80.8
+   ],
+   [
+    8.8,
+    82.1
+   ]
+  ]
+ },
+ "lora_reading": {
+  "base": [
+   66.2,
+   1.4,
+   17.6,
+   26.0
+  ],
+  "lora": [
+   74.0,
+   0.8,
+   8.8,
+   17.3
+  ],
+  "order": [
+   "answers",
+   "median error",
+   "p90 error",
+   "badly wrong"
+  ]
+ },
+ "example_holdout_017": {
+  "tool_values": {
+   "deplot": 50.0,
+   "ocr_pixel": 50.46223423000116
+  },
+  "true": 87.7,
+  "estimate": 50.23111711500058
+ },
+ "policies_all_six": {
+  "all_tools": {
+   "n_claims": 1205,
+   "coverage": 0.7643153526970954,
+   "accuracy_when_decided": 0.9609120521172638,
+   "wrong_flag_rate": 0.04434589800443459,
+   "missed_errors": 0.008787346221441126,
+   "n_flagged": 451,
+   "handoff_rate": 0.23568464730290456,
+   "retrieval_top1": 0.9739442946990117,
+   "no_figure_accuracy": 0.8913043478260869,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.83709787816564,
+    "ocr_pixel": 0.7569444444444444,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.8444293478260869
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 3.2111410601976638,
+   "error_attribution": {
+    "measure": 16,
+    "decide": 5,
+    "retrieval": 15
+   },
+   "handoff_reasons": {
+    "only": 130,
+    "between the two margins": 87,
+    "ambiguous figure": 37,
+    "readings too spread": 30
+   },
+   "margin_check": 0.9416666666666667,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 15,
+   "calls_saved_by_memory": 1541,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 1336,
+    "deplot": 373,
+    "vlm_table": 373,
+    "vlm_crop": 1516
+   },
+   "model_minutes": 262.5,
+   "model_minutes_per_200_claims": 43.6
+  },
+  "fixed_order": {
+   "n_claims": 1205,
+   "coverage": 0.8066390041493776,
+   "accuracy_when_decided": 0.9639917695473251,
+   "wrong_flag_rate": 0.0368763557483731,
+   "missed_errors": 0.012302284710017574,
+   "n_flagged": 461,
+   "handoff_rate": 0.1933609958506224,
+   "retrieval_top1": 0.9739442946990117,
+   "no_figure_accuracy": 0.8913043478260869,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.83709787816564,
+    "ocr_pixel": 0.7569444444444444,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.6368159203980099
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 2.0539083557951483,
+   "error_attribution": {
+    "decide": 7,
+    "measure": 13,
+    "retrieval": 15
+   },
+   "handoff_reasons": {
+    "only": 130,
+    "between the two margins": 38,
+    "ambiguous figure": 37,
+    "readings too spread": 28
+   },
+   "margin_check": 0.9697916666666667,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 15,
+   "calls_saved_by_memory": 1044,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 1336,
+    "deplot": 373,
+    "vlm_table": 193,
+    "vlm_crop": 410
+   },
+   "model_minutes": 136.8,
+   "model_minutes_per_200_claims": 22.7
+  },
+  "informed": {
+   "n_claims": 1205,
+   "coverage": 0.7966804979253111,
+   "accuracy_when_decided": 0.9677083333333333,
+   "wrong_flag_rate": 0.03508771929824561,
+   "missed_errors": 0.007029876977152899,
+   "n_flagged": 456,
+   "handoff_rate": 0.2033195020746888,
+   "retrieval_top1": 0.9739442946990117,
+   "no_figure_accuracy": 0.8913043478260869,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.9598326359832636,
+    "ocr_pixel": 0.7385008517887564,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.9595959595959596
+   },
+   "recovery_rate": 0.594059405940594,
+   "tool_calls_per_claim": 1.858041329739443,
+   "error_attribution": {
+    "measure": 13,
+    "decide": 4,
+    "retrieval": 14
+   },
+   "handoff_reasons": {
+    "handed off": 178,
+    "ambiguous figure": 37,
+    "between the two margins": 13,
+    "readings too spread": 12,
+    "only": 5
+   },
+   "margin_check": 0.9746835443037974,
+   "early_handoffs": 178,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 14,
+   "calls_saved_by_memory": 685,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 1207,
+    "deplot": 330,
+    "vlm_crop": 487,
+    "vlm_table": 56
+   },
+   "model_minutes": 97.8,
+   "model_minutes_per_200_claims": 16.2
+  }
+ },
+ "policies_final": {
+  "all_tools": {
+   "n_claims": 205,
+   "coverage": 0.8097560975609757,
+   "accuracy_when_decided": 0.9698795180722891,
+   "wrong_flag_rate": 0.05747126436781609,
+   "missed_errors": 0.0,
+   "n_flagged": 87,
+   "handoff_rate": 0.1902439024390244,
+   "retrieval_top1": 0.9790575916230366,
+   "no_figure_accuracy": 1.0,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.8693877551020408,
+    "ocr_pixel": 0.78125,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.8669354838709677
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 3.162303664921466,
+   "error_attribution": {
+    "measure": 3,
+    "retrieval": 2
+   },
+   "handoff_reasons": {
+    "only": 18,
+    "between the two margins": 15,
+    "readings too spread": 5,
+    "ambiguous figure": 1
+   },
+   "margin_check": 0.9352941176470588,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 3,
+   "calls_saved_by_memory": 252,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 225,
+    "deplot": 65,
+    "vlm_table": 65,
+    "vlm_crop": 249
+   },
+   "model_minutes": 44.7,
+   "model_minutes_per_200_claims": 43.6
+  },
+  "fixed_order": {
+   "n_claims": 205,
+   "coverage": 0.8634146341463415,
+   "accuracy_when_decided": 0.9661016949152542,
+   "wrong_flag_rate": 0.05555555555555555,
+   "missed_errors": 0.009615384615384616,
+   "n_flagged": 90,
+   "handoff_rate": 0.13658536585365855,
+   "retrieval_top1": 0.9790575916230366,
+   "no_figure_accuracy": 1.0,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.8693877551020408,
+    "ocr_pixel": 0.78125,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.651685393258427
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 1.9267015706806283,
+   "error_attribution": {
+    "decide": 1,
+    "measure": 3,
+    "retrieval": 2
+   },
+   "handoff_reasons": {
+    "only": 18,
+    "readings too spread": 5,
+    "between the two margins": 4,
+    "ambiguous figure": 1
+   },
+   "margin_check": 0.9823529411764705,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 3,
+   "calls_saved_by_memory": 162,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 225,
+    "deplot": 65,
+    "vlm_table": 31,
+    "vlm_crop": 47
+   },
+   "model_minutes": 21.4,
+   "model_minutes_per_200_claims": 20.9
+  },
+  "informed": {
+   "n_claims": 205,
+   "coverage": 0.848780487804878,
+   "accuracy_when_decided": 0.9655172413793104,
+   "wrong_flag_rate": 0.056179775280898875,
+   "missed_errors": 0.009615384615384616,
+   "n_flagged": 89,
+   "handoff_rate": 0.15121951219512195,
+   "retrieval_top1": 0.9790575916230366,
+   "no_figure_accuracy": 1.0,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.9803921568627451,
+    "ocr_pixel": 0.7729468599033816,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.92
+   },
+   "recovery_rate": 0.6363636363636364,
+   "tool_calls_per_claim": 1.8324607329842932,
+   "error_attribution": {
+    "decide": 1,
+    "measure": 3,
+    "retrieval": 2
+   },
+   "handoff_reasons": {
+    "handed off": 24,
+    "ambiguous figure": 1,
+    "between the two margins": 3,
+    "readings too spread": 3
+   },
+   "margin_check": 0.9821428571428571,
+   "early_handoffs": 24,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 3,
+   "calls_saved_by_memory": 109,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 208,
+    "deplot": 57,
+    "vlm_table": 9,
+    "vlm_crop": 76
+   },
+   "model_minutes": 16.2,
+   "model_minutes_per_200_claims": 15.8
+  }
+ },
+ "policies_five_earlier": {
+  "all_tools": {
+   "n_claims": 1000,
+   "coverage": 0.755,
+   "accuracy_when_decided": 0.9589403973509933,
+   "wrong_flag_rate": 0.04120879120879121,
+   "missed_errors": 0.010752688172043012,
+   "n_flagged": 364,
+   "handoff_rate": 0.245,
+   "retrieval_top1": 0.972885032537961,
+   "no_figure_accuracy": 0.8717948717948718,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.8305921052631579,
+    "ocr_pixel": 0.7518656716417911,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.8398692810457516
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 3.2212581344902387,
+   "error_attribution": {
+    "measure": 13,
+    "decide": 5,
+    "retrieval": 13
+   },
+   "handoff_reasons": {
+    "only": 112,
+    "between the two margins": 72,
+    "ambiguous figure": 36,
+    "readings too spread": 25
+   },
+   "margin_check": 0.9430379746835443,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 12,
+   "calls_saved_by_memory": 1289,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 1111,
+    "deplot": 308,
+    "vlm_table": 308,
+    "vlm_crop": 1267
+   },
+   "model_minutes": 217.8,
+   "model_minutes_per_200_claims": 43.6
+  },
+  "fixed_order": {
+   "n_claims": 1000,
+   "coverage": 0.795,
+   "accuracy_when_decided": 0.9635220125786164,
+   "wrong_flag_rate": 0.03234501347708895,
+   "missed_errors": 0.012903225806451613,
+   "n_flagged": 371,
+   "handoff_rate": 0.205,
+   "retrieval_top1": 0.972885032537961,
+   "no_figure_accuracy": 0.8717948717948718,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.8305921052631579,
+    "ocr_pixel": 0.7518656716417911,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.6342412451361867
+   },
+   "recovery_rate": 1.0,
+   "tool_calls_per_claim": 2.0802603036876355,
+   "error_attribution": {
+    "decide": 6,
+    "measure": 10,
+    "retrieval": 13
+   },
+   "handoff_reasons": {
+    "only": 112,
+    "between the two margins": 34,
+    "ambiguous figure": 36,
+    "readings too spread": 23
+   },
+   "margin_check": 0.9670886075949368,
+   "early_handoffs": 0,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 12,
+   "calls_saved_by_memory": 882,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 1111,
+    "deplot": 308,
+    "vlm_table": 162,
+    "vlm_crop": 363
+   },
+   "model_minutes": 115.4,
+   "model_minutes_per_200_claims": 23.1
+  },
+  "informed": {
+   "n_claims": 1000,
+   "coverage": 0.786,
+   "accuracy_when_decided": 0.9681933842239185,
+   "wrong_flag_rate": 0.02997275204359673,
+   "missed_errors": 0.0064516129032258064,
+   "n_flagged": 367,
+   "handoff_rate": 0.214,
+   "retrieval_top1": 0.972885032537961,
+   "no_figure_accuracy": 0.8717948717948718,
+   "parse_accuracy": {
+    "claim_type": 1.0,
+    "series": 1.0,
+    "x": 1.0,
+    "value": 1.0,
+    "tolerance": 1.0
+   },
+   "tool_success_rate": {
+    "deplot": 0.9556004036326943,
+    "ocr_pixel": 0.7311271975180972,
+    "vlm_crop": 1.0,
+    "vlm_table": 0.9653179190751445
+   },
+   "recovery_rate": 0.5868725868725869,
+   "tool_calls_per_claim": 1.8633405639913232,
+   "error_attribution": {
+    "measure": 10,
+    "decide": 3,
+    "retrieval": 12
+   },
+   "handoff_reasons": {
+    "handed off": 154,
+    "ambiguous figure": 36,
+    "between the two margins": 10,
+    "readings too spread": 9,
+    "only": 5
+   },
+   "margin_check": 0.9730769230769231,
+   "early_handoffs": 154,
+   "blocked_action_attempts": 0,
+   "flags_on_non_claims": 0,
+   "measured_on_wrong_figure": 11,
+   "calls_saved_by_memory": 576,
+   "policy_invalid_actions": 0,
+   "lms_unsafe_executed": 0,
+   "lms_blocked": 0,
+   "calls_by_tool": {
+    "ocr_pixel": 999,
+    "deplot": 273,
+    "vlm_crop": 411,
+    "vlm_table": 47
+   },
+   "model_minutes": 81.7,
+   "model_minutes_per_200_claims": 16.3
+  }
+ }
+}

@@ -229,13 +229,11 @@ def main() -> None:
     ap.add_argument("--examples", type=int, default=5)
     args = ap.parse_args()
     out = Path(args.out)
-    log = out / "run_log.md"                      # the run log is kept by hand: never wipe it
-    kept = log.read_text() if log.exists() else None
-    if out.exists():
-        shutil.rmtree(out)
-    out.mkdir(parents=True)
-    if kept is not None:
-        log.write_text(kept)
+    out.mkdir(parents=True, exist_ok=True)
+    # Replace only what this script writes; the run log (kept by hand) and other analyses in the folder stay.
+    shutil.rmtree(out / "examples", ignore_errors=True)
+    for f in [out / "summary.md", out / "README.md", *out.glob("all_claims_*.csv")]:
+        f.unlink(missing_ok=True)
 
     if args.run:
         prefix = dict(a.split("=", 1) for a in args.run)
@@ -254,7 +252,8 @@ def main() -> None:
           "at them). `holdout` was run once with a frozen configuration and then used to diagnose a calibration problem, "
           "so it is no longer unbiased. `holdout2` and `holdout3` are fresh reports; the only things changed after seeing "
           "`holdout2` were two bug fixes (page-break sentence join, cut comparison guard), and `holdout3` was used once to "
-          "choose between two calibration tables, so it is nearly but not fully unbiased (implementation.md §24.7).",
+          "choose between two calibration tables, so it is nearly but not fully unbiased (implementation.md §24.7). "
+          "`final` was generated on 9 November after the method was frozen and was run once: it is the only untouched split.",
           "Accuracy overall counts a hand-off to the TA as not right; accuracy when decided counts only claims the system decided.", ""]
     for s in args.splits:
         md += method_table(s, all_runs[s], dirs[s])
@@ -272,6 +271,15 @@ def main() -> None:
         md.append(f"| {p}{' (main)' if p == MAIN else ''} | {len(rows)} | {with_interval(rows, coverage)} | "
                   f"{with_interval(rows, accuracy_decided)} | {with_interval(rows, wrong_flags)} | "
                   f"{with_interval(rows, missed)} |")
+    if "final" in args.splits and len(args.splits) > 1:
+        earlier = [sp for sp in args.splits if sp != "final"]
+        md += ["", f"### The {len(earlier)} earlier splits pooled (without `final`)", "",
+               "| Method | Claims | Coverage | Accuracy when decided | Wrong flags | Missed errors |", "|---|---|---|---|---|---|"]
+        for p in POLICIES:
+            rows = [r for sp in earlier for r in all_runs[sp][p]]
+            md.append(f"| {p}{' (main)' if p == MAIN else ''} | {len(rows)} | {with_interval(rows, coverage)} | "
+                      f"{with_interval(rows, accuracy_decided)} | {with_interval(rows, wrong_flags)} | "
+                      f"{with_interval(rows, missed)} |")
     md += ["", "Report ids are unique across splits, so the interval resamples whole reports of all splits together.", ""]
     (out / "summary.md").write_text("\n".join(md) + "\n")
 
@@ -286,6 +294,12 @@ def main() -> None:
               "- `examples/<report>/`: a few reports with their PDF and a per-claim results file. "
               "They are chosen by fixed rules, so failures are shown as well as successes:", ""]
     readme += [f"  - `{rid}`: {why}" for s, rid, why in chosen]
+    others = {"margin_vs_b5.md": "calibrated margin against B5 with settings chosen on test+dev, and what BH does (`scripts/margin_vs_b5.py`)",
+              "safety.md": "hidden instructions against clean twins (`scripts/safety_all.py`)",
+              "e4_samples.md": "E4, reduced: repeated samples of one model against tools of different kinds (`scripts/e4_samples.py`)",
+              "lora_adapter": "the same export for the LoRA chart-to-table tool (E6)",
+              "run_log.md": "every run and change, kept or rejected, with its gain or loss (kept by hand)"}
+    readme += ["", "Also here:", ""] + [f"- `{k}`: {v}" for k, v in others.items() if (out / k).exists()]
     readme += ["", "Made by `python scripts/export_results.py` from the saved runs; no model is called.", ""]
     (out / "README.md").write_text("\n".join(readme))
     print(f"wrote {out}/: summary.md, {len(args.splits)} csv, {len(chosen)} example reports")

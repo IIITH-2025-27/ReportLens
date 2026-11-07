@@ -43,11 +43,13 @@ def metric_words(text: str) -> set[str]:
 class FigureIndex:
     def __init__(self, figures: list[Figure], ref_bonus: float = 10.0, vocab_match: int = 80,
                  embed: Callable[[str, list[str]], list[float]] | None = None, embed_weight: float = 2.0,
-                 ambiguity_ratio: float = 0.8, legend_reader: Callable[[Figure], list[str] | None] | None = None):
+                 ambiguity_ratio: float = 0.8, legend_reader: Callable[[Figure], list[str] | None] | None = None,
+                 cited_first: bool = False):
         self.figures = figures
         self.legend_reader = legend_reader              # VLM legend names, asked only when OCR text finds nothing (U11b)
         self.rescued: dict[tuple[str, str], str] = {}   # (figure_id, series) -> how the figure was found despite OCR
         self.ref_bonus, self.vocab_match, self.ambiguity_ratio = ref_bonus, vocab_match, ambiguity_ratio
+        self.cited_first = cited_first      # v2: a cited "Figure N" that OCR cannot fully read beats an uncited figure
         self.embed, self.embed_weight = embed, embed_weight
         docs = [tokenize(figure_text(f)) or ["_"] for f in figures]
         self.bm25 = BM25Plus(docs) if figures else None      # BM25Plus: no negative scores on tiny corpora
@@ -135,6 +137,11 @@ class FigureIndex:
             return cited, cands
         if claim.figure_hint is not None and covering[0][0].number == claim.figure_hint:
             return [covering[0][0]], cands                # an explicit "Figure N" settles it
+        if self.cited_first and claim.figure_hint is not None and (cited := self.cited_figure(claim)):
+            # holdout3_000: "(Figure 3)", OCR misread the series in Figure 3, and Figure 2 was measured instead
+            self.rescued[(cited[0].figure_id, claim.series)] = (f"Figure {cited[0].number} is cited and OCR did not "
+                                                                f"read the series name")
+            return cited[:1], cands
         top = covering[0][1]
         close = [f for f, s in covering if s >= self.ambiguity_ratio * top]
         return close[:2], cands

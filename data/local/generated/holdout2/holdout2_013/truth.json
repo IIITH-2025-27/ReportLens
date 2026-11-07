@@ -1,0 +1,613 @@
+{
+ "report_id": "holdout2_013",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_013_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "SST-2",
+     "MNIST",
+     "AG News",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-18": [
+      60.3,
+      73.2,
+      67.9,
+      79.9,
+      52.4,
+      53.3
+     ],
+     "ResNet-50": [
+      70.6,
+      85.6,
+      66.2,
+      84.5,
+      59.2,
+      55.2
+     ],
+     "EfficientNet": [
+      64.4,
+      81.7,
+      61.8,
+      78.5,
+      53.6,
+      46.2
+     ],
+     "BERT-base": [
+      75.1,
+      88.6,
+      77.6,
+      95.1,
+      64.2,
+      59.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.9,
+       3.1
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "ResNet-18": "#1f77b4",
+      "ResNet-50": "#ff7f0e",
+      "EfficientNet": "#2ca02c",
+      "BERT-base": "#d62728"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_013_fig2",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15",
+     "16"
+    ],
+    "series": {
+     "Baseline": [
+      60.0,
+      62.1,
+      64.1,
+      66.2,
+      69.8,
+      68.7,
+      70.9,
+      71.7,
+      70.8,
+      73.6,
+      74.6,
+      73.5,
+      75.6,
+      74.9,
+      75.4,
+      74.1
+     ],
+     "ViT-S": [
+      56.3,
+      63.9,
+      67.4,
+      71.3,
+      73.5,
+      75.7,
+      78.8,
+      80.8,
+      81.1,
+      82.8,
+      82.7,
+      83.3,
+      82.8,
+      84.3,
+      82.8,
+      83.3
+     ],
+     "MobileNet": [
+      48.6,
+      58.0,
+      67.5,
+      70.7,
+      74.4,
+      78.6,
+      80.9,
+      81.4,
+      84.2,
+      83.1,
+      84.1,
+      82.8,
+      86.7,
+      83.8,
+      84.9,
+      85.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     46.695,
+     88.605
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.4,
+       3.0
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "Baseline": "#0072b2",
+      "ViT-S": "#d55e00",
+      "MobileNet": "#009e73"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "F1 score of ResNet-18 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_013_fig3",
+    "kind": "bar",
+    "title": "F1 score of ResNet-18 by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-18": [
+      92.4,
+      91.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "center right",
+      "font_size": 9,
+      "figsize": [
+       5.9,
+       3.8
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "ResNet-18": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_013_fig4",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "IMDB",
+     "SST-2",
+     "AG News",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "Transformer": [
+      56.1,
+      97.0,
+      80.8,
+      84.7,
+      79.4,
+      69.7
+     ],
+     "DistilBERT": [
+      46.6,
+      86.0,
+      74.5,
+      69.5,
+      71.9,
+      62.5
+     ],
+     "MobileNet": [
+      57.3,
+      81.6,
+      75.6,
+      74.4,
+      75.6,
+      66.3
+     ],
+     "Baseline": [
+      64.9,
+      95.0,
+      82.8,
+      84.1,
+      82.6,
+      77.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.9,
+       3.4
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "Transformer": "#e41a1c",
+      "DistilBERT": "#377eb8",
+      "MobileNet": "#4daf4a",
+      "Baseline": "#984ea3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_013_fig1_c0",
+   "sentence": "On AG News, BERT-base is 20.2 points better than ResNet-18 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": "ResNet-18",
+   "x_b": "AG News",
+   "true_value": 15.2,
+   "claimed_value": 20.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig1_c1",
+   "sentence": "As shown in Figure 1, BERT-base reaches 64.2% test accuracy on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 64.2,
+   "claimed_value": 64.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig1_c2",
+   "sentence": "As shown in Figure 1, on SST-2, BERT-base is 6.9 points better than EfficientNet.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "SST-2",
+   "series_b": "EfficientNet",
+   "x_b": "SST-2",
+   "true_value": 6.9,
+   "claimed_value": 6.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig2_c0",
+   "sentence": "As shown in Figure 2, at epoch 8, MobileNet achieves 79.3% validation accuracy.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.4,
+   "claimed_value": 79.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 41.910000000000004,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig2_c1",
+   "sentence": "As shown in Figure 2, from epoch 6 to epoch 10, the validation accuracy of Baseline improves by a relative 5.9%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Baseline",
+   "x": "6",
+   "series_b": null,
+   "x_b": "10",
+   "true_value": 7.13246,
+   "claimed_value": 5.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 41.910000000000004,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig2_c2",
+   "sentence": "MobileNet reaches 83.1% validation accuracy at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 83.1,
+   "claimed_value": 83.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 41.910000000000004,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_fig3_c0",
+   "sentence": "ResNet-18 achieves 91.9% F1 score on CIFAR-10 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 91.9,
+   "claimed_value": 91.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig3_c1",
+   "sentence": "ResNet-18 reaches 81.9% F1 score on CIFAR-10 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 91.9,
+   "claimed_value": 81.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_013_fig4_c0",
+   "sentence": "DistilBERT reaches 24.5% test accuracy on SST-2.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.5,
+   "claimed_value": 24.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_fig4_c1",
+   "sentence": "Baseline achieves 32.8% test accuracy on SST-2.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.8,
+   "claimed_value": 32.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_fig4_c2",
+   "sentence": "On AG News, DistilBERT obtains a test accuracy of 69.5%.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.5,
+   "claimed_value": 69.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_nofig",
+   "sentence": "Logistic Regression reaches 72.7% accuracy on IMDB.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 72.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_setup0",
+   "sentence": "The learning rate was set to 0.01 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_013_setup1",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

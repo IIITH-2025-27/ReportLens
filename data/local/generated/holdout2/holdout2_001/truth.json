@@ -1,0 +1,549 @@
+{
+ "report_id": "holdout2_001",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_001_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "MNIST",
+     "CIFAR-10",
+     "AG News"
+    ],
+    "series": {
+     "ViT-S": [
+      89.3,
+      86.3,
+      90.7,
+      72.3
+     ],
+     "BERT-base": [
+      81.8,
+      75.3,
+      83.9,
+      72.0
+     ],
+     "GRU": [
+      86.1,
+      75.8,
+      86.9,
+      71.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       5.2,
+       2.8
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "ViT-S": "#0072b2",
+      "BERT-base": "#d55e00",
+      "GRU": "#009e73"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_001_fig2",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "AG News",
+     "IMDB",
+     "CIFAR-10"
+    ],
+    "series": {
+     "BERT-base": [
+      81.6,
+      92.4,
+      66.1
+     ],
+     "CNN": [
+      75.3,
+      78.4,
+      50.1
+     ],
+     "MobileNet": [
+      80.6,
+      86.5,
+      57.5
+     ],
+     "ResNet-18": [
+      81.1,
+      84.4,
+      60.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 12,
+      "figsize": [
+       5.1,
+       3.5
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "CNN": "#d95f02",
+      "MobileNet": "#7570b3",
+      "ResNet-18": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Training loss for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_001_fig3",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14"
+    ],
+    "series": {
+     "LSTM": [
+      1.039,
+      0.489,
+      0.215,
+      0.144,
+      0.133,
+      0.081,
+      0.109
+     ],
+     "ResNet-50": [
+      1.673,
+      1.137,
+      0.929,
+      0.731,
+      0.557,
+      0.435,
+      0.469
+     ],
+     "VGG-16": [
+      0.895,
+      0.535,
+      0.374,
+      0.28,
+      0.236,
+      0.286,
+      0.281
+     ],
+     "Transformer": [
+      1.391,
+      1.001,
+      0.808,
+      0.746,
+      0.625,
+      0.554,
+      0.497
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.0013999999999999985,
+     1.7526000000000002
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 10,
+      "figsize": [
+       5.1,
+       3.8
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "LSTM": "#1b9e77",
+      "ResNet-50": "#d95f02",
+      "VGG-16": "#7570b3",
+      "Transformer": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_001_fig4",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30"
+    ],
+    "series": {
+     "MobileNet": [
+      70.3,
+      80.9,
+      84.6,
+      85.7,
+      86.0,
+      85.5
+     ],
+     "LSTM": [
+      67.5,
+      74.6,
+      77.8,
+      80.6,
+      80.1,
+      80.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     66.575,
+     86.925
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 12,
+      "figsize": [
+       5.6,
+       3.4
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "MobileNet": "#e41a1c",
+      "LSTM": "#377eb8"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_001_fig1_c0",
+   "sentence": "ViT-S outperforms GRU by 5.2 percentage points on SVHN.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": "GRU",
+   "x_b": "SVHN",
+   "true_value": 3.2,
+   "claimed_value": 5.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_fig1_c1",
+   "sentence": "As shown in Figure 1, on AG News, BERT-base obtains a test accuracy of 72.0%.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.0,
+   "claimed_value": 72.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig1_c2",
+   "sentence": "ViT-S reaches 87.3% test accuracy on SVHN.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 89.3,
+   "claimed_value": 87.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_fig2_c0",
+   "sentence": "As shown in Figure 2, on AG News, MobileNet is 5.3 points better than CNN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "AG News",
+   "series_b": "CNN",
+   "x_b": "AG News",
+   "true_value": 5.3,
+   "claimed_value": 5.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig2_c1",
+   "sentence": "ResNet-18 achieves 84.4% F1 score on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 84.4,
+   "claimed_value": 84.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_fig2_c2",
+   "sentence": "As shown in Figure 2, ResNet-18 reaches 110.7% F1 score on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.7,
+   "claimed_value": 110.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig2_c3",
+   "sentence": "As shown in Figure 2, BERT-base outperforms MobileNet by 3.0 percentage points on AG News.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "AG News",
+   "series_b": "MobileNet",
+   "x_b": "AG News",
+   "true_value": 1.0,
+   "claimed_value": 3.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig3_c0",
+   "sentence": "At epoch 2, the loss of LSTM is 1.039 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.039,
+   "claimed_value": 1.039,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.7512,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig3_c1",
+   "sentence": "At epoch 4, the loss of VGG-16 is -0.341 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.535,
+   "claimed_value": -0.341,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 1.7512,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_001_fig4_c0",
+   "sentence": "At epoch 25, MobileNet is 5.9 points better than LSTM.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "25",
+   "series_b": "LSTM",
+   "x_b": "25",
+   "true_value": 5.9,
+   "claimed_value": 5.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 20.349999999999994,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_fig4_c1",
+   "sentence": "MobileNet attains a F1 score of 85.7% at epoch 20.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "20",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.7,
+   "claimed_value": 85.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 20.349999999999994,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_setup0",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_001_setup1",
+   "sentence": "The learning rate was set to 0.01 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

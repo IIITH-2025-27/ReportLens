@@ -1,0 +1,12 @@
+# The final untouched split (9 Nov). Same generator settings as the test split (the defaults); new reports (new seeds
+# come from the split name). Generated after every design choice was made; the frozen local_real.yaml config is run
+# on it once (all tools live, then the other policies replayed from that cache) and nothing is changed after looking.
+#   chart-claim-verifier generate -c configs/exp/final.yaml        (builds only the "final" split and its clean twins)
+generator:
+  reports: {calib: 0, dev: 0, test: 0, style_shift: 0, final: 20}
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local
+  runs_dir: runs/local
