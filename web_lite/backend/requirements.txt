@@ -1,0 +1,9 @@
+# The verifier itself is the package at the repository root (single source of truth).
+-e ../..
+fastapi>=0.110
+uvicorn[standard]>=0.29
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+python-multipart>=0.0.9
+python-dotenv>=1.0
+alembic>=1.13
