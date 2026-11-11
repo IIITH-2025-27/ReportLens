@@ -1,6 +1,6 @@
 """Side-by-side table of several runs (e.g. the policies of the agentic ablation, E5).
 
-    python scripts/compare_runs.py runs/local/test_P0 runs/local/test_P1 runs/local/test_P3 \
+    python scripts/analysis/compare_runs.py runs/local/test_P0 runs/local/test_P1 runs/local/test_P3 \
         --profile calibration_tables/local/ocr_pixel_deplot_vlm_table_vlm_crop.profile.json
 """
 import json

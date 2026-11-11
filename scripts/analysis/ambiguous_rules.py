@@ -1,6 +1,6 @@
 """U6: compare the four rules for a sentence that fits two figures, using the figure_runs stored in the traces.
 
-    python scripts/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/u2_informed [runs/local/dev_P3 ...]
+    python scripts/analysis/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/u2_informed [runs/local/dev_P3 ...]
 
 For each rule the claim is accepted (CONSISTENT) or sent to the TA (NOT_SURE); an ambiguous claim is never flagged.
 Choose by missed errors first, then coverage.

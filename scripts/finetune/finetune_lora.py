@@ -1,6 +1,6 @@
 """E6: LoRA fine-tune Qwen3-VL-4B to turn a chart into a JSON table (the job of tool 2, `vlm_table`).
 
-    python scripts/finetune_lora.py --pool ft_pool --out checkpoints/lora_chart2table --epochs 1
+    python scripts/finetune/finetune_lora.py --pool ft_pool --out checkpoints/lora_chart2table --epochs 1
 
 Training pairs: the chart image the report contains -> the true table as JSON, in the exact prompt the tool uses.
 One chart per step (batch 1, gradient accumulation), loss on the answer tokens only, LoRA on the language model's

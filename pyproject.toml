@@ -39,8 +39,5 @@ chart-claim-verifier = "chart_claim_verifier.cli:main"
 [tool.setuptools.packages.find]
 include = ["chart_claim_verifier*"]
 
-[tool.setuptools.package-data]
-chart_claim_verifier = ["agent/prompts/*.txt"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]

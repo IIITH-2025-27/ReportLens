@@ -5,7 +5,7 @@ For each chart it checks the intermediate results, not only the final value:
   legend    detected entries vs true series, and detected colour vs true colour
   reading   ok / refused / silent error (> 2% of the axis range), with the first wrong step
 
-    python scripts/diagnose_ocr_pixel.py --n 30 --hard
+    python scripts/diagnostics/diagnose_ocr_pixel.py --n 30 --hard
 """
 import argparse
 import random

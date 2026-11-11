@@ -1,6 +1,6 @@
 """LoRA fine-tuning of the VLM for chart -> table (implementation.md §10). Runs on a T4 (fp16).
 
-    python finetune/train_lora.py --data data/finetune --out checkpoints/lora_chart2table
+    python scripts/finetune/train_lora.py --data data/finetune --out checkpoints/lora_chart2table
 
 Then set `models.lora_adapter: checkpoints/lora_chart2table` in the config and
 RE-RUN CALIBRATION: the old calibration table is invalid for a changed tool.

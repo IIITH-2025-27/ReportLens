@@ -1,6 +1,6 @@
-"""R1: write results/ from saved runs -- numbers, every claim, and a few reports with their PDFs.
+"""R1: write results/base/ from saved runs -- numbers, every claim, and a few reports with their PDFs.
 
-    python scripts/export_results.py --run test=mc_test dev=mc_dev holdout=mc_holdout holdout2=holdout2 --out results
+    python scripts/analysis/export_results.py --run test=mc_test dev=mc_dev holdout=mc_holdout holdout2=holdout2 --out results/base
 
 `--run SPLIT=PREFIX` reads runs/local/<PREFIX>_<policy> (informed = the main method; all_tools and fixed_order are shown
 for comparison). Without --run it uses <tag>_<split>. No model is called. See implementation.md §24 (R1).
@@ -225,7 +225,7 @@ def main() -> None:
     ap.add_argument("--tag", default="final")
     ap.add_argument("--splits", nargs="+", default=["test", "dev"])
     ap.add_argument("--run", nargs="+", default=None, metavar="SPLIT=PREFIX", help="run-name prefix per split")
-    ap.add_argument("--out", default="results")
+    ap.add_argument("--out", default="results/base")
     ap.add_argument("--examples", type=int, default=5)
     args = ap.parse_args()
     out = Path(args.out)
@@ -286,7 +286,7 @@ def main() -> None:
               "- `examples/<report>/`: a few reports with their PDF and a per-claim results file. "
               "They are chosen by fixed rules, so failures are shown as well as successes:", ""]
     readme += [f"  - `{rid}`: {why}" for s, rid, why in chosen]
-    readme += ["", "Made by `python scripts/export_results.py` from the saved runs; no model is called.", ""]
+    readme += ["", "Made by `python scripts/analysis/export_results.py` from the saved runs; no model is called.", ""]
     (out / "README.md").write_text("\n".join(readme))
     print(f"wrote {out}/: summary.md, {len(args.splits)} csv, {len(chosen)} example reports")
 
