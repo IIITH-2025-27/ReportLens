@@ -61,7 +61,7 @@ Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
 | Measured tool profile + informed agent (P3), stage logs | working |
 | LLM parser, LLM controller (P2), baselines B1–B4 | working with Qwen3-VL-4B |
 | Retrieval, calibration, decision rule, BH batch check | working |
-| Agent: failure-aware memory, policies P0 / P1 / P1b / P3, claim loop, report planner, repair step | working (repair gated on `scripts/pilot_legend.py`) |
+| Agent: failure-aware memory, policies P0 / P1 / P1b / P3, claim loop, report planner, repair step | working (repair gated on `scripts/pilots/pilot_legend.py`) |
 | Offline replay (`run --offline`): policies re-run from the reading cache, a missing reading is counted and never calls a model | working |
 | Mock LMS + action guard | working |
 | Metrics, sweeps (coverage at 10% wrong flags, B5), E4 correlation, E8 safety | working |
@@ -87,9 +87,9 @@ Replay a policy from the reading cache (no model is loaded; `offline_misses` in 
 
 ```bash
 chart-claim-verifier run -c configs/exp/local_real.yaml --split test --policy informed --offline --name replay_P3
-python scripts/compare_runs.py runs/local/test_P0 runs/local/replay_P3 --profile calibration_tables/local/<tools>.profile.json
-python scripts/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/replay_P3    # the four rules for a sentence that fits two figures
-python scripts/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing               # the parse stage alone (rules, then the LLM)
+python scripts/analysis/compare_runs.py runs/local/test_P0 runs/local/replay_P3 --profile calibration_tables/local/<tools>.profile.json
+python scripts/analysis/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/replay_P3    # the four rules for a sentence that fits two figures
+python scripts/analysis/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing               # the parse stage alone (rules, then the LLM)
 ```
 
 If the `chart-claim-verifier` command or `import chart_claim_verifier` stops working after the project folder is moved or renamed (the virtualenv remembers the old path), run `pip install -e .` again, or use `python -m chart_claim_verifier.cli ...` from the project folder.
@@ -114,8 +114,20 @@ chart_claim_verifier/
   lms/              mock LMS and allow-list guard
   baselines/        B1–B4 (B5 is in evaluation/sweep.py)
   evaluation/       metrics, sweeps, tool correlation, safety
-finetune/           LoRA data + training
-scripts/            compare_runs, ambiguous_rules, eval_parse, pilot_legend, quick benchmarks
+scripts/
+  analysis/         compare_runs, intervals, ambiguous_rules, eval_parse, export_results
+  pilots/           go / no-go pilots: pilot_legend, pilot_legend_retrieval
+  diagnostics/      bench_ocr_pixel, diagnose_ocr_pixel
+  finetune/         LoRA data + training
+calibration_tables/
+  local/            live table + tool profile, base model
+  local_lora/       live table + tool profile, LoRA chart-to-table adapter
+  archive/          older tables kept for the record (see its README)
+results/
+  base/             summary, every claim, example reports (base model)
+  lora/             the same for the LoRA adapter
+  run_log.md        one row per run, kept by hand
+docs/               workflow.html, proposal/, mid_report/
 tests/
 ```
 

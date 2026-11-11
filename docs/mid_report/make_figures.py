@@ -1,7 +1,7 @@
-"""Draws the figures of report.tex. The numbers are copied from results/summary.md, results/lora_adapter/summary.md,
+"""Draws the figures of report.tex. The numbers are copied from results/base/summary.md, results/lora/summary.md,
 results/run_log.md and runs/local/baselines.log (source noted at each block); nothing here is computed from a model.
 
-    python report/make_figures.py        (run from the repository root; needs matplotlib)
+    python docs/mid_report/make_figures.py       (run from the repository root; needs matplotlib)
 """
 from pathlib import Path
 
@@ -47,7 +47,7 @@ x_last = 0.05 + 3 * STEP + W / 2
 arrow(ax, x_last, 1.55, x_last, 0.05 + H)
 fig.savefig(OUT / "pipeline.png", bbox_inches="tight"); plt.close(fig)
 
-# ------------------------------------------------------------------ 2. per split (informed planner; results/summary.md)
+# ------------------------------------------------------------------ 2. per split (informed planner; results/base/summary.md)
 splits = ["test", "dev", "holdout", "holdout2", "holdout3", "all\n(1000 claims)"]
 cov = [74.1, 80.8, 78.0, 83.7, 76.1, 78.6]
 right = [99.3, 97.6, 91.7, 97.7, 97.3, 96.8]
@@ -66,7 +66,7 @@ b.set_xticks(list(xs)); b.set_xticklabels(splits, fontsize=8); b.set_ylabel("% o
 b.set_title("Wrong flags (lower is better)", fontsize=10)
 fig.tight_layout(); fig.savefig(OUT / "per_split.png"); plt.close(fig)
 
-# ------------------------------------------------------------------ 3. against baselines (test split; runs/local/baselines.log and results/summary.md)
+# ------------------------------------------------------------------ 3. against baselines (test split; runs/local/baselines.log and results/base/summary.md)
 names = ["B1\nVLM answers\ndirectly", "B4\ntools, model\njudges", "P0\nall tools\n+ rule", "P1\nfixed order\n+ rule", "P3\ninformed\n+ rule"]
 wf = [36.1, 37.2, 2.6, 1.3, 1.2]
 ms = [61.0, 0.0, 1.0, 1.0, 0.0]
@@ -82,7 +82,7 @@ for ax_ in (a, b):
     ax_.tick_params(axis="x", labelsize=7.5)
 fig.tight_layout(); fig.savefig(OUT / "baselines.png"); plt.close(fig)
 
-# ------------------------------------------------------------------ 4. smallest error caught (test, informed; results/summary.md)
+# ------------------------------------------------------------------ 4. smallest error caught (test, informed; results/base/summary.md)
 size = ["2%", "5%", "10%", "20%", "50%"]
 of_all = [70, 86, 72, 86, 94]
 of_meas = [87.5, 92.3, 86.7, 100, 100]

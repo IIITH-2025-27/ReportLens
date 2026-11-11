@@ -1,6 +1,6 @@
 """U7 pilot: does reading the legend with the VLM repair `ocr_pixel`'s "series_not_found"? (go / no-go)
 
-    PYTHONPATH=. python scripts/pilot_legend.py -c configs/exp/local_real.yaml [--save]
+    PYTHONPATH=. python scripts/pilots/pilot_legend.py -c configs/exp/local_real.yaml [--save]
 
 For every calibration figure on which ocr_pixel failed with series_not_found (at most 14 VLM calls, one per
 figure), read the legend with the VLM, hand it to ocr_pixel, and read every point of the figure again.

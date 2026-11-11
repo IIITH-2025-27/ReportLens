@@ -1,6 +1,6 @@
 """Quick accuracy check of the OCR+pixel tool on freshly generated charts.
 
-    python scripts/bench_ocr_pixel.py --n 40 [--held-out]
+    python scripts/diagnostics/bench_ocr_pixel.py --n 40 [--held-out]
 """
 import argparse
 import random

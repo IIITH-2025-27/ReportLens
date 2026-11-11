@@ -1,6 +1,6 @@
 """U11b pilot: can VLM-read legend names rescue claims that OCR made NO_FIGURE -- without inventing figures?
 
-    PYTHONPATH=. python scripts/pilot_legend_retrieval.py -c configs/exp/local_real.yaml runs/local/u11a_test_informed runs/local/u11a_dev_informed
+    PYTHONPATH=. python scripts/pilots/pilot_legend_retrieval.py -c configs/exp/local_real.yaml runs/local/u11a_test_informed runs/local/u11a_dev_informed
 
 For every NO_FIGURE verdict, the figures that match the claim except for its series name get their legend read by the
 VLM (one cached call per figure, shared with the U7 repair). The names are added to the figure's vocabulary and

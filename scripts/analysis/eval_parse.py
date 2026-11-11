@@ -1,6 +1,6 @@
 """U8: evaluate the parse stage alone -- rules first, the LLM parser only when the rules do not recognise a sentence.
 
-    python scripts/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing [--rules-only]
+    python scripts/analysis/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing [--rules-only]
 
 No chart is read, so the only model cost is the LLM parses. For each gold claim:
   rules   the rule parser alone (a sentence it does not recognise counts as a miss)

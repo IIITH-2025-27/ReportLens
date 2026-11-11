@@ -3,7 +3,7 @@
 Charts come from separate generator seeds ("ft-*"), and the held-out plotting
 style is never used, so the LoRA model cannot simply learn the test styles.
 
-    python finetune/make_sft_data.py --n 6000 --out data/finetune
+    python scripts/finetune/make_sft_data.py --n 6000 --out data/finetune
 """
 from __future__ import annotations
 

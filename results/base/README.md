@@ -5,9 +5,9 @@
 - `examples/<report>/`: a few reports with their PDF and a per-claim results file. They are chosen by fixed rules, so failures are shown as well as successes:
 
   - `test_002`: the report with the most claims (test)
-  - `holdout_018`: a wrongly flagged claim
+  - `holdout_011`: a wrongly flagged claim
   - `holdout_019`: a figure that exists was reported as NO_FIGURE
   - `holdout3_019`: a sentence that fits two figures
   - `test_004`: every decided claim is right (test)
 
-Made by `python scripts/export_results.py` from the saved runs; no model is called.
+Made by `python scripts/analysis/export_results.py` from the saved runs; no model is called.

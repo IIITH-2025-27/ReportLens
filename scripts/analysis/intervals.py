@@ -1,6 +1,6 @@
 """95% bootstrap intervals for coverage, wrong flags and missed errors of saved runs.
 
-    python scripts/intervals.py runs/local/final_dev_informed runs/local/final_test_informed ...
+    python scripts/analysis/intervals.py runs/local/final_dev_informed runs/local/final_test_informed ...
 
 Claims of one report share figures, so whole REPORTS are resampled, not single claims.
 """

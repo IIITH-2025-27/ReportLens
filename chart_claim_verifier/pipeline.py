@@ -155,7 +155,7 @@ def rebuild_profile(ctx: Context, split: str | None = None, name: str | None = N
             raise RuntimeError("the reading cache does not hold every calibration reading: run `chart-claim-verifier calibrate`")
         saved.write_text(json.dumps(errors))
     profile = build_profile(errors, names, error_correlation(errors, names), *_profile_settings(ctx.cfg))
-    try:                                                  # repairs are measured separately (scripts/pilot_legend.py): keep them
+    try:                                                  # repairs are measured separately (scripts/pilots/pilot_legend.py): keep them
         old = load_profile(ctx, name)
         profile["repairs"] = old.get("repairs", {})
         profile["cost"].update({k: v for k, v in old.get("cost", {}).items() if k not in profile["cost"]})
