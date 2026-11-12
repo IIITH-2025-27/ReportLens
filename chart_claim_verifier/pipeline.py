@@ -45,10 +45,21 @@ class Context:
             if self.offline:
                 from .models.vlm import OfflineLLM
                 self._llm = OfflineLLM(m["vlm"] + (f"+{m['lora_adapter']}" if m.get("lora_adapter") else ""), m["vlm"])
+            elif self.server is not None:
+                from .models.remote import RemoteVLM
+                self._llm = RemoteVLM(self.server, m["vlm"], m.get("lora_adapter"))
             else:
                 from .models.vlm import VLM
                 self._llm = VLM(m["vlm"], m.get("dtype", "float16"), m.get("lora_adapter"))
         return self._llm
+
+    @property
+    def server(self):
+        """The remote model server, when models.remote_url (or CCV_REMOTE_URL) is set; None runs models here."""
+        if not hasattr(self, "_server"):
+            from .models.remote import server_from_config
+            self._server = None if self.offline else server_from_config(self.cfg["models"])
+        return self._server
 
     def needs_llm(self, tools: list[str], parser: str, policy: str) -> bool:
         return parser == "llm" or policy == "llm" or any(t in ("vlm_table", "vlm_crop") for t in tools)
@@ -57,7 +68,8 @@ class Context:
         names = names or self.cfg["tools"]["enabled"]
         llm = self.llm if any(n in ("vlm_table", "vlm_crop") for n in names) else None
         return build_tools(names, self.cache, llm=llm, truth=self.truth,
-                           deplot_model=self.cfg["models"].get("deplot", "google/deplot"), offline=self.offline)
+                           deplot_model=self.cfg["models"].get("deplot", "google/deplot"), offline=self.offline,
+                           server=self.server)
 
 
 # ------------------------------------------------------------------ ingest
@@ -218,8 +230,9 @@ def make_policy(ctx: Context, name: str, table: CalibrationTable, tools: dict, p
     raise ValueError(f"unknown policy {name!r}")
 
 
-def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
-              parser: str = "rule", retrieval: str = "ours", limit: int | None = None):
+def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None, parser: str = "rule",
+                retrieval: str = "ours", oracle=None) -> tuple[ReportAgent, RuleConfig, Policy]:
+    """The report agent exactly as a run uses it. Shared by `run_split` and `verify_pdf` (the web backend)."""
     cfg = ctx.cfg
     tools = ctx.tools()
     try:
@@ -233,6 +246,24 @@ def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | N
     # parser: "rule" (no model), "llm" (always the model), "agent" (rules, LLM only when needed)
     prs = LLMParser(ctx.llm) if parser == "llm" else RuleParser()
     llm_parser = LLMParser(ctx.llm) if parser == "agent" else None
+    agent = ReportAgent(prs, controller, retrieval, oracle=oracle,
+                        ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
+                        llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
+                        legend_reader=make_legend_reader(ctx) if cfg["retrieval"].get("legend_names") else None)
+    return agent, rc, pol
+
+
+def verify_pdf(ctx: Context, agent: ReportAgent, rc: RuleConfig, pdf_path: str | Path, work_dir: str | Path,
+               report_id: str | None = None) -> tuple[Report, list[ClaimTrace]]:
+    """Check one uploaded report: no truth file needed. The batch check runs over this report's own claims."""
+    report = parse_pdf(pdf_path, work_dir, report_id)
+    traces, _ = agent.run(report)
+    return report, finalize(traces, None, rc.alpha, ctx.cfg["decision"].get("batch_check", True))
+
+
+def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
+              parser: str = "rule", retrieval: str = "ours", limit: int | None = None):
+    cfg = ctx.cfg
     truths, traces, mems, plans = [], [], [], {}
     oracle_map: dict = {}
     dirs = report_dirs(ctx.data, split)[:limit]
@@ -241,10 +272,8 @@ def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | N
         truths.append(truth)
         for c in truth["claims"]:
             oracle_map[(truth["report_id"], c["sentence"].strip())] = c.get("figure_id")
-    agent = ReportAgent(prs, controller, retrieval, oracle=lambda rid, s: oracle_map.get((rid, s.strip())),
-                        ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
-                        llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
-                        legend_reader=make_legend_reader(ctx) if cfg["retrieval"].get("legend_names") else None)
+    agent, rc, pol = build_agent(ctx, table, policy, parser, retrieval,
+                                 oracle=lambda rid, s: oracle_map.get((rid, s.strip())))
     for rd, truth in zip(dirs, truths):
         report, _ = ingest(ctx, rd)
         tr, mem = agent.run(report)

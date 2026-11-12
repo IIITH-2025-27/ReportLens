@@ -9,7 +9,7 @@ from .simulated import SimPointTool, SimSampleTool, SimTableTool, TruthIndex
 
 def build_tools(names: list[str], cache: ReadingCache | None = None, llm=None,
                 truth: TruthIndex | None = None, deplot_model: str = "google/deplot",
-                offline: bool = False) -> dict[str, Tool]:
+                offline: bool = False, server=None) -> dict[str, Tool]:
     tools: dict[str, Tool] = {}
     for n in names:
         if n.startswith("vlm_crop@s"):              # E4: K samples of one model at T > 0
@@ -27,7 +27,7 @@ def build_tools(names: list[str], cache: ReadingCache | None = None, llm=None,
             tools[n] = VlmCropTool(_need(llm, n), cache)
         elif n == "deplot":
             from .deplot import DePlotTool
-            tools[n] = DePlotTool(cache, deplot_model, offline)
+            tools[n] = DePlotTool(cache, deplot_model, offline, server)
         elif n in ("sim_vlm_table", "sim_deplot"):
             tools[n] = SimTableTool(n, _need(truth, n), cache, cost=4.0 if "vlm" in n else 1.5)
         elif n == "sim_vlm_crop":

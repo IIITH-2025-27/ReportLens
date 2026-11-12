@@ -61,4 +61,5 @@ models:
   vlm_fallback: Qwen/Qwen2.5-VL-7B-Instruct
   deplot: google/deplot
   lora_adapter: null                    # path after fine-tuning; null = base model
+  remote_url: null                      # model server URL (web/model_server); null = load the models here
   dtype: float16                        # T4 has no bf16

@@ -7,6 +7,9 @@ from ..schemas import Figure
 from .base import Table, TableTool, ToolError
 
 
+PROMPT = "Generate underlying data table of the figure below:"
+
+
 def parse_linearized(text: str) -> Table:
     """Parse DePlot output: 'TITLE | t <0x0A> Epoch | A | B <0x0A> 1 | 0.5 | 0.6 ...'."""
     rows = [r.strip() for r in re.split(r"<0x0A>|\n", text) if r.strip()]
@@ -37,9 +40,9 @@ class DePlotTool(TableTool):
     kind = "neural"
     version = "v1:google/deplot"
 
-    def __init__(self, cache=None, model_id: str = "google/deplot", offline: bool = False):
+    def __init__(self, cache=None, model_id: str = "google/deplot", offline: bool = False, server=None):
         super().__init__(cache)
-        self.model_id, self.offline = model_id, offline
+        self.model_id, self.offline, self.server = model_id, offline, server   # server: models.remote.ModelServer
         self._model = None
 
     def _load(self):
@@ -51,16 +54,24 @@ class DePlotTool(TableTool):
             self._model = Pix2StructForConditionalGeneration.from_pretrained(self.model_id).to(best_device()).eval()
         return self._proc, self._model
 
+    def linearize(self, image) -> str:
+        """DePlot's raw answer for one chart image (path or PIL). The model server calls this too."""
+        import torch
+        from PIL import Image
+        proc, model = self._load()
+        im = Image.open(image) if isinstance(image, str) else image
+        inputs = proc(images=im.convert("RGB"), text=PROMPT, return_tensors="pt").to(model.device)
+        with torch.inference_mode():
+            out = model.generate(**inputs, max_new_tokens=512)
+        return proc.decode(out[0], skip_special_tokens=True)
+
     def extract_table(self, fig: Figure) -> Table:
         if self.offline:
             from ..models.vlm import OfflineMiss
             raise OfflineMiss("deplot table not cached")
-        import torch
-        from PIL import Image
-        proc, model = self._load()
-        inputs = proc(images=Image.open(fig.image_path).convert("RGB"),
-                      text="Generate underlying data table of the figure below:",
-                      return_tensors="pt").to(model.device)
-        with torch.inference_mode():
-            out = model.generate(**inputs, max_new_tokens=512)
-        return parse_linearized(proc.decode(out[0], skip_special_tokens=True))
+        if self.server is not None:
+            from ..models.remote import encode_image
+            text = self.server.run("deplot", {"image": encode_image(fig.image_path)})["text"]
+        else:
+            text = self.linearize(fig.image_path)
+        return parse_linearized(text)
