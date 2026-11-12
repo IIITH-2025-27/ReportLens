@@ -128,6 +128,7 @@ results/
   lora/             the same for the LoRA adapter
   run_log.md        one row per run, kept by hand
 docs/               workflow.html, proposal/, mid_report/
+web/                student + TA web app: backend/ (FastAPI, PostgreSQL), frontend/ (React); see web/README.md
 tests/
 ```
 

@@ -1,0 +1,14 @@
+# Same versions as the machine the web backend was tested on (the adapter was saved with peft 0.21.2).
+# The default PyPI torch wheel runs on CPU and on CUDA, so moving the Space to GPU hardware needs no rebuild change.
+torch==2.11.0
+torchvision==0.26.0
+transformers==5.5.4
+peft==0.21.2
+accelerate>=1.0
+huggingface_hub>=1.0
+pillow>=10
+pydantic>=2.5
+rapidfuzz>=3
+numpy>=1.26
+fastapi>=0.110
+uvicorn>=0.29
