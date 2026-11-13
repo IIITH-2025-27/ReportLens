@@ -1,0 +1,678 @@
+{
+ "report_id": "holdout2_017",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_017_fig1",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24",
+     "26",
+     "28"
+    ],
+    "series": {
+     "LSTM": [
+      41.9,
+      48.5,
+      55.2,
+      58.6,
+      63.1,
+      65.9,
+      68.8,
+      71.9,
+      72.9,
+      74.6,
+      76.1,
+      75.9,
+      75.4,
+      77.9
+     ],
+     "CNN": [
+      61.2,
+      66.1,
+      71.2,
+      73.6,
+      76.3,
+      78.6,
+      79.0,
+      81.3,
+      80.5,
+      82.4,
+      82.4,
+      83.2,
+      83.3,
+      83.6
+     ],
+     "ViT-S": [
+      56.2,
+      63.7,
+      72.1,
+      76.3,
+      80.7,
+      83.5,
+      86.7,
+      88.8,
+      90.6,
+      92.2,
+      91.7,
+      94.1,
+      95.1,
+      94.5
+     ],
+     "VGG-16": [
+      53.7,
+      61.9,
+      64.4,
+      67.0,
+      69.3,
+      72.0,
+      73.2,
+      73.2,
+      73.7,
+      73.6,
+      75.0,
+      75.7,
+      76.2,
+      76.1
+     ],
+     "Baseline": [
+      42.1,
+      52.8,
+      58.0,
+      63.2,
+      65.4,
+      68.4,
+      69.1,
+      70.0,
+      70.9,
+      72.8,
+      71.9,
+      72.8,
+      73.5,
+      73.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     39.239999999999995,
+     97.75999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.5,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "LSTM": "#e41a1c",
+      "CNN": "#377eb8",
+      "ViT-S": "#4daf4a",
+      "VGG-16": "#984ea3",
+      "Baseline": "#ff7f00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_017_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "IMDB",
+     "AG News",
+     "CIFAR-10",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "MLP": [
+      61.6,
+      55.0,
+      51.1,
+      56.1,
+      67.2
+     ],
+     "ResNet-50": [
+      71.9,
+      63.9,
+      61.3,
+      66.5,
+      79.7
+     ],
+     "ResNet-18": [
+      60.6,
+      58.7,
+      51.5,
+      54.3,
+      71.6
+     ],
+     "Ours": [
+      72.7,
+      64.7,
+      61.3,
+      65.5,
+      87.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       5.9,
+       3.9
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "MLP": "#0072b2",
+      "ResNet-50": "#d55e00",
+      "ResNet-18": "#009e73",
+      "Ours": "#cc79a7"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_017_fig3",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "AG News"
+    ],
+    "series": {
+     "ResNet-50": [
+      82.6,
+      88.9
+     ],
+     "VGG-16": [
+      79.7,
+      76.5
+     ],
+     "MobileNet": [
+      79.9,
+      81.2
+     ],
+     "Baseline": [
+      87.1,
+      83.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.5,
+       3.5
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ResNet-50": "#1f77b4",
+      "VGG-16": "#ff7f0e",
+      "MobileNet": "#2ca02c",
+      "Baseline": "#d62728"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_017_fig4",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "IMDB",
+     "CIFAR-10",
+     "SVHN",
+     "SST-2"
+    ],
+    "series": {
+     "Transformer": [
+      87.8,
+      96.8,
+      67.6,
+      90.4
+     ],
+     "ResNet-50": [
+      81.1,
+      91.8,
+      54.7,
+      74.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       5.8,
+       4.0
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "Transformer": "#e41a1c",
+      "ResNet-50": "#377eb8"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_017_fig1_c0",
+   "sentence": "At epoch 2, Baseline achieves 30.4% F1 score.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 42.1,
+   "claimed_value": 30.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 58.519999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_017_fig1_c1",
+   "sentence": "ViT-S outperforms VGG-16 by 1.8 percentage points at epoch 6 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "6",
+   "series_b": "VGG-16",
+   "x_b": "6",
+   "true_value": 7.7,
+   "claimed_value": 1.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 58.519999999999996,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig1_c2",
+   "sentence": "As shown in Figure 1, CNN attains a F1 score of 53.7% at epoch 2.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.2,
+   "claimed_value": 53.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 58.519999999999996,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig1_c3",
+   "sentence": "ViT-S attains a F1 score of 58.6% at epoch 8.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.3,
+   "claimed_value": 58.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 58.519999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_017_fig2_c0",
+   "sentence": "Ours outperforms MLP by 31.1 percentage points on SST-2 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "SST-2",
+   "series_b": "MLP",
+   "x_b": "SST-2",
+   "true_value": 11.1,
+   "claimed_value": 31.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig2_c1",
+   "sentence": "On Fashion-MNIST, ResNet-50 obtains a validation accuracy of 69.7% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.7,
+   "claimed_value": 69.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig3_c0",
+   "sentence": "VGG-16 achieves 69.7% validation accuracy on SVHN (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.7,
+   "claimed_value": 69.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig3_c1",
+   "sentence": "As shown in Figure 3, Baseline outperforms MobileNet by 52.5 percentage points on AG News.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Baseline",
+   "x": "AG News",
+   "series_b": "MobileNet",
+   "x_b": "AG News",
+   "true_value": 2.5,
+   "claimed_value": 52.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig3_c2",
+   "sentence": "On AG News, MobileNet obtains a validation accuracy of 131.2% (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.2,
+   "claimed_value": 131.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig3_c3",
+   "sentence": "Baseline outperforms VGG-16 by 7 percentage points on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Baseline",
+   "x": "AG News",
+   "series_b": "VGG-16",
+   "x_b": "AG News",
+   "true_value": 7.2,
+   "claimed_value": 7.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_017_fig4_c0",
+   "sentence": "On SST-2, Transformer obtains a F1 score of 90% (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.4,
+   "claimed_value": 90.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig4_c1",
+   "sentence": "As shown in Figure 4, on IMDB, ResNet-50 obtains a F1 score of 101.1%.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.1,
+   "claimed_value": 101.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig4_c2",
+   "sentence": "On IMDB, Transformer is 6.7 points better than ResNet-50 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "IMDB",
+   "series_b": "ResNet-50",
+   "x_b": "IMDB",
+   "true_value": 6.7,
+   "claimed_value": 6.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_fig4_c3",
+   "sentence": "Transformer outperforms ResNet-50 by 13 percentage points on SVHN (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "SVHN",
+   "series_b": "ResNet-50",
+   "x_b": "SVHN",
+   "true_value": 12.9,
+   "claimed_value": 13.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_017_nofig",
+   "sentence": "On AG News, Naive Bayes obtains an accuracy of 50.7%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Naive Bayes",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 50.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_017_setup0",
+   "sentence": "We trained each model for 100 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_017_setup1",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

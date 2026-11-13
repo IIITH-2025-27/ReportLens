@@ -1,0 +1,481 @@
+{
+ "report_id": "holdout_001",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of Ours by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_001_fig1",
+    "kind": "bar",
+    "title": "F1 score of Ours by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "AG News",
+     "CIFAR-10",
+     "IMDB",
+     "SST-2",
+     "SVHN",
+     "MNIST"
+    ],
+    "series": {
+     "Ours": [
+      55.4,
+      59.9,
+      79.6,
+      77.9,
+      73.6,
+      81.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     93.83999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.2,
+       2.9
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "Ours": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_001_fig2",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "IMDB",
+     "AG News"
+    ],
+    "series": {
+     "BERT-base": [
+      72.7,
+      74.6,
+      61.9,
+      87.8
+     ],
+     "VGG-16": [
+      71.2,
+      80.6,
+      63.7,
+      91.8
+     ],
+     "ResNet-50": [
+      67.5,
+      73.9,
+      56.6,
+      83.1
+     ],
+     "CNN": [
+      64.6,
+      72.3,
+      60.9,
+      82.4
+     ],
+     "LSTM": [
+      74.8,
+      82.8,
+      64.5,
+      86.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.5,
+       3.2
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "BERT-base": "#0072b2",
+      "VGG-16": "#d55e00",
+      "ResNet-50": "#009e73",
+      "CNN": "#cc79a7",
+      "LSTM": "#e69f00"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_001_fig3",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15",
+     "16",
+     "17"
+    ],
+    "series": {
+     "LSTM": [
+      54.7,
+      59.5,
+      66.7,
+      70.0,
+      70.8,
+      74.0,
+      75.4,
+      76.4,
+      76.4,
+      78.9,
+      78.9,
+      78.3,
+      80.0,
+      79.9,
+      81.1,
+      81.4,
+      80.4
+     ],
+     "Ours": [
+      37.0,
+      47.6,
+      54.0,
+      63.1,
+      67.3,
+      71.5,
+      75.4,
+      77.4,
+      81.8,
+      84.0,
+      85.7,
+      87.1,
+      88.0,
+      90.1,
+      93.0,
+      92.3,
+      93.3
+     ],
+     "EfficientNet": [
+      61.9,
+      68.1,
+      71.8,
+      75.5,
+      77.1,
+      79.2,
+      79.7,
+      82.4,
+      82.2,
+      83.4,
+      84.1,
+      85.7,
+      86.9,
+      85.5,
+      86.7,
+      86.4,
+      86.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     34.185,
+     96.115
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       5.1,
+       2.9
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "LSTM": "#1b9e77",
+      "Ours": "#d95f02",
+      "EfficientNet": "#7570b3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_001_fig1_c0",
+   "sentence": "Ours reaches 81.6% F1 score on MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.6,
+   "claimed_value": 81.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 93.83999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_fig1_c1",
+   "sentence": "Ours scores 2.0 points higher on MNIST than on IMDB.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "MNIST",
+   "series_b": "Ours",
+   "x_b": "IMDB",
+   "true_value": 2.0,
+   "claimed_value": 2.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 93.83999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_fig2_c0",
+   "sentence": "LSTM outperforms ResNet-50 by about 7 percentage points on Fashion-MNIST (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "Fashion-MNIST",
+   "series_b": "ResNet-50",
+   "x_b": "Fashion-MNIST",
+   "true_value": 7.3,
+   "claimed_value": 7.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_001_fig2_c1",
+   "sentence": "LSTM reaches 54.5% F1 score on IMDB.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 64.5,
+   "claimed_value": 54.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_fig3_c0",
+   "sentence": "As shown in Figure 3, from epoch 9 to epoch 10, the accuracy of LSTM improves by a relative 11.4%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "LSTM",
+   "x": "9",
+   "series_b": null,
+   "x_b": "10",
+   "true_value": 3.272251,
+   "claimed_value": 11.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 61.92999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_001_fig3_c1",
+   "sentence": "At epoch 15, LSTM achieves over 80% accuracy (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "15",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.1,
+   "claimed_value": 80.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 61.92999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_001_fig3_c2",
+   "sentence": "EfficientNet attains a accuracy of about 90% at epoch 15.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "15",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.7,
+   "claimed_value": 90.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 61.92999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_fig3_c3",
+   "sentence": "As shown in Figure 3, from epoch 8 to epoch 13, the accuracy of Ours improves by a relative 29.7%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "8",
+   "series_b": null,
+   "x_b": "13",
+   "true_value": 13.69509,
+   "claimed_value": 29.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 61.92999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_001_nofig",
+   "sentence": "Random Forest reaches 53.5% accuracy on CIFAR-10.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 53.5,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_setup0",
+   "sentence": "The learning rate was set to 0.001 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_001_setup1",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

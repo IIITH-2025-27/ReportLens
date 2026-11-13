@@ -1,0 +1,352 @@
+{
+ "report_id": "holdout_006",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_006_fig1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "SVHN",
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "AG News"
+    ],
+    "series": {
+     "ResNet-18": [
+      98.3,
+      79.8,
+      87.3,
+      63.9,
+      89.9
+     ],
+     "CNN": [
+      87.7,
+      80.3,
+      87.4,
+      56.3,
+      85.5
+     ],
+     "MLP": [
+      82.3,
+      73.9,
+      77.5,
+      53.8,
+      77.6
+     ],
+     "LSTM": [
+      87.7,
+      86.5,
+      86.4,
+      63.5,
+      88.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       3.3
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ResNet-18": "#1b9e77",
+      "CNN": "#d95f02",
+      "MLP": "#7570b3",
+      "LSTM": "#e7298a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_006_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15",
+     "16",
+     "17",
+     "18",
+     "19"
+    ],
+    "series": {
+     "VGG-16": [
+      50.8,
+      52.7,
+      56.4,
+      59.5,
+      61.0,
+      64.0,
+      65.0,
+      65.9,
+      66.9,
+      67.5,
+      67.6,
+      67.4,
+      70.1,
+      70.7,
+      70.2,
+      72.4,
+      71.8,
+      72.3,
+      72.7
+     ],
+     "CNN": [
+      38.5,
+      48.3,
+      55.5,
+      60.6,
+      63.5,
+      68.8,
+      71.8,
+      74.5,
+      75.2,
+      76.6,
+      77.8,
+      79.2,
+      78.6,
+      79.5,
+      80.5,
+      82.3,
+      80.5,
+      81.1,
+      81.2
+     ],
+     "GRU": [
+      53.0,
+      57.9,
+      60.5,
+      63.7,
+      66.2,
+      68.0,
+      68.2,
+      69.3,
+      70.4,
+      70.9,
+      71.9,
+      70.3,
+      69.4,
+      69.7,
+      71.7,
+      70.6,
+      71.8,
+      72.7,
+      70.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     36.31,
+     84.49
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       4.7,
+       3.2
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "VGG-16": "#1f77b4",
+      "CNN": "#ff7f0e",
+      "GRU": "#2ca02c"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_006_fig1_c0",
+   "sentence": "MLP achieves over 75% accuracy on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.5,
+   "claimed_value": 75.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_006_fig1_c1",
+   "sentence": "On IMDB, ResNet-18 is 11 points better than LSTM.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "IMDB",
+   "series_b": "LSTM",
+   "x_b": "IMDB",
+   "true_value": 10.6,
+   "claimed_value": 11.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_006_fig2_c0",
+   "sentence": "As shown in Figure 2, at epoch 2, GRU achieves about 60% accuracy.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 57.9,
+   "claimed_value": 60.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 48.17999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_006_fig2_c1",
+   "sentence": "CNN outperforms GRU by 5.7 percentage points at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "10",
+   "series_b": "GRU",
+   "x_b": "10",
+   "true_value": 5.7,
+   "claimed_value": 5.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 48.17999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_006_nofig",
+   "sentence": "On CIFAR-10, Naive Bayes obtains an accuracy of 54.7%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Naive Bayes",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 54.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_006_setup0",
+   "sentence": "The learning rate was set to 0.001 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_006_setup1",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

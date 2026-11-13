@@ -1,0 +1,607 @@
+{
+ "report_id": "calib_easy_003",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_003_fig1",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35",
+     "40",
+     "45"
+    ],
+    "series": {
+     "CNN": [
+      57.3,
+      71.0,
+      78.1,
+      81.6,
+      84.8,
+      85.7,
+      86.2,
+      89.2,
+      87.9
+     ],
+     "LSTM": [
+      54.2,
+      59.9,
+      65.8,
+      69.7,
+      71.9,
+      73.8,
+      74.8,
+      76.2,
+      76.3
+     ],
+     "MobileNet": [
+      54.0,
+      63.5,
+      70.8,
+      74.5,
+      77.5,
+      80.3,
+      80.6,
+      78.9,
+      81.9
+     ],
+     "Baseline": [
+      55.2,
+      61.3,
+      65.1,
+      68.5,
+      71.3,
+      69.8,
+      70.0,
+      69.9,
+      71.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.24,
+     90.96000000000001
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       6.0,
+       4.3
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "CNN": "#1f77b4",
+      "LSTM": "#ff7f0e",
+      "MobileNet": "#2ca02c",
+      "Baseline": "#d62728"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_003_fig2",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "MNIST",
+     "SST-2",
+     "SVHN"
+    ],
+    "series": {
+     "MLP": [
+      53.0,
+      78.4,
+      76.7,
+      65.5,
+      62.7
+     ],
+     "GRU": [
+      62.0,
+      93.3,
+      80.8,
+      67.2,
+      65.2
+     ],
+     "EfficientNet": [
+      59.5,
+      82.7,
+      88.0,
+      66.6,
+      70.2
+     ],
+     "Transformer": [
+      53.4,
+      84.4,
+      82.0,
+      66.6,
+      66.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       5.3,
+       3.9
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "MLP": "#e41a1c",
+      "GRU": "#377eb8",
+      "EfficientNet": "#4daf4a",
+      "Transformer": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_003_fig3",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35",
+     "40",
+     "45"
+    ],
+    "series": {
+     "Baseline": [
+      48.3,
+      60.0,
+      65.2,
+      71.0,
+      75.2,
+      76.6,
+      75.2,
+      76.3,
+      77.9
+     ],
+     "DistilBERT": [
+      62.6,
+      72.9,
+      80.5,
+      84.0,
+      87.9,
+      91.0,
+      90.3,
+      93.4,
+      92.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     46.044999999999995,
+     95.655
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.5,
+       4.2
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "Baseline": "#1b9e77",
+      "DistilBERT": "#d95f02"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_easy_003_fig4",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "SVHN",
+     "SST-2",
+     "CIFAR-10",
+     "IMDB"
+    ],
+    "series": {
+     "BERT-base": [
+      75.9,
+      90.5,
+      83.3,
+      76.1
+     ],
+     "Transformer": [
+      62.5,
+      84.1,
+      83.8,
+      71.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 12,
+      "figsize": [
+       5.5,
+       3.5
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "Transformer": "#d95f02"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_easy_003_fig1_c0",
+   "sentence": "At epoch 40, MobileNet is about 9 points better than Baseline.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "40",
+   "series_b": "Baseline",
+   "x_b": "40",
+   "true_value": 9.0,
+   "claimed_value": 9.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 38.720000000000006,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig1_c1",
+   "sentence": "LSTM attains a validation accuracy of 56.1% at epoch 5 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "5",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 54.2,
+   "claimed_value": 56.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 38.720000000000006,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_003_fig1_c2",
+   "sentence": "As shown in Figure 1, MobileNet attains a validation accuracy of 74.2% at epoch 45.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "45",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.9,
+   "claimed_value": 74.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 38.720000000000006,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_003_fig2_c0",
+   "sentence": "As shown in Figure 2, GRU achieves 60.0% accuracy on Fashion-MNIST.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.0,
+   "claimed_value": 60.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_003_fig2_c1",
+   "sentence": "On MNIST, EfficientNet is 27.2 points better than GRU.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "MNIST",
+   "series_b": "GRU",
+   "x_b": "MNIST",
+   "true_value": 7.2,
+   "claimed_value": 27.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig2_c2",
+   "sentence": "On Fashion-MNIST, Transformer obtains a accuracy of 53.0%.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 53.4,
+   "claimed_value": 53.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig3_c0",
+   "sentence": "DistilBERT reaches 73% test accuracy at epoch 10.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.9,
+   "claimed_value": 73.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 49.61000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig3_c1",
+   "sentence": "DistilBERT attains a test accuracy of 65.5% at epoch 35.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "35",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.3,
+   "claimed_value": 65.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 49.61000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig3_c2",
+   "sentence": "At epoch 15, DistilBERT achieves 75.5% test accuracy.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "15",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.5,
+   "claimed_value": 75.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 49.61000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig4_c0",
+   "sentence": "Transformer reaches 71.6% F1 score on IMDB.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.6,
+   "claimed_value": 71.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_fig4_c1",
+   "sentence": "As shown in Figure 4, on SVHN, BERT-base obtains a F1 score of 76%.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 75.9,
+   "claimed_value": 76.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_easy_003_fig4_c2",
+   "sentence": "BERT-base achieves about 80% F1 score on CIFAR-10.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 83.3,
+   "claimed_value": 80.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_nofig",
+   "sentence": "On QQP, Random Forest obtains an accuracy of 71.9%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "QQP",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 71.9,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_easy_003_setup1",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

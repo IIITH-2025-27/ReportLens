@@ -24,14 +24,14 @@ class RuleConfig:
     min_readings: int = 2
     alpha: float = 0.10
     max_accept_margin: float = 0.03   # fraction of axis span; wider margin -> cannot tell, measure again
-    by_tool_set: bool = True          # U14: margins from the exact tools that gave the readings
+    by_tool_set: bool = False         # U14 (rejected): margins from the exact tools that gave the readings
     drop_tied_legs: bool = True       # U10: a tool that reads both legs of a two-leg claim as one number gives no reading
 
     @classmethod
     def from_cfg(cls, cfg: dict) -> "RuleConfig":
         d = cfg["decision"]
         return cls(d["level_flag"], d["level_accept"], d["eps"], d["min_readings"], d["alpha"],
-                   d.get("max_accept_margin", 0.03), d.get("by_tool_set", True), d.get("drop_tied_legs", True))
+                   d.get("max_accept_margin", 0.03), d.get("by_tool_set", False), d.get("drop_tied_legs", True))
 
 
 def claim_gap(claimed: float, est: float, relation: str) -> float:

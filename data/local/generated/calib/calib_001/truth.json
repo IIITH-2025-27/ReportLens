@@ -1,0 +1,395 @@
+{
+ "report_id": "calib_001",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_001_fig1",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "SVHN",
+     "SST-2",
+     "IMDB"
+    ],
+    "series": {
+     "VGG-16": [
+      73.2,
+      61.1,
+      74.0
+     ],
+     "ViT-S": [
+      86.2,
+      69.1,
+      91.6
+     ],
+     "LSTM": [
+      79.1,
+      65.0,
+      85.0
+     ],
+     "BERT-base": [
+      84.4,
+      72.4,
+      88.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 11,
+      "figsize": [
+       5.8,
+       3.6
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "VGG-16": "#e41a1c",
+      "ViT-S": "#377eb8",
+      "LSTM": "#4daf4a",
+      "BERT-base": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_001_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "series": {
+     "EfficientNet": [
+      43.2,
+      50.1,
+      57.1,
+      61.0,
+      65.2,
+      67.9,
+      68.6,
+      68.7,
+      71.8,
+      72.1,
+      73.3,
+      73.6
+     ],
+     "ResNet-18": [
+      38.4,
+      46.8,
+      51.7,
+      55.5,
+      62.0,
+      65.3,
+      68.7,
+      71.2,
+      72.9,
+      72.3,
+      73.8,
+      74.8
+     ],
+     "ViT-S": [
+      60.4,
+      64.2,
+      67.9,
+      71.3,
+      73.3,
+      73.5,
+      74.4,
+      76.7,
+      78.2,
+      75.8,
+      75.6,
+      76.3
+     ],
+     "BERT-base": [
+      42.3,
+      55.2,
+      63.3,
+      69.7,
+      73.0,
+      76.5,
+      77.7,
+      77.7,
+      79.5,
+      79.5,
+      79.9,
+      81.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     36.25,
+     83.55000000000001
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.6,
+       3.2
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "EfficientNet": "#e41a1c",
+      "ResNet-18": "#377eb8",
+      "ViT-S": "#4daf4a",
+      "BERT-base": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy of ViT-S by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_001_fig3",
+    "kind": "bar",
+    "title": "Validation accuracy of ViT-S by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "ViT-S": [
+      70.3,
+      90.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 12,
+      "figsize": [
+       5.7,
+       3.6
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#1f77b4"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_001_fig1_c0",
+   "sentence": "On SVHN, VGG-16 obtains a F1 score of 83.2%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.2,
+   "claimed_value": 83.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_001_fig1_c1",
+   "sentence": "As shown in Figure 1, BERT-base outperforms ViT-S by about 3 percentage points on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "SST-2",
+   "series_b": "ViT-S",
+   "x_b": "SST-2",
+   "true_value": 3.3,
+   "claimed_value": 3.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_001_fig2_c0",
+   "sentence": "BERT-base outperforms ResNet-18 by 17.9 percentage points at epoch 2 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "2",
+   "series_b": "ResNet-18",
+   "x_b": "2",
+   "true_value": 8.4,
+   "claimed_value": 17.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 47.30000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_001_fig2_c1",
+   "sentence": "As shown in Figure 2, from epoch 8 to epoch 9, the accuracy of EfficientNet improves by a relative 5%.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "EfficientNet",
+   "x": "8",
+   "series_b": null,
+   "x_b": "9",
+   "true_value": 4.512373,
+   "claimed_value": 5.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 47.30000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_001_fig3_c0",
+   "sentence": "As shown in Figure 3, ViT-S achieves 80.3% validation accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.3,
+   "claimed_value": 80.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_001_fig3_c1",
+   "sentence": "On Fashion-MNIST, ViT-S obtains a validation accuracy of 68.3%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.3,
+   "claimed_value": 68.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_001_setup0",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_001_setup1",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

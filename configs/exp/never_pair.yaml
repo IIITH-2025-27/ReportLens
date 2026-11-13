@@ -1,0 +1,22 @@
+# E9 (rejected for the main configuration): the frozen local_real.yaml, but the two Qwen tools are never each other's
+# cross-check. Replay only (runs/audit): coverage 78.6 -> 76.9%, missed errors 0.6 -> 0.9% (base model), so it was left out.
+#   chart-claim-verifier run -c configs/exp/never_pair.yaml --split test --policy informed --offline --name npbase_test_informed
+generator:
+  reports: {calib: 12, dev: 0, test: 20, style_shift: 0}
+decision:
+  min_group_size: 30
+calibration:
+  splits: [calib, calib_easy]
+tools:
+  enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]
+agent:
+  policy: informed
+  fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  informed:
+    never_pair: [[vlm_table, vlm_crop]]
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local
+  runs_dir: runs/audit

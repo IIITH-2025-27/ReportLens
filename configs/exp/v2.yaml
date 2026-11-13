@@ -1,0 +1,26 @@
+# v2 (after the final run, 9-11 Nov): the frozen local_real.yaml plus the small changes each kept only if its replay
+# passed the rule written before running it (results/run_log.md, section G). The untouched-split numbers of the report
+# are the frozen ones; v2 results are development results, because every split had been seen by then.
+generator:
+  reports: {calib: 12, dev: 0, test: 20, style_shift: 0}
+decision:
+  min_group_size: 30
+calibration:
+  splits: [calib, calib_easy]
+tools:
+  enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]
+retrieval:
+  cited_first: true       # G2: a cited "Figure N" beats an uncited figure when OCR cannot read the series in N
+  # G3 (always check two figures when several show the claim) was replayed and rejected: coverage -3.5 points
+agent:
+  policy: informed
+  fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  hand_off_rejected: true # G1: a sentence that looks like a claim but the parser rejects goes to the TA
+  # G4 (the LLM parser trusts a complete form over its own "not a chart claim") is a code change in claims/parser.py;
+  # it matters only with --parser llm or agent, since the main runs parse with rules
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local
+  runs_dir: runs/v2

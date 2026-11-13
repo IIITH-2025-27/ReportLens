@@ -1,0 +1,312 @@
+{
+ "report_id": "holdout_016",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_016_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "SVHN",
+     "CIFAR-10",
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "MLP": [
+      69.5,
+      70.3,
+      85.9,
+      66.8,
+      92.6
+     ],
+     "VGG-16": [
+      74.1,
+      68.8,
+      87.4,
+      65.1,
+      87.4
+     ],
+     "EfficientNet": [
+      62.0,
+      62.6,
+      79.2,
+      58.6,
+      82.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       5.2,
+       2.8
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "MLP": "#0072b2",
+      "VGG-16": "#d55e00",
+      "EfficientNet": "#009e73"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy of ResNet-50 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_016_fig2",
+    "kind": "bar",
+    "title": "Accuracy of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SVHN",
+     "SST-2",
+     "AG News",
+     "IMDB",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-50": [
+      88.1,
+      87.4,
+      83.4,
+      77.8,
+      76.0,
+      57.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.8,
+       3.0
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ResNet-50": "#1b9e77"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_016_fig1_c0",
+   "sentence": "On CIFAR-10, MLP obtains a validation accuracy of 95.9%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.9,
+   "claimed_value": 95.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_fig1_c1",
+   "sentence": "On IMDB, VGG-16 obtains a validation accuracy of 74%.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.1,
+   "claimed_value": 74.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_fig1_c2",
+   "sentence": "MLP outperforms EfficientNet by 7.7 percentage points on SVHN.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "SVHN",
+   "series_b": "EfficientNet",
+   "x_b": "SVHN",
+   "true_value": 7.7,
+   "claimed_value": 7.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_fig1_c3",
+   "sentence": "On IMDB, VGG-16 is 4.6 points better than MLP.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": "MLP",
+   "x_b": "IMDB",
+   "true_value": 4.6,
+   "claimed_value": 4.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_fig2_c0",
+   "sentence": "ResNet-50 scores 25.6 points higher on AG News than on IMDB.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "AG News",
+   "series_b": "ResNet-50",
+   "x_b": "IMDB",
+   "true_value": 5.6,
+   "claimed_value": 25.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_fig2_c1",
+   "sentence": "As shown in Figure 2, on AG News, ResNet-50 obtains a accuracy of over 80%.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 83.4,
+   "claimed_value": 80.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_016_nofig",
+   "sentence": "On SST-2, XGBoost obtains an accuracy of 90.8%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 90.8,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_016_setup1",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -1,0 +1,396 @@
+{
+ "report_id": "final_015",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of LSTM by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_015_fig1",
+    "kind": "bar",
+    "title": "F1 score of LSTM by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "Fashion-MNIST",
+     "MNIST",
+     "SST-2",
+     "CIFAR-10"
+    ],
+    "series": {
+     "LSTM": [
+      59.1,
+      70.1,
+      57.7,
+      59.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     80.61499999999998
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.2,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "LSTM": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy of MLP by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_015_fig2",
+    "kind": "bar",
+    "title": "Test accuracy of MLP by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "MNIST"
+    ],
+    "series": {
+     "MLP": [
+      76.2,
+      65.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     87.63
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 12,
+      "figsize": [
+       5.2,
+       4.1
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "MLP": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy of ViT-S by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_015_fig3",
+    "kind": "bar",
+    "title": "Validation accuracy of ViT-S by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "CIFAR-10",
+     "Fashion-MNIST",
+     "IMDB",
+     "MNIST"
+    ],
+    "series": {
+     "ViT-S": [
+      81.0,
+      64.2,
+      72.2,
+      90.4,
+      65.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 12,
+      "figsize": [
+       6.4,
+       3.5
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#1f77b4"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "final_015_fig1_c0",
+   "sentence": "LSTM scores 16.4 points higher on MNIST than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "MNIST",
+   "series_b": "LSTM",
+   "x_b": "SST-2",
+   "true_value": 12.4,
+   "claimed_value": 16.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 80.61499999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig1_c1",
+   "sentence": "As shown in Figure 1, LSTM reaches 59.1% F1 score on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 59.1,
+   "claimed_value": 59.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 80.61499999999998,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_015_fig2_c0",
+   "sentence": "On MNIST, MLP obtains a test accuracy of 109.2% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.4,
+   "claimed_value": 109.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 87.63,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_015_fig2_c1",
+   "sentence": "MLP reaches 65.4% test accuracy on MNIST.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.4,
+   "claimed_value": 65.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 87.63,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig2_c2",
+   "sentence": "MLP achieves 32.4% test accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.2,
+   "claimed_value": 32.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 87.63,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig2_c3",
+   "sentence": "On MNIST, MLP obtains a test accuracy of 82.9%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.4,
+   "claimed_value": 82.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 87.63,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig3_c0",
+   "sentence": "ViT-S scores 58.8 points higher on AG News than on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "AG News",
+   "series_b": "ViT-S",
+   "x_b": "Fashion-MNIST",
+   "true_value": 8.8,
+   "claimed_value": 58.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig3_c1",
+   "sentence": "On IMDB, ViT-S obtains a validation accuracy of 72.2%.",
+   "figure_id": "fig3",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.4,
+   "claimed_value": 72.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_fig3_c2",
+   "sentence": "ViT-S reaches 90.4% validation accuracy on IMDB.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.4,
+   "claimed_value": 90.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_nofig",
+   "sentence": "Random Forest reaches 91.4% accuracy on Fashion-MNIST.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 91.4,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_015_setup1",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

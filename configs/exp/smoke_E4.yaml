@@ -5,6 +5,8 @@ decision:
   min_group_size: 30
 tools:
   enabled: [sim_vlm_crop@s1, sim_vlm_crop@s2, sim_vlm_crop@s3, sim_vlm_crop@s4]
+calibration:
+  order: random          # the four samples are exchangeable: a seeded random subset per k (as before 9 Nov)
 agent:
   policy: all_tools
   fixed_order: [sim_vlm_crop@s1, sim_vlm_crop@s2, sim_vlm_crop@s3, sim_vlm_crop@s4]

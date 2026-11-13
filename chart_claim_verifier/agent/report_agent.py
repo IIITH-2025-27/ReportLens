@@ -59,7 +59,8 @@ class ReportAgent:
 
     def __init__(self, parser, controller: ClaimController, retrieval: RetrievalMode = "ours",
                  oracle: Callable[[str, str], str | None] | None = None, ref_bonus: float = 10.0,
-                 vocab_match: int = 80, llm_parser=None, ambiguous_rule: str = "either", legend_reader=None):
+                 vocab_match: int = 80, llm_parser=None, ambiguous_rule: str = "either", legend_reader=None,
+                 hand_off_rejected: bool = False, cited_first: bool = False, ambiguity_ratio: float = 0.8):
         if ambiguous_rule not in AMBIGUOUS_RULES:
             raise ValueError(f"unknown ambiguous_rule {ambiguous_rule!r}")
         self.ambiguous_rule = ambiguous_rule
@@ -68,6 +69,10 @@ class ReportAgent:
         self.oracle = oracle            # (report_id, sentence) -> true figure_id; ablation only
         self.ref_bonus, self.vocab_match = ref_bonus, vocab_match
         self.legend_reader = legend_reader  # fig -> legend names read by the VLM (U11b); None = OCR text only
+        # v2: a sentence that looks like a claim but that the parser rejects goes to the TA instead of being dropped
+        # (a hidden instruction made the LLM parser drop 8 real claims, E8)
+        self.hand_off_rejected = hand_off_rejected
+        self.cited_first, self.ambiguity_ratio = cited_first, ambiguity_ratio    # retrieval options, see FigureIndex
 
     def ingest(self, pdf_path: str | Path, work_dir: str | Path, report_id: str | None = None) -> Report:
         return parse_pdf(pdf_path, work_dir, report_id)
@@ -93,13 +98,18 @@ class ReportAgent:
         """Returns (claim | None | 'error', parser name)."""
         claim = self.parser.parse(sent.text, sent.sentence_id, context)
         if claim is not None:
-            stages.append({"stage": "parse", "decision": "rule parser",
-                           "why": f"sentence matches a known '{claim.claim_type}' phrasing"})
+            if self.parser.name == "llm":
+                stages.append({"stage": "parse", "decision": "LLM parser",
+                               "why": f"the model read the sentence as a '{claim.claim_type}' claim"})
+            else:
+                stages.append({"stage": "parse", "decision": "rule parser",
+                               "why": f"sentence matches a known '{claim.claim_type}' phrasing"})
             return claim, "rule"
         if self.llm_parser is None:
             stages.append({"stage": "parse", "decision": "not a chart claim",
-                           "why": "no known phrasing and no LLM parser available"})
-            return None, "rule"
+                           "why": "the LLM parser found no checkable chart claim" if self.parser.name == "llm"
+                           else "no known phrasing and no LLM parser available"})
+            return None, self.parser.name
         stages.append({"stage": "parse", "decision": "escalate to LLM parser",
                        "why": "the sentence has a result-like number but no phrasing the rules know"})
         try:
@@ -110,7 +120,8 @@ class ReportAgent:
     # ------------------------------------------------------------------ main loop
     def run(self, report: Report) -> tuple[list[ClaimTrace], ReportMemory]:
         mem = ReportMemory(report, FigureIndex(report.figures, self.ref_bonus, self.vocab_match,
-                                                  legend_reader=self.legend_reader))
+                                                  legend_reader=self.legend_reader, cited_first=self.cited_first,
+                                                  ambiguity_ratio=self.ambiguity_ratio))
         self.plan(mem)
         context = mem.context()
         planned, traces = [], []
@@ -129,8 +140,9 @@ class ReportAgent:
                                          decision=Decision(verdict="NOT_SURE", reason="could not parse")))
                 continue
             if claim is None:
+                verdict = "NOT_SURE" if self.hand_off_rejected else "SKIPPED"
                 traces.append(ClaimTrace(**base, stages=stages,
-                                         decision=Decision(verdict="SKIPPED", reason="parser: not a chart claim")))
+                                         decision=Decision(verdict=verdict, reason="parser: not a chart claim")))
                 continue
             figs, cands = self._locate(claim, sent, mem)
             if not figs and used == "rule" and self.llm_parser is not None and self.retrieval == "ours":

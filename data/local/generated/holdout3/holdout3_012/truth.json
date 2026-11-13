@@ -1,0 +1,496 @@
+{
+ "report_id": "holdout3_012",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_012_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "MNIST",
+     "IMDB",
+     "SST-2",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "VGG-16": [
+      80.4,
+      57.8,
+      71.5,
+      54.2
+     ],
+     "ResNet-50": [
+      76.4,
+      62.5,
+      71.7,
+      59.4
+     ],
+     "ResNet-18": [
+      84.2,
+      65.5,
+      78.4,
+      61.8
+     ],
+     "Transformer": [
+      74.7,
+      57.7,
+      64.5,
+      48.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     96.83
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       3.0
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "VGG-16": "#0072b2",
+      "ResNet-50": "#d55e00",
+      "ResNet-18": "#009e73",
+      "Transformer": "#cc79a7"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "F1 score of EfficientNet by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_012_fig2",
+    "kind": "bar",
+    "title": "F1 score of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "IMDB",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "EfficientNet": [
+      83.1,
+      88.1,
+      56.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 10,
+      "figsize": [
+       6.0,
+       4.3
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "EfficientNet": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy of Ours by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_012_fig3",
+    "kind": "bar",
+    "title": "Accuracy of Ours by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SST-2",
+     "Fashion-MNIST",
+     "AG News",
+     "SVHN"
+    ],
+    "series": {
+     "Ours": [
+      67.0,
+      69.2,
+      79.6,
+      72.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     91.53999999999999
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       5.7,
+       4.3
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "Ours": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_012_fig4",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SST-2",
+     "IMDB",
+     "SVHN",
+     "CIFAR-10",
+     "MNIST"
+    ],
+    "series": {
+     "LSTM": [
+      73.1,
+      56.4,
+      77.5,
+      69.8,
+      69.4
+     ],
+     "ResNet-50": [
+      75.9,
+      61.5,
+      77.8,
+      70.3,
+      65.0
+     ],
+     "MobileNet": [
+      76.2,
+      58.4,
+      76.4,
+      73.9,
+      69.5
+     ],
+     "DistilBERT": [
+      81.9,
+      62.0,
+      77.8,
+      75.4,
+      75.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     94.185
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       5.8,
+       4.3
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "LSTM": "#e41a1c",
+      "ResNet-50": "#377eb8",
+      "MobileNet": "#4daf4a",
+      "DistilBERT": "#984ea3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_012_fig1_c0",
+   "sentence": "On SST-2, ResNet-18 is 15.8 points better than Transformer.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "SST-2",
+   "series_b": "Transformer",
+   "x_b": "SST-2",
+   "true_value": 13.9,
+   "claimed_value": 15.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 96.83,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig1_c1",
+   "sentence": "As shown in Figure 1, on MNIST, ResNet-18 is 27.2 points better than ResNet-50.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "MNIST",
+   "series_b": "ResNet-50",
+   "x_b": "MNIST",
+   "true_value": 7.8,
+   "claimed_value": 27.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 96.83,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_012_fig2_c0",
+   "sentence": "EfficientNet scores 31.8 points higher on Fashion-MNIST than on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "Fashion-MNIST",
+   "series_b": "EfficientNet",
+   "x_b": "CIFAR-10",
+   "true_value": 31.8,
+   "claimed_value": 31.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig2_c1",
+   "sentence": "EfficientNet scores 5.0 points higher on Fashion-MNIST than on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "Fashion-MNIST",
+   "series_b": "EfficientNet",
+   "x_b": "IMDB",
+   "true_value": 5.0,
+   "claimed_value": 5.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig3_c0",
+   "sentence": "Ours scores 4.7 points higher on SVHN than on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "SVHN",
+   "series_b": "Ours",
+   "x_b": "Fashion-MNIST",
+   "true_value": 2.9,
+   "claimed_value": 4.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 91.53999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig3_c1",
+   "sentence": "On SVHN, Ours obtains a accuracy of 72.1%.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.1,
+   "claimed_value": 72.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.53999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig3_c2",
+   "sentence": "Ours scores 10 points higher on AG News than on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "AG News",
+   "series_b": "Ours",
+   "x_b": "Fashion-MNIST",
+   "true_value": 10.4,
+   "claimed_value": 10.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 91.53999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_fig4_c0",
+   "sentence": "LSTM reaches 73.9% accuracy on CIFAR-10 (Figure 4).",
+   "figure_id": "fig4",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.8,
+   "claimed_value": 73.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 94.185,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_012_fig4_c1",
+   "sentence": "DistilBERT outperforms MobileNet by 1.4 percentage points on SVHN.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "SVHN",
+   "series_b": "MobileNet",
+   "x_b": "SVHN",
+   "true_value": 1.4,
+   "claimed_value": 1.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 94.185,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_nofig",
+   "sentence": "SVM reaches 73.9% accuracy on CIFAR-10.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 73.9,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_setup0",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_012_setup1",
+   "sentence": "We trained each model for 30 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

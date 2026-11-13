@@ -1,0 +1,488 @@
+{
+ "report_id": "dev_006",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_006_fig1",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "SVHN",
+     "AG News",
+     "SST-2"
+    ],
+    "series": {
+     "ViT-S": [
+      91.9,
+      80.0,
+      65.8,
+      74.6
+     ],
+     "GRU": [
+      87.1,
+      78.1,
+      56.0,
+      70.6
+     ],
+     "ResNet-50": [
+      83.6,
+      73.5,
+      52.9,
+      69.6
+     ],
+     "MobileNet": [
+      93.0,
+      81.8,
+      64.1,
+      72.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 10,
+      "figsize": [
+       6.0,
+       4.0
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "GRU": "#377eb8",
+      "ResNet-50": "#4daf4a",
+      "MobileNet": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "dev_006_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35",
+     "40",
+     "45"
+    ],
+    "series": {
+     "ViT-S": [
+      58.4,
+      69.2,
+      74.5,
+      77.7,
+      80.5,
+      79.4,
+      79.1,
+      81.4,
+      81.3
+     ],
+     "ResNet-50": [
+      47.6,
+      59.5,
+      65.8,
+      70.7,
+      74.5,
+      77.2,
+      79.0,
+      80.4,
+      80.8
+     ],
+     "GRU": [
+      57.5,
+      65.9,
+      71.2,
+      75.3,
+      74.1,
+      75.5,
+      74.7,
+      75.5,
+      77.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     45.910000000000004,
+     83.09
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 12,
+      "figsize": [
+       5.7,
+       4.0
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "ResNet-50": "#377eb8",
+      "GRU": "#4daf4a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "F1 score during training for the models in this experiment.",
+   "table": {
+    "table_id": "dev_006_fig3",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14"
+    ],
+    "series": {
+     "BERT-base": [
+      65.6,
+      69.6,
+      72.9,
+      73.2,
+      73.7,
+      74.3,
+      75.4,
+      76.4,
+      75.3,
+      76.3,
+      75.8,
+      78.1,
+      77.0,
+      76.0
+     ],
+     "Baseline": [
+      54.5,
+      60.5,
+      65.9,
+      69.2,
+      74.0,
+      76.5,
+      79.3,
+      79.8,
+      81.8,
+      82.7,
+      83.9,
+      85.4,
+      85.8,
+      86.1
+     ],
+     "DistilBERT": [
+      55.8,
+      61.7,
+      66.5,
+      70.9,
+      74.9,
+      76.9,
+      78.6,
+      79.4,
+      82.0,
+      82.6,
+      83.5,
+      84.0,
+      85.3,
+      84.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.92,
+     87.67999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.5,
+       3.1
+      ],
+      "dpi": 72,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "BERT-base": "#0072b2",
+      "Baseline": "#d55e00",
+      "DistilBERT": "#009e73"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "dev_006_fig1_c0",
+   "sentence": "As shown in Figure 1, on SST-2, MobileNet is 4.4 points better than ResNet-50.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "SST-2",
+   "series_b": "ResNet-50",
+   "x_b": "SST-2",
+   "true_value": 2.4,
+   "claimed_value": 4.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_006_fig1_c1",
+   "sentence": "ViT-S outperforms GRU by 1.9 percentage points on SVHN.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": "GRU",
+   "x_b": "SVHN",
+   "true_value": 1.9,
+   "claimed_value": 1.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_fig1_c2",
+   "sentence": "ViT-S reaches 80.0% F1 score on SVHN.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.0,
+   "claimed_value": 80.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_fig1_c3",
+   "sentence": "On AG News, GRU is 3.1 points better than ResNet-50.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": "ResNet-50",
+   "x_b": "AG News",
+   "true_value": 3.1,
+   "claimed_value": 3.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_fig2_c0",
+   "sentence": "As shown in Figure 2, GRU reaches 76.0% accuracy at epoch 20.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "20",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 75.3,
+   "claimed_value": 76.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 37.18,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_006_fig2_c1",
+   "sentence": "ResNet-50 reaches 79.1% accuracy at epoch 35.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "35",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.0,
+   "claimed_value": 79.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 37.18,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_fig3_c0",
+   "sentence": "As shown in Figure 3, from epoch 6 to epoch 12, the F1 score of DistilBERT improves by a relative 9%.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "DistilBERT",
+   "x": "6",
+   "series_b": null,
+   "x_b": "12",
+   "true_value": 9.23277,
+   "claimed_value": 9.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 34.75999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_006_fig3_c1",
+   "sentence": "At epoch 4, BERT-base is 4.0 points better than Baseline (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "BERT-base",
+   "x": "4",
+   "series_b": "Baseline",
+   "x_b": "4",
+   "true_value": 4.0,
+   "claimed_value": 4.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 34.75999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_006_fig3_c2",
+   "sentence": "Baseline attains a F1 score of 79.8% at epoch 8.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.8,
+   "claimed_value": 79.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 34.75999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_006_setup1",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

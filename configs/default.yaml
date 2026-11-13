@@ -38,10 +38,14 @@ retrieval:
   vocab_match: 80         # rapidfuzz score for series/x to count as "in this figure"
   legend_names: true      # OCR found no figure: ask the VLM for the legend of near-miss figures (U11b pilot: 5 of 7 wrong
                           # NO_FIGUREs recovered, 0 of 23 right ones invented; one cached call per figure)
+  cited_first: false      # v2: a cited "Figure N" that matches all but the (OCR-misread) series beats an uncited figure
+  ambiguity_ratio: 0.8    # several figures show the claim: check the top two if the second scores >= ratio x the first
+                          # (v2: 0.0 = always check two, because two charts can share a caption, e.g. "Training loss")
 
 agent:
   policy: fixed_order     # all_tools | fixed_order | calibration_informed | informed | llm
   fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  hand_off_rejected: false  # v2: a sentence that looks like a claim but the parser rejects goes to the TA (not dropped)
   ambiguous_rule: both    # two figures fit a sentence: either | top | both | never (see scripts/ambiguous_rules.py).
                           # Chosen on 14 ambiguous claims (test + dev): either/top accepted 5, one of them wrong; both/never 0 missed errors
   informed:               # the informed policy (agent/planner.py); every number is read from the tool profile
@@ -52,6 +56,12 @@ agent:
     min_pair_agreements: 20 # agreements needed before a pair's wrong-agreement rate is trusted
     min_repair_success: 0.5 # a repair is proposed only if it fixed at least this share of such failures in calibration
     big_error: 0.05         # "badly wrong" = off by more than 5% of the axis range (the usual ChartQA tolerance)
+    never_pair: []          # tools that share one model and so are never each other's cross-check, e.g. [[vlm_table, vlm_crop]]
+
+calibration:
+  splits: [calib]
+  order: fixed            # a k-reading calibration item uses the first k answering tools in agent.fixed_order ("random": a seeded
+                          # random subset). Explicit since 9 Nov; before, it silently followed agent.policy
 
 tools:
   enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]

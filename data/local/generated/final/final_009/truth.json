@@ -1,0 +1,330 @@
+{
+ "report_id": "final_009",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of CNN by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "final_009_fig1",
+    "kind": "bar",
+    "title": "F1 score of CNN by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "SST-2",
+     "MNIST",
+     "SVHN",
+     "IMDB",
+     "Fashion-MNIST",
+     "AG News"
+    ],
+    "series": {
+     "CNN": [
+      88.8,
+      81.2,
+      87.3,
+      75.4,
+      69.1,
+      78.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       2.9
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "CNN": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "final_009_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35",
+     "40"
+    ],
+    "series": {
+     "Transformer": [
+      55.5,
+      61.4,
+      65.8,
+      71.1,
+      73.5,
+      73.1,
+      73.9,
+      73.3
+     ],
+     "LSTM": [
+      72.8,
+      79.8,
+      84.5,
+      87.2,
+      88.4,
+      89.5,
+      89.6,
+      90.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     53.77,
+     91.83
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 11,
+      "figsize": [
+       6.4,
+       4.3
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "Transformer": "#0072b2",
+      "LSTM": "#d55e00"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "final_009_fig1_c0",
+   "sentence": "As shown in Figure 1, on AG News, CNN obtains a F1 score of 128.7%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.7,
+   "claimed_value": 128.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_009_fig1_c1",
+   "sentence": "CNN scores about 10 points higher on AG News than on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "AG News",
+   "series_b": "CNN",
+   "x_b": "Fashion-MNIST",
+   "true_value": 9.6,
+   "claimed_value": 10.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_fig1_c2",
+   "sentence": "CNN scores 13.2 points higher on SVHN than on Fashion-MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SVHN",
+   "series_b": "CNN",
+   "x_b": "Fashion-MNIST",
+   "true_value": 18.2,
+   "claimed_value": 13.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_fig1_c3",
+   "sentence": "CNN scores about 18 points higher on SVHN than on Fashion-MNIST (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "SVHN",
+   "series_b": "CNN",
+   "x_b": "Fashion-MNIST",
+   "true_value": 18.2,
+   "claimed_value": 18.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_009_fig2_c0",
+   "sentence": "LSTM outperforms Transformer by 18.4 percentage points at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "10",
+   "series_b": "Transformer",
+   "x_b": "10",
+   "true_value": 18.4,
+   "claimed_value": 18.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 38.059999999999995,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_fig2_c1",
+   "sentence": "As shown in Figure 2, LSTM outperforms Transformer by 16.8 percentage points at epoch 40.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "40",
+   "series_b": "Transformer",
+   "x_b": "40",
+   "true_value": 16.8,
+   "claimed_value": 16.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 38.059999999999995,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "final_009_fig2_c2",
+   "sentence": "LSTM outperforms Transformer by 20.6 percentage points at epoch 15.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "15",
+   "series_b": "Transformer",
+   "x_b": "15",
+   "true_value": 18.7,
+   "claimed_value": 20.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 38.059999999999995,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_nofig",
+   "sentence": "Logistic Regression reaches 90.4% accuracy on AG News.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 90.4,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_setup0",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "final_009_setup1",
+   "sentence": "We trained each model for 100 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -1,0 +1,267 @@
+{
+ "report_id": "calib_000",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score of Transformer by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_000_fig1",
+    "kind": "bar",
+    "title": "F1 score of Transformer by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "SST-2",
+     "AG News",
+     "IMDB"
+    ],
+    "series": {
+     "Transformer": [
+      74.5,
+      71.5,
+      84.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     96.71499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.6,
+       4.0
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "Transformer": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy of Ours by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_000_fig2",
+    "kind": "bar",
+    "title": "Accuracy of Ours by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "AG News",
+     "SVHN",
+     "MNIST",
+     "IMDB"
+    ],
+    "series": {
+     "Ours": [
+      73.3,
+      68.6,
+      63.4,
+      70.5,
+      58.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     84.29499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 12,
+      "figsize": [
+       5.9,
+       4.4
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "Ours": "#0072b2"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_000_fig1_c0",
+   "sentence": "Transformer reaches 119.9% F1 score on AG News.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.5,
+   "claimed_value": 119.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 96.71499999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_000_fig1_c1",
+   "sentence": "Transformer reaches 71.5% F1 score on AG News (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.5,
+   "claimed_value": 71.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 96.71499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_000_fig2_c0",
+   "sentence": "Ours achieves 71.8% accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.4,
+   "claimed_value": 71.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 84.29499999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_000_fig2_c1",
+   "sentence": "Ours achieves 63.4% accuracy on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.4,
+   "claimed_value": 63.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 84.29499999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_000_fig2_c2",
+   "sentence": "Ours achieves 70.5% accuracy on MNIST (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.5,
+   "claimed_value": 70.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 84.29499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_000_nofig",
+   "sentence": "On AG News, Naive Bayes obtains an accuracy of 83.5%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Naive Bayes",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 83.5,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_000_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_000_setup1",
+   "sentence": "Each experiment was repeated 5 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

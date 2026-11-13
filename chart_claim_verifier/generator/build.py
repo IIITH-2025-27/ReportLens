@@ -11,7 +11,7 @@ from pathlib import Path
 
 from .report_builder import build_report
 
-SPLITS = ["calib", "calib_easy", "dev", "test", "style_shift", "phrasing", "holdout", "holdout2", "calib_grouped", "holdout3", "ft_pool"]
+SPLITS = ["calib", "calib_easy", "dev", "test", "style_shift", "phrasing", "holdout", "holdout2", "calib_grouped", "holdout3", "ft_pool", "final"]
 NOVEL_SHARE = 0.6        # "phrasing" split: share of claims worded in ways the rule parser does not know (U8)
 
 

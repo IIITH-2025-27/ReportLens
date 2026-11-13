@@ -1,0 +1,326 @@
+{
+ "report_id": "holdout_003",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_003_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "IMDB",
+     "MNIST",
+     "SST-2",
+     "SVHN"
+    ],
+    "series": {
+     "MLP": [
+      79.4,
+      76.1,
+      59.1,
+      91.7,
+      75.1
+     ],
+     "VGG-16": [
+      74.1,
+      71.7,
+      59.7,
+      85.6,
+      76.8
+     ],
+     "MobileNet": [
+      72.3,
+      67.6,
+      60.0,
+      82.7,
+      69.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.4,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MLP": "#1f77b4",
+      "VGG-16": "#ff7f0e",
+      "MobileNet": "#2ca02c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_003_fig2",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "SVHN",
+     "IMDB",
+     "AG News",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ViT-S": [
+      76.3,
+      81.1,
+      88.8,
+      78.3,
+      93.0
+     ],
+     "ResNet-18": [
+      74.4,
+      76.1,
+      82.1,
+      76.1,
+      91.5
+     ],
+     "Transformer": [
+      76.0,
+      74.4,
+      77.6,
+      77.0,
+      90.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.3,
+       3.1
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ViT-S": "#1b9e77",
+      "ResNet-18": "#d95f02",
+      "Transformer": "#7570b3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_003_fig1_c0",
+   "sentence": "On MNIST, MobileNet obtains a validation accuracy of 60.0% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.0,
+   "claimed_value": 60.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_003_fig1_c1",
+   "sentence": "MLP outperforms VGG-16 by 16.1 percentage points on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "SST-2",
+   "series_b": "VGG-16",
+   "x_b": "SST-2",
+   "true_value": 6.1,
+   "claimed_value": 16.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_fig1_c2",
+   "sentence": "VGG-16 reaches 67.6% validation accuracy on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.7,
+   "claimed_value": 67.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_003_fig2_c0",
+   "sentence": "ViT-S reaches 88.8% accuracy on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.8,
+   "claimed_value": 88.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_fig2_c1",
+   "sentence": "ViT-S achieves 88.0% accuracy on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 93.0,
+   "claimed_value": 88.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_fig2_c2",
+   "sentence": "On Fashion-MNIST, Transformer obtains a accuracy of 26.0%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.0,
+   "claimed_value": 26.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_nofig",
+   "sentence": "Random Forest reaches 82.2% accuracy on Tiny-ImageNet.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "Tiny-ImageNet",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 82.2,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_setup0",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_003_setup1",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

@@ -1,0 +1,451 @@
+{
+ "report_id": "calib_009",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "calib_009_fig1",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16",
+     "18",
+     "20",
+     "22",
+     "24",
+     "26",
+     "28",
+     "30",
+     "32"
+    ],
+    "series": {
+     "EfficientNet": [
+      48.5,
+      56.7,
+      64.4,
+      68.3,
+      73.5,
+      76.7,
+      79.1,
+      82.9,
+      83.4,
+      85.4,
+      87.3,
+      86.9,
+      87.5,
+      88.6,
+      89.2,
+      88.2
+     ],
+     "MobileNet": [
+      65.6,
+      73.0,
+      75.9,
+      82.6,
+      84.0,
+      85.1,
+      89.6,
+      89.7,
+      91.6,
+      91.7,
+      93.5,
+      93.1,
+      92.1,
+      94.7,
+      94.0,
+      93.7
+     ],
+     "ResNet-50": [
+      50.7,
+      57.0,
+      61.0,
+      64.7,
+      66.6,
+      71.0,
+      72.0,
+      72.9,
+      75.5,
+      76.7,
+      76.9,
+      79.9,
+      77.3,
+      80.6,
+      80.0,
+      79.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     46.19,
+     97.01
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.4,
+       3.2
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "EfficientNet": "#0072b2",
+      "MobileNet": "#d55e00",
+      "ResNet-50": "#009e73"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Training loss for the models in this experiment.",
+   "table": {
+    "table_id": "calib_009_fig2",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16"
+    ],
+    "series": {
+     "GRU": [
+      1.415,
+      0.864,
+      0.527,
+      0.451,
+      0.369,
+      0.353,
+      0.31,
+      0.25
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.19175,
+     1.47325
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       5.5,
+       3.5
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Test accuracy of GRU by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_009_fig3",
+    "kind": "bar",
+    "title": "Test accuracy of GRU by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "IMDB",
+     "CIFAR-10",
+     "SVHN",
+     "AG News",
+     "MNIST"
+    ],
+    "series": {
+     "GRU": [
+      81.5,
+      85.2,
+      73.2,
+      90.6,
+      90.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 10,
+      "figsize": [
+       5.5,
+       4.2
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#1b9e77"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_009_fig1_c0",
+   "sentence": "From epoch 16 to epoch 20, the validation accuracy of MobileNet improves by a relative 7.9%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "MobileNet",
+   "x": "16",
+   "series_b": null,
+   "x_b": "20",
+   "true_value": 2.229654,
+   "claimed_value": 7.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 50.82000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_fig1_c1",
+   "sentence": "As shown in Figure 1, MobileNet outperforms EfficientNet by 12 percentage points at epoch 6.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "6",
+   "series_b": "EfficientNet",
+   "x_b": "6",
+   "true_value": 11.5,
+   "claimed_value": 12.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 50.82000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_009_fig2_c0",
+   "sentence": "At epoch 12, the loss of GRU is 0.994.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "12",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.353,
+   "claimed_value": 0.994,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 1.2814999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_fig2_c1",
+   "sentence": "At epoch 8, the loss of GRU is 0.387.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.451,
+   "claimed_value": 0.387,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 1.2814999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_fig2_c2",
+   "sentence": "At epoch 16, the loss of GRU is 0.506.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "16",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.25,
+   "claimed_value": 0.506,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 1.2814999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_fig3_c0",
+   "sentence": "On AG News, GRU obtains a test accuracy of 100.6%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.6,
+   "claimed_value": 100.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_fig3_c1",
+   "sentence": "On CIFAR-10, GRU obtains a test accuracy of 80.2% (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.2,
+   "claimed_value": 80.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_009_fig3_c2",
+   "sentence": "GRU reaches 92.6% test accuracy on AG News (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.6,
+   "claimed_value": 92.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_009_nofig",
+   "sentence": "On Tiny-ImageNet, Naive Bayes obtains an accuracy of 85.6%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Naive Bayes",
+   "x": "Tiny-ImageNet",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 85.6,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_setup0",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_009_setup1",
+   "sentence": "We trained each model for 50 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

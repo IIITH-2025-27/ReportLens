@@ -1,0 +1,309 @@
+{
+ "report_id": "dev_002",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "dev_002_fig1",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "AG News",
+     "Fashion-MNIST",
+     "SST-2",
+     "CIFAR-10"
+    ],
+    "series": {
+     "GRU": [
+      67.5,
+      70.4,
+      85.7,
+      85.7,
+      57.5
+     ],
+     "ResNet-18": [
+      69.9,
+      73.1,
+      81.7,
+      87.8,
+      60.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 12,
+      "figsize": [
+       6.0,
+       4.1
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#1b9e77",
+      "ResNet-18": "#d95f02"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "dev_002_fig2",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60"
+    ],
+    "series": {
+     "Baseline": [
+      69.8,
+      74.7,
+      78.7,
+      77.8,
+      78.8,
+      76.5
+     ],
+     "DistilBERT": [
+      62.2,
+      74.3,
+      80.9,
+      86.9,
+      89.2,
+      89.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     60.85,
+     90.55
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 12,
+      "figsize": [
+       5.7,
+       3.8
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "Baseline": "#1b9e77",
+      "DistilBERT": "#d95f02"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "dev_002_fig1_c0",
+   "sentence": "ResNet-18 achieves about 60% validation accuracy on CIFAR-10 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.7,
+   "claimed_value": 60.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_002_fig1_c1",
+   "sentence": "On SST-2, GRU obtains a validation accuracy of 135.7%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.7,
+   "claimed_value": 135.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_002_fig1_c2",
+   "sentence": "ResNet-18 outperforms GRU by 4.1 percentage points on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "SST-2",
+   "series_b": "GRU",
+   "x_b": "SST-2",
+   "true_value": 2.1,
+   "claimed_value": 4.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_002_fig2_c0",
+   "sentence": "As shown in Figure 2, DistilBERT reaches 82.4% test accuracy at epoch 30.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "30",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.9,
+   "claimed_value": 82.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 29.699999999999996,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_002_fig2_c1",
+   "sentence": "At epoch 30, DistilBERT is 8.1 points better than Baseline.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "30",
+   "series_b": "Baseline",
+   "x_b": "30",
+   "true_value": 2.2,
+   "claimed_value": 8.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 29.699999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_002_fig2_c2",
+   "sentence": "DistilBERT outperforms Baseline by 3.7 percentage points at epoch 30 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "30",
+   "series_b": "Baseline",
+   "x_b": "30",
+   "true_value": 2.2,
+   "claimed_value": 3.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 29.699999999999996,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "dev_002_fig2_c3",
+   "sentence": "At epoch 40, Baseline achieves about 80% test accuracy.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.8,
+   "claimed_value": 80.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 29.699999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_002_setup0",
+   "sentence": "We trained each model for 50 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "dev_002_setup1",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

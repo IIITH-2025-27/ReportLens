@@ -1,0 +1,273 @@
+{
+ "report_id": "holdout_010",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_010_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "MNIST",
+     "CIFAR-10",
+     "AG News"
+    ],
+    "series": {
+     "BERT-base": [
+      65.1,
+      85.4,
+      63.9
+     ],
+     "Ours": [
+      61.9,
+      89.8,
+      66.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 11,
+      "figsize": [
+       6.5,
+       3.9
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#e41a1c",
+      "Ours": "#377eb8"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout_010_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "AG News",
+     "SVHN",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "ViT-S": [
+      88.0,
+      58.7,
+      64.5,
+      85.7
+     ],
+     "ResNet-18": [
+      96.2,
+      71.7,
+      80.7,
+      99.5
+     ],
+     "DistilBERT": [
+      91.9,
+      75.0,
+      71.6,
+      96.3
+     ],
+     "LSTM": [
+      93.2,
+      68.7,
+      71.1,
+      89.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "best",
+      "font_size": 11,
+      "figsize": [
+       5.9,
+       4.3
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "ResNet-18": "#377eb8",
+      "DistilBERT": "#4daf4a",
+      "LSTM": "#984ea3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout_010_fig1_c0",
+   "sentence": "On AG News, Ours is 2.2 points better than BERT-base (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "AG News",
+   "series_b": "BERT-base",
+   "x_b": "AG News",
+   "true_value": 2.2,
+   "claimed_value": 2.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_010_fig1_c1",
+   "sentence": "On MNIST, Ours obtains a test accuracy of 71.9%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.9,
+   "claimed_value": 71.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_010_fig2_c0",
+   "sentence": "ViT-S achieves 48.7% validation accuracy on AG News.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 58.7,
+   "claimed_value": 48.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_010_fig2_c1",
+   "sentence": "As shown in Figure 2, LSTM outperforms ViT-S by 30.0 percentage points on AG News.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "AG News",
+   "series_b": "ViT-S",
+   "x_b": "AG News",
+   "true_value": 10.0,
+   "claimed_value": 30.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout_010_nofig",
+   "sentence": "XGBoost reaches 64.5% accuracy on Tiny-ImageNet.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "Tiny-ImageNet",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 64.5,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_010_setup0",
+   "sentence": "The dataset was split into 70 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout_010_setup1",
+   "sentence": "We trained each model for 100 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

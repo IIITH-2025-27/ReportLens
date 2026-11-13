@@ -1,0 +1,356 @@
+{
+ "report_id": "test_018",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy of GRU by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_018_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of GRU by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "MNIST"
+    ],
+    "series": {
+     "GRU": [
+      76.4,
+      73.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     87.86
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 10,
+      "figsize": [
+       5.1,
+       3.4
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "GRU": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of EfficientNet by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_018_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "AG News",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "EfficientNet": [
+      68.4,
+      80.6,
+      85.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     98.43999999999998
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "lower right",
+      "font_size": 12,
+      "figsize": [
+       6.0,
+       4.0
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "EfficientNet": "#e41a1c"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Accuracy of MobileNet by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_018_fig3",
+    "kind": "bar",
+    "title": "Accuracy of MobileNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "MNIST",
+     "AG News",
+     "SVHN",
+     "IMDB"
+    ],
+    "series": {
+     "MobileNet": [
+      78.1,
+      65.4,
+      73.7,
+      59.8,
+      73.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     89.81499999999998
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 9,
+      "figsize": [
+       5.0,
+       3.0
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "MobileNet": "#1f77b4"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "test_018_fig1_c0",
+   "sentence": "As shown in Figure 1, on SST-2, GRU obtains a validation accuracy of 72.0%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.4,
+   "claimed_value": 72.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 87.86,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_018_fig1_c1",
+   "sentence": "GRU scores 20.5 points higher on SST-2 than on MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "SST-2",
+   "series_b": "GRU",
+   "x_b": "MNIST",
+   "true_value": 2.9,
+   "claimed_value": 20.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 87.86,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_fig1_c2",
+   "sentence": "On MNIST, GRU obtains a validation accuracy of 74%.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.5,
+   "claimed_value": 74.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 87.86,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_fig2_c0",
+   "sentence": "EfficientNet scores 17.2 points higher on Fashion-MNIST than on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "Fashion-MNIST",
+   "series_b": "EfficientNet",
+   "x_b": "SVHN",
+   "true_value": 17.2,
+   "claimed_value": 17.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 98.43999999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_fig2_c1",
+   "sentence": "On SVHN, EfficientNet obtains a validation accuracy of 88.1%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 68.4,
+   "claimed_value": 88.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 98.43999999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_fig3_c0",
+   "sentence": "MobileNet scores 53.2 points higher on AG News than on MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "MobileNet",
+   "x": "AG News",
+   "series_b": "MobileNet",
+   "x_b": "MNIST",
+   "true_value": 8.3,
+   "claimed_value": 53.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 89.81499999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_fig3_c1",
+   "sentence": "MobileNet reaches 73% accuracy on IMDB.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.2,
+   "claimed_value": 73.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 89.81499999999998,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_nofig",
+   "sentence": "On IMDB, Logistic Regression obtains an accuracy of 80.3%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 80.3,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_setup0",
+   "sentence": "Each experiment was repeated 5 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_018_setup1",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

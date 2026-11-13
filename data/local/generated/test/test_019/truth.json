@@ -1,0 +1,705 @@
+{
+ "report_id": "test_019",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_019_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SST-2",
+     "Fashion-MNIST",
+     "AG News",
+     "IMDB",
+     "MNIST",
+     "SVHN"
+    ],
+    "series": {
+     "MobileNet": [
+      97.7,
+      84.0,
+      86.7,
+      71.0,
+      76.1,
+      63.2
+     ],
+     "ResNet-18": [
+      84.1,
+      78.6,
+      73.5,
+      56.4,
+      73.7,
+      50.1
+     ],
+     "Baseline": [
+      74.9,
+      77.0,
+      74.4,
+      52.3,
+      71.3,
+      47.9
+     ],
+     "DistilBERT": [
+      85.9,
+      75.9,
+      77.2,
+      62.4,
+      71.1,
+      54.8
+     ],
+     "VGG-16": [
+      91.7,
+      87.4,
+      88.9,
+      71.6,
+      79.0,
+      58.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       4.5,
+       2.8
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "MobileNet": "#1b9e77",
+      "ResNet-18": "#d95f02",
+      "Baseline": "#7570b3",
+      "DistilBERT": "#e7298a",
+      "VGG-16": "#66a61e"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "test_019_fig2",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30"
+    ],
+    "series": {
+     "CNN": [
+      73.2,
+      79.7,
+      83.0,
+      84.5,
+      86.4,
+      85.7
+     ],
+     "LSTM": [
+      69.6,
+      77.3,
+      81.1,
+      84.4,
+      83.9,
+      85.9
+     ],
+     "MobileNet": [
+      61.9,
+      65.8,
+      68.3,
+      70.0,
+      70.0,
+      70.0
+     ],
+     "VGG-16": [
+      56.9,
+      68.0,
+      74.0,
+      75.9,
+      77.1,
+      77.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     55.425,
+     87.875
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "center right",
+      "font_size": 10,
+      "figsize": [
+       6.0,
+       3.5
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "CNN": "#e41a1c",
+      "LSTM": "#377eb8",
+      "MobileNet": "#4daf4a",
+      "VGG-16": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "test_019_fig3",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14"
+    ],
+    "series": {
+     "ViT-S": [
+      58.4,
+      64.0,
+      71.0,
+      75.7,
+      79.0,
+      81.4,
+      84.9,
+      86.0,
+      87.4,
+      87.1,
+      87.7,
+      88.8,
+      89.3,
+      90.6
+     ],
+     "CNN": [
+      48.9,
+      51.9,
+      52.3,
+      58.0,
+      61.4,
+      61.1,
+      63.2,
+      65.2,
+      65.3,
+      65.1,
+      67.1,
+      66.0,
+      68.2,
+      69.1
+     ],
+     "ResNet-50": [
+      51.6,
+      59.8,
+      66.7,
+      71.9,
+      78.1,
+      80.5,
+      83.4,
+      84.7,
+      86.8,
+      88.0,
+      89.7,
+      89.2,
+      90.4,
+      90.8
+     ],
+     "ResNet-18": [
+      58.6,
+      60.9,
+      64.4,
+      65.4,
+      67.6,
+      67.7,
+      70.9,
+      70.3,
+      70.5,
+      70.0,
+      70.8,
+      71.0,
+      70.1,
+      68.2
+     ],
+     "LSTM": [
+      45.7,
+      54.4,
+      60.6,
+      67.8,
+      71.7,
+      75.6,
+      78.1,
+      80.3,
+      82.2,
+      81.4,
+      83.3,
+      84.0,
+      84.0,
+      86.2
+     ],
+     "Baseline": [
+      53.0,
+      60.9,
+      70.6,
+      76.5,
+      80.5,
+      82.1,
+      86.0,
+      87.1,
+      88.5,
+      89.5,
+      90.3,
+      92.7,
+      91.4,
+      91.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     43.35,
+     95.05
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 9,
+      "figsize": [
+       4.5,
+       3.0
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "CNN": "#377eb8",
+      "ResNet-50": "#4daf4a",
+      "ResNet-18": "#984ea3",
+      "LSTM": "#ff7f00",
+      "Baseline": "#a65628"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Validation accuracy of DistilBERT by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "test_019_fig4",
+    "kind": "bar",
+    "title": "Validation accuracy of DistilBERT by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News",
+     "CIFAR-10",
+     "SST-2"
+    ],
+    "series": {
+     "DistilBERT": [
+      82.1,
+      89.1,
+      91.5,
+      68.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       6.1,
+       3.6
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "DistilBERT": "#0072b2"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "test_019_fig1_c0",
+   "sentence": "ResNet-18 reaches 56% test accuracy on IMDB.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 56.4,
+   "claimed_value": 56.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig1_c1",
+   "sentence": "On AG News, VGG-16 obtains a test accuracy of about 90% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.9,
+   "claimed_value": 90.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_019_fig1_c2",
+   "sentence": "DistilBERT achieves 51.1% test accuracy on MNIST.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 71.1,
+   "claimed_value": 51.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig2_c0",
+   "sentence": "CNN outperforms MobileNet by 16 percentage points at epoch 25 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "CNN",
+   "x": "25",
+   "series_b": "MobileNet",
+   "x_b": "25",
+   "true_value": 16.4,
+   "claimed_value": 16.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 32.45,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_019_fig2_c1",
+   "sentence": "From epoch 15 to epoch 25, the validation accuracy of VGG-16 improves by a relative 26.1%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "VGG-16",
+   "x": "15",
+   "series_b": null,
+   "x_b": "25",
+   "true_value": 4.189189,
+   "claimed_value": 26.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 32.45,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig2_c2",
+   "sentence": "LSTM attains a validation accuracy of over 80% at epoch 25.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "25",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 83.9,
+   "claimed_value": 80.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 32.45,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig3_c0",
+   "sentence": "ViT-S outperforms CNN by 21.5 percentage points at epoch 14.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "14",
+   "series_b": "CNN",
+   "x_b": "14",
+   "true_value": 21.5,
+   "claimed_value": 21.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 51.699999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig3_c1",
+   "sentence": "ResNet-18 outperforms ResNet-50 by 1.1 percentage points at epoch 2 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "2",
+   "series_b": "ResNet-50",
+   "x_b": "2",
+   "true_value": 1.1,
+   "claimed_value": 1.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 51.699999999999996,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_019_fig3_c2",
+   "sentence": "From epoch 3 to epoch 8, the validation accuracy of ViT-S improves by a relative 21.1%.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "ViT-S",
+   "x": "3",
+   "series_b": null,
+   "x_b": "8",
+   "true_value": 21.126761,
+   "claimed_value": 21.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 51.699999999999996,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig4_c0",
+   "sentence": "DistilBERT achieves 68.8% validation accuracy on SST-2.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 68.8,
+   "claimed_value": 68.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig4_c1",
+   "sentence": "As shown in Figure 4, DistilBERT achieves 82.1% validation accuracy on IMDB.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.1,
+   "claimed_value": 82.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "test_019_fig4_c2",
+   "sentence": "DistilBERT scores about 23 points higher on CIFAR-10 than on SST-2.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "CIFAR-10",
+   "series_b": "DistilBERT",
+   "x_b": "SST-2",
+   "true_value": 22.7,
+   "claimed_value": 23.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_fig4_c3",
+   "sentence": "On IMDB, DistilBERT obtains a validation accuracy of 82.1%.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.1,
+   "claimed_value": 82.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_nofig",
+   "sentence": "SVM reaches 52.3% accuracy on SVHN.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 52.3,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_setup0",
+   "sentence": "We trained each model for 30 epochs with a batch size of 128.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "test_019_setup1",
+   "sentence": "The learning rate was set to 0.01 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

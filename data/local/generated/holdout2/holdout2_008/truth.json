@@ -1,0 +1,353 @@
+{
+ "report_id": "holdout2_008",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_008_fig1",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "AG News",
+     "SST-2",
+     "CIFAR-10",
+     "Fashion-MNIST",
+     "SVHN"
+    ],
+    "series": {
+     "BERT-base": [
+      71.0,
+      70.3,
+      76.1,
+      85.4,
+      60.9
+     ],
+     "MLP": [
+      75.7,
+      83.0,
+      83.2,
+      91.2,
+      68.7
+     ],
+     "GRU": [
+      68.0,
+      69.6,
+      71.6,
+      81.8,
+      60.5
+     ],
+     "EfficientNet": [
+      77.9,
+      79.7,
+      79.9,
+      93.1,
+      70.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 11,
+      "figsize": [
+       6.1,
+       3.6
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "BERT-base": "#e41a1c",
+      "MLP": "#377eb8",
+      "GRU": "#4daf4a",
+      "EfficientNet": "#984ea3"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Training loss for the models in this experiment.",
+   "table": {
+    "table_id": "holdout2_008_fig2",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "series": {
+     "MLP": [
+      1.81,
+      1.399,
+      1.101,
+      0.862,
+      0.733,
+      0.608,
+      0.468,
+      0.447
+     ],
+     "CNN": [
+      1.379,
+      0.922,
+      0.647,
+      0.47,
+      0.39,
+      0.441,
+      0.423,
+      0.343
+     ],
+     "VGG-16": [
+      1.317,
+      0.861,
+      0.699,
+      0.514,
+      0.476,
+      0.468,
+      0.394,
+      0.39
+     ],
+     "BERT-base": [
+      1.764,
+      1.244,
+      0.913,
+      0.63,
+      0.491,
+      0.378,
+      0.281,
+      0.245
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.16675,
+     1.88825
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 12,
+      "figsize": [
+       6.0,
+       3.6
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "MLP": "#e41a1c",
+      "CNN": "#377eb8",
+      "VGG-16": "#4daf4a",
+      "BERT-base": "#984ea3"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout2_008_fig1_c0",
+   "sentence": "GRU achieves 69.6% F1 score on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.6,
+   "claimed_value": 69.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_008_fig1_c1",
+   "sentence": "GRU reaches 60.5% F1 score on SVHN (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.5,
+   "claimed_value": 60.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_008_fig1_c2",
+   "sentence": "EfficientNet outperforms GRU by 10 percentage points on SVHN.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "SVHN",
+   "series_b": "GRU",
+   "x_b": "SVHN",
+   "true_value": 9.7,
+   "claimed_value": 10.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_008_fig1_c3",
+   "sentence": "On Fashion-MNIST, BERT-base obtains a F1 score of about 90% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.4,
+   "claimed_value": 90.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_008_fig2_c0",
+   "sentence": "At epoch 5, the loss of MLP is 1.594 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "5",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.733,
+   "claimed_value": 1.594,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 1.7215,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_008_fig2_c1",
+   "sentence": "CNN has a loss of 0.39 at epoch 5.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "5",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.39,
+   "claimed_value": 0.39,
+   "tolerance": 0.005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.7215,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_008_fig2_c2",
+   "sentence": "As shown in Figure 2, VGG-16 has a loss of 0.600 at epoch 4.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.514,
+   "claimed_value": 0.6,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 1.7215,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout2_008_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout2_008_setup1",
+   "sentence": "All experiments were run on a single GPU with 12 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

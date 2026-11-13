@@ -1,0 +1,327 @@
+{
+ "report_id": "holdout3_008",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_008_fig1",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "13",
+     "14",
+     "15",
+     "16"
+    ],
+    "series": {
+     "EfficientNet": [
+      41.6,
+      50.1,
+      57.2,
+      62.2,
+      66.6,
+      68.1,
+      72.0,
+      75.0,
+      75.4,
+      77.9,
+      77.9,
+      79.0,
+      80.2,
+      79.2,
+      81.5,
+      79.8
+     ],
+     "LSTM": [
+      46.5,
+      50.4,
+      56.7,
+      60.3,
+      62.3,
+      66.3,
+      66.2,
+      68.7,
+      70.1,
+      71.6,
+      71.8,
+      72.0,
+      74.5,
+      73.6,
+      75.2,
+      73.9
+     ],
+     "GRU": [
+      49.2,
+      55.3,
+      63.0,
+      66.7,
+      71.6,
+      75.6,
+      77.6,
+      81.8,
+      83.0,
+      85.1,
+      88.2,
+      88.8,
+      91.8,
+      90.6,
+      92.4,
+      92.2
+     ],
+     "Baseline": [
+      63.3,
+      66.2,
+      68.1,
+      69.8,
+      71.7,
+      72.6,
+      73.5,
+      74.4,
+      72.6,
+      74.8,
+      73.0,
+      74.6,
+      74.6,
+      73.4,
+      74.7,
+      74.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     39.06,
+     94.94000000000001
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       3.2
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "EfficientNet": "#0072b2",
+      "LSTM": "#d55e00",
+      "GRU": "#009e73",
+      "Baseline": "#cc79a7"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of ResNet-50 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "holdout3_008_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "AG News"
+    ],
+    "series": {
+     "ResNet-50": [
+      74.4,
+      90.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": true,
+      "legend_loc": "upper left",
+      "font_size": 9,
+      "figsize": [
+       5.4,
+       4.0
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "ResNet-50": "#0072b2"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "holdout3_008_fig1_c0",
+   "sentence": "As shown in Figure 1, at epoch 1, Baseline achieves 62.2% accuracy.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.3,
+   "claimed_value": 62.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 55.88000000000001,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "holdout3_008_fig1_c1",
+   "sentence": "At epoch 4, EfficientNet achieves 51.0% accuracy.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.2,
+   "claimed_value": 51.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 55.88000000000001,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_008_fig2_c0",
+   "sentence": "ResNet-50 achieves 74% validation accuracy on SST-2.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.4,
+   "claimed_value": 74.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_008_fig2_c1",
+   "sentence": "ResNet-50 reaches 64.4% validation accuracy on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.4,
+   "claimed_value": 64.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_008_nofig",
+   "sentence": "On STL-10, SVM obtains an accuracy of 65.9%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "STL-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 65.9,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_008_setup0",
+   "sentence": "We trained each model for 30 epochs with a batch size of 128.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "holdout3_008_setup1",
+   "sentence": "The learning rate was set to 0.0003 with the Adam optimizer.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

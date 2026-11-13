@@ -48,11 +48,20 @@ def coverage_at(points: list[dict], target: float = 0.10) -> dict | None:
 def ours_settings(table: CalibrationTable, base: RuleConfig, levels=(0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975, 0.99)):
     out = []
     for lv in levels:
-        rc = RuleConfig(lv, min(base.level_accept, lv), base.eps, base.min_readings, base.alpha, base.max_accept_margin)
+        rc = RuleConfig(lv, min(base.level_accept, lv), base.eps, base.min_readings, base.alpha, base.max_accept_margin,
+                        base.by_tool_set, base.drop_tied_legs)
         out.append((f"ours level={lv}", table, rc, False))
     for a in (0.05, 0.10, 0.20):
-        rc = RuleConfig(base.level_flag, base.level_accept, base.eps, base.min_readings, a, base.max_accept_margin)
+        rc = RuleConfig(base.level_flag, base.level_accept, base.eps, base.min_readings, a, base.max_accept_margin,
+                        base.by_tool_set, base.drop_tied_legs)
         out.append((f"ours+BH alpha={a}", table, rc, True))
+    # A flag needs gap > rounding + the level_flag cut-off, so its conformal p-value is at most 1 - level_flag. With
+    # level_flag >= 1 - alpha every flag passes BH and the batch check cannot change a verdict. To see what BH adds,
+    # let it act: lower per-claim levels, then BH at the configured alpha.
+    for lv in (0.6, 0.7, 0.8):
+        rc = RuleConfig(lv, min(base.level_accept, lv), base.eps, base.min_readings, base.alpha, base.max_accept_margin,
+                        base.by_tool_set, base.drop_tied_legs)
+        out.append((f"ours level={lv} +BH alpha={base.alpha}", table, rc, True))
     return out
 
 

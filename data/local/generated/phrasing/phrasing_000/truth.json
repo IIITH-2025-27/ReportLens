@@ -1,0 +1,449 @@
+{
+ "report_id": "phrasing_000",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "F1 score by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_000_fig1",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "IMDB",
+     "MNIST",
+     "SVHN",
+     "AG News",
+     "Fashion-MNIST",
+     "CIFAR-10"
+    ],
+    "series": {
+     "Baseline": [
+      69.7,
+      93.5,
+      88.1,
+      89.0,
+      96.4,
+      99.5
+     ],
+     "ResNet-50": [
+      62.8,
+      92.3,
+      78.4,
+      81.0,
+      88.6,
+      93.7
+     ],
+     "MLP": [
+      68.8,
+      89.6,
+      73.6,
+      79.8,
+      85.3,
+      85.6
+     ],
+     "DistilBERT": [
+      57.3,
+      81.6,
+      71.3,
+      75.7,
+      83.0,
+      83.1
+     ],
+     "GRU": [
+      67.4,
+      91.0,
+      79.5,
+      82.7,
+      87.3,
+      86.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.3,
+       3.3
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "Baseline": "#1f77b4",
+      "ResNet-50": "#ff7f0e",
+      "MLP": "#2ca02c",
+      "DistilBERT": "#d62728",
+      "GRU": "#9467bd"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy of ResNet-18 by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_000_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of ResNet-18 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "AG News",
+     "Fashion-MNIST",
+     "SVHN",
+     "SST-2"
+    ],
+    "series": {
+     "ResNet-18": [
+      65.6,
+      71.1,
+      70.6,
+      70.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     81.76499999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       5.2,
+       3.3
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "ResNet-18": "#1f77b4"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_000_fig3",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News",
+     "SST-2",
+     "CIFAR-10",
+     "SVHN"
+    ],
+    "series": {
+     "BERT-base": [
+      73.7,
+      62.9,
+      65.9,
+      86.5,
+      70.7
+     ],
+     "Ours": [
+      69.6,
+      59.8,
+      63.7,
+      85.1,
+      63.3
+     ],
+     "MLP": [
+      64.2,
+      57.5,
+      61.1,
+      84.4,
+      66.0
+     ],
+     "ResNet-50": [
+      67.4,
+      58.5,
+      63.5,
+      88.1,
+      70.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.2,
+       3.3
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "Ours": "#d95f02",
+      "MLP": "#7570b3",
+      "ResNet-50": "#e7298a"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "phrasing_000_fig1_c0",
+   "sentence": "As shown in Figure 1, Evaluated on IMDB, DistilBERT comes in at 57% F1 score.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 57.3,
+   "claimed_value": 57.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_000_fig1_c1",
+   "sentence": "Evaluated on SVHN, MLP comes in at 73.6% F1 score.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.6,
+   "claimed_value": 73.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_000_fig2_c0",
+   "sentence": "ResNet-18 is 3.4 points higher on SST-2 than on AG News (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "SST-2",
+   "series_b": "ResNet-18",
+   "x_b": "AG News",
+   "true_value": 5.0,
+   "claimed_value": 3.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 81.76499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_000_fig2_c1",
+   "sentence": "ResNet-18 posts 70.6% validation accuracy when tested on SVHN (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.6,
+   "claimed_value": 70.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 81.76499999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_000_fig3_c0",
+   "sentence": "On SVHN, ResNet-50 obtains a validation accuracy of about 70%.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.8,
+   "claimed_value": 70.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_000_fig3_c1",
+   "sentence": "As shown in Figure 3, MLP posts 79.4% validation accuracy when tested on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 84.4,
+   "claimed_value": 79.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_000_fig3_c2",
+   "sentence": "Evaluated on CIFAR-10, MLP comes in at 84% validation accuracy (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 84.4,
+   "claimed_value": 84.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_000_fig3_c3",
+   "sentence": "ResNet-50 reaches 70.8% validation accuracy on SVHN.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.8,
+   "claimed_value": 70.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_000_nofig",
+   "sentence": "Logistic Regression reaches 63.4% accuracy on CIFAR-10.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 63.4,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_000_setup0",
+   "sentence": "We trained each model for 50 epochs with a batch size of 32.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_000_setup1",
+   "sentence": "All experiments were run on a single GPU with 16 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

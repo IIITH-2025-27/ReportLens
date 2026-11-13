@@ -84,13 +84,23 @@ def calibration_splits(cfg: dict, split: str | None = None) -> list[str]:
     return split.split(",") if split else list((cfg.get("calibration") or {}).get("splits", ["calib"]))
 
 
+def calibration_order(cfg: dict) -> list[str] | None:
+    """Which k tools make a k-reading calibration item: the first k in agent.fixed_order ("fixed", the default), or a
+    seeded random subset ("random", used by the E4 configs). Set explicitly, so choosing a different run-time policy
+    in the config can no longer change the calibration table."""
+    how = (cfg.get("calibration") or {}).get("order", "fixed")
+    if how not in ("fixed", "random"):
+        raise ValueError(f"calibration.order must be 'fixed' or 'random', not {how!r}")
+    return list(cfg["agent"]["fixed_order"]) if how == "fixed" else None
+
+
 def calibrate(ctx: Context, split: str | None = None, name: str | None = None) -> tuple[CalibrationTable, dict]:
     cfg = ctx.cfg
     tools = ctx.tools()
     rng = random.Random(cfg["seed"])
     items, errors = _collect(ctx, calibration_splits(cfg, split), tools, rng)
     names = list(tools)
-    order = cfg["agent"]["fixed_order"] if cfg["agent"]["policy"] in ("fixed_order",) else None
+    order = calibration_order(cfg)
     d = cfg["decision"]
     extras = {
         "tool_error": tool_error_table(errors, names),
@@ -218,8 +228,10 @@ def make_policy(ctx: Context, name: str, table: CalibrationTable, tools: dict, p
     raise ValueError(f"unknown policy {name!r}")
 
 
-def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
-              parser: str = "rule", retrieval: str = "ours", limit: int | None = None):
+def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None, parser: str = "rule",
+                retrieval: str = "ours", oracle=None) -> tuple[ReportAgent, Policy, RuleConfig]:
+    """The report agent exactly as the config describes it. `run` and `check` both use this, so the command a TA
+    runs on one report is the same system that was evaluated."""
     cfg = ctx.cfg
     tools = ctx.tools()
     try:
@@ -233,18 +245,45 @@ def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | N
     # parser: "rule" (no model), "llm" (always the model), "agent" (rules, LLM only when needed)
     prs = LLMParser(ctx.llm) if parser == "llm" else RuleParser()
     llm_parser = LLMParser(ctx.llm) if parser == "agent" else None
+    agent = ReportAgent(prs, controller, retrieval, oracle=oracle,
+                        ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
+                        llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
+                        legend_reader=make_legend_reader(ctx) if cfg["retrieval"].get("legend_names") else None,
+                        hand_off_rejected=cfg["agent"].get("hand_off_rejected", False),
+                        cited_first=cfg["retrieval"].get("cited_first", False),
+                        ambiguity_ratio=cfg["retrieval"].get("ambiguity_ratio", 0.8))
+    return agent, pol, rc
+
+
+def ingest_pdf(ctx: Context, pdf: Path, name: str | None = None) -> Report:
+    """Any report PDF (no truth file needed): parsed once into <work>/check/<name>/ and cached there."""
+    name = name or pdf.stem
+    work = ctx.work / "check" / name
+    cached = work / "report.json"
+    if cached.exists():
+        return Report.model_validate_json(cached.read_text())
+    report = parse_pdf(pdf, work, name)
+    cached.write_text(report.model_dump_json())
+    return report
+
+
+def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
+              parser: str = "rule", retrieval: str = "ours", limit: int | None = None,
+              reports: list[str] | None = None):
+    cfg = ctx.cfg
     truths, traces, mems, plans = [], [], [], {}
     oracle_map: dict = {}
-    dirs = report_dirs(ctx.data, split)[:limit]
+    dirs = report_dirs(ctx.data, split)
+    if reports is not None:                         # e.g. E8: only the reports that have a clean twin
+        dirs = [d for d in dirs if d.name in set(reports)]
+    dirs = dirs[:limit]
     for rd in dirs:
         report, truth = ingest(ctx, rd)
         truths.append(truth)
         for c in truth["claims"]:
             oracle_map[(truth["report_id"], c["sentence"].strip())] = c.get("figure_id")
-    agent = ReportAgent(prs, controller, retrieval, oracle=lambda rid, s: oracle_map.get((rid, s.strip())),
-                        ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
-                        llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
-                        legend_reader=make_legend_reader(ctx) if cfg["retrieval"].get("legend_names") else None)
+    agent, pol, rc = build_agent(ctx, table, policy, parser, retrieval,
+                                 oracle=lambda rid, s: oracle_map.get((rid, s.strip())))
     for rd, truth in zip(dirs, truths):
         report, _ = ingest(ctx, rd)
         tr, mem = agent.run(report)

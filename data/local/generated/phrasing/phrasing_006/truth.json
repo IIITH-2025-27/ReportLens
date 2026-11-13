@@ -1,0 +1,527 @@
+{
+ "report_id": "phrasing_006",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Validation accuracy of MLP by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_006_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of MLP by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News",
+     "Fashion-MNIST",
+     "SVHN",
+     "MNIST"
+    ],
+    "series": {
+     "MLP": [
+      93.7,
+      70.3,
+      93.1,
+      61.4,
+      70.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 8,
+      "figsize": [
+       4.2,
+       3.3
+      ],
+      "dpi": 90,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 35
+     },
+     "colors": {
+      "MLP": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_006_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News"
+    ],
+    "series": {
+     "Ours": [
+      77.8,
+      77.2
+     ],
+     "BERT-base": [
+      69.4,
+      70.5
+     ],
+     "GRU": [
+      78.6,
+      80.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     92.22999999999999
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": true,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 11,
+      "figsize": [
+       5.9,
+       4.1
+      ],
+      "dpi": 120,
+      "held_out": false
+     },
+     "colors": {
+      "Ours": "#e41a1c",
+      "BERT-base": "#377eb8",
+      "GRU": "#4daf4a"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "image": "fig3.png",
+   "caption": "Validation accuracy by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_006_fig3",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "AG News",
+     "IMDB"
+    ],
+    "series": {
+     "DistilBERT": [
+      71.9,
+      86.4,
+      83.6
+     ],
+     "ResNet-50": [
+      70.3,
+      79.8,
+      74.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     99.36
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 11,
+      "figsize": [
+       6.4,
+       4.2
+      ],
+      "dpi": 150,
+      "held_out": false
+     },
+     "colors": {
+      "DistilBERT": "#1b9e77",
+      "ResNet-50": "#d95f02"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "image": "fig4.png",
+   "caption": "Test accuracy during training for the models in this experiment.",
+   "table": {
+    "table_id": "phrasing_006_fig4",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35"
+    ],
+    "series": {
+     "Baseline": [
+      55.3,
+      68.6,
+      77.3,
+      81.1,
+      85.1,
+      88.1,
+      87.4
+     ],
+     "EfficientNet": [
+      64.6,
+      71.6,
+      76.4,
+      80.1,
+      81.6,
+      84.1,
+      85.0
+     ],
+     "BERT-base": [
+      77.1,
+      88.3,
+      91.8,
+      93.4,
+      95.2,
+      94.5,
+      95.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     53.279999999999994,
+     97.72
+    ],
+    "meta": {
+     "hard": false,
+     "style": {
+      "value_labels": true,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "upper left",
+      "font_size": 12,
+      "figsize": [
+       5.4,
+       3.8
+      ],
+      "dpi": 100,
+      "held_out": false
+     },
+     "colors": {
+      "Baseline": "#1f77b4",
+      "EfficientNet": "#ff7f0e",
+      "BERT-base": "#2ca02c"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "phrasing_006_fig1_c0",
+   "sentence": "As shown in Figure 1, MLP posts 72.3% validation accuracy when tested on AG News.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.3,
+   "claimed_value": 72.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 100.0,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_006_fig1_c1",
+   "sentence": "MLP posts 70.0% validation accuracy when tested on MNIST.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.0,
+   "claimed_value": 70.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig2_c0",
+   "sentence": "Evaluated on AG News, GRU comes in at 84.8% validation accuracy.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.2,
+   "claimed_value": 84.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 92.22999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig2_c1",
+   "sentence": "Evaluated on AG News, GRU comes in at 71.0% validation accuracy.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.2,
+   "claimed_value": 71.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 92.22999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig2_c2",
+   "sentence": "On IMDB, Ours obtains a validation accuracy of 31.7%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.8,
+   "claimed_value": 31.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 92.22999999999999,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig3_c0",
+   "sentence": "On SST-2, ResNet-50 obtains a validation accuracy of 60.4%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.3,
+   "claimed_value": 60.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 99.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig3_c1",
+   "sentence": "On AG News, DistilBERT is 4.6 points better than ResNet-50.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "DistilBERT",
+   "x": "AG News",
+   "series_b": "ResNet-50",
+   "x_b": "AG News",
+   "true_value": 6.6,
+   "claimed_value": 4.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 99.36,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig4_c0",
+   "sentence": "The test accuracy of EfficientNet improves by a relative 11% between epoch 5 and epoch 10.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "EfficientNet",
+   "x": "5",
+   "series_b": null,
+   "x_b": "10",
+   "true_value": 10.835913,
+   "claimed_value": 11.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 44.440000000000005,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig4_c1",
+   "sentence": "As shown in Figure 4, The test accuracy of BERT-base improves by a relative 14.5% between epoch 5 and epoch 10.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "BERT-base",
+   "x": "5",
+   "series_b": null,
+   "x_b": "10",
+   "true_value": 14.526589,
+   "claimed_value": 14.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 44.440000000000005,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "phrasing_006_fig4_c2",
+   "sentence": "Epoch 15 sees Baseline post a test accuracy of 77.3%.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "15",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.3,
+   "claimed_value": 77.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 44.440000000000005,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_fig4_c3",
+   "sentence": "By epoch 10, the test accuracy of BERT-base stands at 79.4%.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.3,
+   "claimed_value": 79.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 44.440000000000005,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_nofig",
+   "sentence": "On MNIST, Logistic Regression obtains an accuracy of 60.0%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Logistic Regression",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 60.0,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_setup0",
+   "sentence": "We trained each model for 100 epochs with a batch size of 64.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "phrasing_006_setup1",
+   "sentence": "The dataset was split into 80 percent training data and the rest for testing.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}

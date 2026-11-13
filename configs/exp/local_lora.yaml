@@ -16,7 +16,7 @@ tools:
   enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]
 
 agent:
-  policy: fixed_order
+  policy: informed        # the main method (P3); calibration order is set by calibration.order, not by this
   fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
 
 paths:

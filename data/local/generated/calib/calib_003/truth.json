@@ -1,0 +1,366 @@
+{
+ "report_id": "calib_003",
+ "held_out_style": false,
+ "injection": null,
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "image": "fig1.png",
+   "caption": "Test accuracy of Baseline by dataset for the models in this experiment.",
+   "table": {
+    "table_id": "calib_003_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of Baseline by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "MNIST",
+     "AG News",
+     "Fashion-MNIST",
+     "SVHN",
+     "IMDB"
+    ],
+    "series": {
+     "Baseline": [
+      81.1,
+      72.9,
+      60.2,
+      76.4,
+      85.0,
+      66.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     97.74999999999999
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "lower right",
+      "font_size": 8,
+      "figsize": [
+       4.6,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 50
+     },
+     "colors": {
+      "Baseline": "#0072b2"
+     }
+    }
+   }
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "image": "fig2.png",
+   "caption": "Training loss for the models in this experiment.",
+   "table": {
+    "table_id": "calib_003_fig2",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "series": {
+     "BERT-base": [
+      1.124,
+      0.687,
+      0.53,
+      0.391,
+      0.322,
+      0.361,
+      0.275,
+      0.241,
+      0.244,
+      0.238,
+      0.219,
+      0.238
+     ],
+     "ResNet-18": [
+      1.122,
+      0.746,
+      0.605,
+      0.462,
+      0.403,
+      0.354,
+      0.281,
+      0.306,
+      0.229,
+      0.25,
+      0.261,
+      0.281
+     ],
+     "ResNet-50": [
+      1.407,
+      1.02,
+      0.83,
+      0.616,
+      0.42,
+      0.361,
+      0.292,
+      0.231,
+      0.149,
+      0.168,
+      0.233,
+      0.195
+     ],
+     "Baseline": [
+      1.474,
+      1.01,
+      0.699,
+      0.448,
+      0.319,
+      0.298,
+      0.28,
+      0.228,
+      0.237,
+      0.242,
+      0.256,
+      0.203
+     ],
+     "ViT-S": [
+      1.508,
+      1.382,
+      1.146,
+      1.055,
+      0.846,
+      0.747,
+      0.642,
+      0.633,
+      0.527,
+      0.546,
+      0.523,
+      0.439
+     ],
+     "CNN": [
+      1.824,
+      1.273,
+      1.0,
+      0.863,
+      0.696,
+      0.632,
+      0.565,
+      0.525,
+      0.525,
+      0.475,
+      0.507,
+      0.434
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.06524999999999999,
+     1.90775
+    ],
+    "meta": {
+     "hard": true,
+     "style": {
+      "value_labels": false,
+      "grid": false,
+      "markers": false,
+      "legend_loc": "best",
+      "font_size": 8,
+      "figsize": [
+       5.1,
+       3.2
+      ],
+      "dpi": 80,
+      "held_out": false,
+      "line_width": 1.2,
+      "jpeg_quality": 70
+     },
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "ResNet-18": "#d95f02",
+      "ResNet-50": "#7570b3",
+      "Baseline": "#e7298a",
+      "ViT-S": "#66a61e",
+      "CNN": "#e6ab02"
+     }
+    }
+   }
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "calib_003_fig1_c0",
+   "sentence": "Baseline scores 57.5 points higher on SVHN than on Fashion-MNIST (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Baseline",
+   "x": "SVHN",
+   "series_b": "Baseline",
+   "x_b": "Fashion-MNIST",
+   "true_value": 8.6,
+   "claimed_value": 57.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 97.74999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_003_fig1_c1",
+   "sentence": "As shown in Figure 1, Baseline achieves 65.5% test accuracy on SVHN.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.0,
+   "claimed_value": 65.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 97.74999999999999,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_003_fig2_c0",
+   "sentence": "As shown in Figure 2, at epoch 9, the loss of ResNet-50 is 0.186.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "9",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.149,
+   "claimed_value": 0.186,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 1.8425,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_003_fig2_c1",
+   "sentence": "At epoch 8, the loss of Baseline is 0.136 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.228,
+   "claimed_value": 0.136,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 1.8425,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_003_fig2_c2",
+   "sentence": "At epoch 12, the loss of Baseline is 0.203 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "12",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.203,
+   "claimed_value": 0.203,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.8425,
+   "cites_figure": true
+  },
+  {
+   "claim_id": "calib_003_nofig",
+   "sentence": "SVM reaches 54.2% accuracy on Tiny-ImageNet.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "SVM",
+   "x": "Tiny-ImageNet",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 54.2,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_003_setup0",
+   "sentence": "Each experiment was repeated 3 times with different random seeds.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  },
+  {
+   "claim_id": "calib_003_setup1",
+   "sentence": "All experiments were run on a single GPU with 24 GB of memory.",
+   "figure_id": null,
+   "kind": "not_a_claim",
+   "gold": "skip",
+   "claim_type": null,
+   "series": null,
+   "x": null,
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": null,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false
+  }
+ ]
+}
