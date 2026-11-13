@@ -45,10 +45,21 @@ class Context:
             if self.offline:
                 from .models.vlm import OfflineLLM
                 self._llm = OfflineLLM(m["vlm"] + (f"+{m['lora_adapter']}" if m.get("lora_adapter") else ""), m["vlm"])
+            elif self.server is not None:
+                from .models.remote import RemoteVLM
+                self._llm = RemoteVLM(self.server, m["vlm"], m.get("lora_adapter"))
             else:
                 from .models.vlm import VLM
                 self._llm = VLM(m["vlm"], m.get("dtype", "float16"), m.get("lora_adapter"))
         return self._llm
+
+    @property
+    def server(self):
+        """The remote model server, when models.remote_url (or CCV_REMOTE_URL) is set; None runs models here."""
+        if not hasattr(self, "_server"):
+            from .models.remote import server_from_config
+            self._server = None if self.offline else server_from_config(self.cfg["models"])
+        return self._server
 
     def needs_llm(self, tools: list[str], parser: str, policy: str) -> bool:
         return parser == "llm" or policy == "llm" or any(t in ("vlm_table", "vlm_crop") for t in tools)
@@ -57,7 +68,8 @@ class Context:
         names = names or self.cfg["tools"]["enabled"]
         llm = self.llm if any(n in ("vlm_table", "vlm_crop") for n in names) else None
         return build_tools(names, self.cache, llm=llm, truth=self.truth,
-                           deplot_model=self.cfg["models"].get("deplot", "google/deplot"), offline=self.offline)
+                           deplot_model=self.cfg["models"].get("deplot", "google/deplot"), offline=self.offline,
+                           server=self.server)
 
 
 # ------------------------------------------------------------------ ingest
@@ -165,7 +177,7 @@ def rebuild_profile(ctx: Context, split: str | None = None, name: str | None = N
             raise RuntimeError("the reading cache does not hold every calibration reading: run `chart-claim-verifier calibrate`")
         saved.write_text(json.dumps(errors))
     profile = build_profile(errors, names, error_correlation(errors, names), *_profile_settings(ctx.cfg))
-    try:                                                  # repairs are measured separately (scripts/pilot_legend.py): keep them
+    try:                                                  # repairs are measured separately (scripts/pilots/pilot_legend.py): keep them
         old = load_profile(ctx, name)
         profile["repairs"] = old.get("repairs", {})
         profile["cost"].update({k: v for k, v in old.get("cost", {}).items() if k not in profile["cost"]})
@@ -229,9 +241,9 @@ def make_policy(ctx: Context, name: str, table: CalibrationTable, tools: dict, p
 
 
 def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None, parser: str = "rule",
-                retrieval: str = "ours", oracle=None) -> tuple[ReportAgent, Policy, RuleConfig]:
-    """The report agent exactly as the config describes it. `run` and `check` both use this, so the command a TA
-    runs on one report is the same system that was evaluated."""
+                retrieval: str = "ours", oracle=None) -> tuple[ReportAgent, RuleConfig, Policy]:
+    """The report agent exactly as the config describes it. `run`, `check` and the web backend (`verify_pdf`) all
+    use this, so the command a TA runs on one report is the same system that was evaluated."""
     cfg = ctx.cfg
     tools = ctx.tools()
     try:
@@ -252,7 +264,7 @@ def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None
                         hand_off_rejected=cfg["agent"].get("hand_off_rejected", False),
                         cited_first=cfg["retrieval"].get("cited_first", False),
                         ambiguity_ratio=cfg["retrieval"].get("ambiguity_ratio", 0.8))
-    return agent, pol, rc
+    return agent, rc, pol
 
 
 def ingest_pdf(ctx: Context, pdf: Path, name: str | None = None) -> Report:
@@ -265,6 +277,14 @@ def ingest_pdf(ctx: Context, pdf: Path, name: str | None = None) -> Report:
     report = parse_pdf(pdf, work, name)
     cached.write_text(report.model_dump_json())
     return report
+
+
+def verify_pdf(ctx: Context, agent: ReportAgent, rc: RuleConfig, pdf_path: str | Path, work_dir: str | Path,
+               report_id: str | None = None) -> tuple[Report, list[ClaimTrace]]:
+    """Check one uploaded report: no truth file needed. The batch check runs over this report's own claims."""
+    report = parse_pdf(pdf_path, work_dir, report_id)
+    traces, _ = agent.run(report)
+    return report, finalize(traces, None, rc.alpha, ctx.cfg["decision"].get("batch_check", True))
 
 
 def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
@@ -282,7 +302,7 @@ def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | N
         truths.append(truth)
         for c in truth["claims"]:
             oracle_map[(truth["report_id"], c["sentence"].strip())] = c.get("figure_id")
-    agent, pol, rc = build_agent(ctx, table, policy, parser, retrieval,
+    agent, rc, pol = build_agent(ctx, table, policy, parser, retrieval,
                                  oracle=lambda rid, s: oracle_map.get((rid, s.strip())))
     for rd, truth in zip(dirs, truths):
         report, _ = ingest(ctx, rd)

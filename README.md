@@ -20,7 +20,7 @@ Measure first, then decide. `chart-claim-verifier calibrate` reads every data po
 
 Every number comes with the number of *charts* behind it (`chart-claim-verifier profile` shows both): points on one chart share their mistakes, so a situation measured on fewer than 5 charts falls back to the pooled numbers. The profile also records how far each failure reaches (`failure_scope`: does `y_fit_failed` repeat on every point of the figure, `series_not_found` on every point of the series, `two_lines_at_x` only on its own point?), which is what report memory uses to decide what not to retry.
 
-The pair numbers matter more than the single-tool ones: the rule only accepts or flags when readings agree, so a wrong verdict needs two tools that make the *same* mistake. On hard line charts the VLM crop reader alone is badly wrong 34% of the time, yet when it agrees with the pixel reader both are wrong only 1.3% of the time; the two VLM tools (same model) agree on a wrong value 5.1% of the time, just above the planner's 5% limit, so it does not pair them there (51 calibration charts, `calib` + `calib_easy`).
+The pair numbers matter more than the single-tool ones: the rule only accepts or flags when readings agree, so a wrong verdict needs two tools that make the *same* mistake. On hard line charts the VLM crop reader alone is badly wrong 40% of the time, yet when it agrees with the pixel reader both are wrong only 2.4% of the time; the two VLM tools (same model) agree on a wrong value 10% of the time.
 
 At run time the agent looks before it acts, at every stage, and logs why (`stages` in each trace):
 
@@ -46,79 +46,55 @@ Policies to compare (ablation E5): `all_tools` (P0), `fixed_order` (P1), `calibr
 | Not sure | Sent to the TA for review |
 | No matching figure | No chart covers the claim |
 
-## Status (final submission, 13 Nov 2026)
+## Status
 
-Everything in the plan is built and has run on real tools (Qwen3-VL-4B, DePlot, Tesseract) on an Apple M4 laptop. The method was frozen on 9 Nov (`configs/exp/local_real.yaml`) and then run once on a new, untouched split (`final`). Results: [`results/summary.md`](results/summary.md); every run and decision, kept or rejected: [`results/run_log.md`](results/run_log.md); write-up: [`report/final_report/report.pdf`](report/final_report/report.pdf).
+Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
 
 | Part | State |
 |---|---|
-| Data generator (charts, PDF reports, labelled claims, hidden injections, clean twins) | working; 6 evaluation splits of 20 reports, 17 calibration reports, 1,088 fine-tuning charts |
-| Ingest, retrieval (Figure N + BM25 + series check + VLM legend names), rule and LLM parsers, tolerance rules | working |
-| Four tools (OCR + pixel, DePlot, VLM table, VLM crop), reading cache, offline replay | working |
-| Calibration, decision rule, BH batch check | working (BH cannot change a verdict at level 0.95 with alpha 0.10; see `scripts/margin_vs_b5.py`) |
-| Agent: measured tool profile, informed planner (P3), failure-aware memory, early hand-off; P0 / P1 / P2 for comparison | working |
-| Mock LMS + allow-list guard, injection test (E8) | working; 0 unsafe actions in every run; hidden instructions change 0 of 210 verdicts with the rule parser, and made the LLM parser drop 8 claims (`results/safety.md`); since G1 such sentences go to the TA instead |
-| After the final run (`configs/exp/v2.yaml`, development results) | rejected candidates go to the TA (G1), cited figure wins (G2): wrong flags 3.5 -> 3.3% pooled; LLM parser rejections 40 -> 2 of 247 claims (G4); reduced E4 (`results/e4_samples.md`); look-alike figure check rejected (G3). See run log section G |
-| Baselines B1-B5 | run (B1-B4 on `final`; B5 by replay) |
-| LoRA fine-tuning of the VLM table tool | one run (918 charts, 1 epoch); better reading, not fewer wrong flags (diagnosed in the run log, E4/E9) |
-| Simulated tools (truth + noise) | for pipeline tests only; never report their numbers |
+| Data generator (charts, PDF reports, labelled claims, hidden injections, clean twins) | working |
+| Ingest (PDF → figures, captions, sentences, chart type, axis span) | working |
+| Tool 4: OCR + pixel reader | working; ~90–100% success on clean charts (median error ~0.1% of the axis range), weak on small JPEG charts with many lines (it refuses rather than guesses, mostly) |
+| Tools 1–3: VLM crop, VLM table (Qwen3-VL-4B), DePlot | working locally on Apple silicon (MPS); also run on CUDA |
+| Simulated tools 1–3 (read the truth + noise) | working; **for pipeline testing only, never report their numbers** |
+| Claim finder, rule parser, tolerance rules | working |
+| Measured tool profile + informed agent (P3), stage logs | working |
+| LLM parser, LLM controller (P2), baselines B1–B4 | working with Qwen3-VL-4B |
+| Retrieval, calibration, decision rule, BH batch check | working |
+| Agent: failure-aware memory, policies P0 / P1 / P1b / P3, claim loop, report planner, repair step | working (repair gated on `scripts/pilots/pilot_legend.py`) |
+| Offline replay (`run --offline`): policies re-run from the reading cache, a missing reading is counted and never calls a model | working |
+| Mock LMS + action guard | working |
+| Metrics, sweeps (coverage at 10% wrong flags, B5), E4 correlation, E8 safety | working |
+| LoRA data + training script | data script works; training script **not yet run** |
 
-## Final results
+## Quick start (CPU, simulated tools)
 
-On the untouched `final` split (20 reports, 205 claims, run once after the freeze), with the same Qwen3-VL-4B everywhere:
-
-| Method | Coverage | Right when decided | Wrong flags | Missed errors | Model time |
-|---|---|---|---|---|---|
-| B1: the VLM sees chart + sentence and answers | 100% | 64.9% | 23.3% | 55.8% | 15.0 min |
-| B3: five samples, abstain unless unanimous | 88.3% | 66.3% | 19.1% | 50.0% | ~28 min |
-| B4: the same four tool readings, the VLM judges | 99.5% | 82.4% | 25.9% | 0.0% | – |
-| P0: all tools + rule | 81.0% | 97.0% | 5.7% | 0.0% | 44.7 min |
-| **P3: planner + rule (main)** | **84.9%** | **96.6%** | **5.6%** | **1.0%** | **16.2 min** |
-
-All six evaluation splits pooled (1,205 claims): P3 decides 79.7% of claims, is right on 96.8% of them, 3.5% of its flags are wrong [2.0, 5.2], 0.7% of real errors are missed, and no planted error was accepted. Negative findings, reported as such: an uncalibrated margin (B5) does as well as the calibrated one; the BH batch check cannot change a verdict at level 0.95 with alpha 0.10; LoRA improves chart reading but not wrong flags. Details: [`results/summary.md`](results/summary.md), [`results/margin_vs_b5.md`](results/margin_vs_b5.md), [`results/safety.md`](results/safety.md), [`results/run_log.md`](results/run_log.md).
-
-## Quick start
-
-Needs Python >= 3.10 and Tesseract (`brew install tesseract` / `apt install tesseract-ocr`).
+Needs Python ≥ 3.10 and Tesseract (`brew install tesseract` / `apt install tesseract-ocr`).
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"            # add ",gpu" for the real models (torch, transformers, peft)
-pytest                             # 90 tests, CPU only
+pip install -e ".[dev]"
+pytest                                                    # 72 tests
 
-# check one report (any PDF); prints each claim's verdict and the TA's evidence card. v2 = the frozen method plus the two
-# changes kept after the final run (a rejected-looking claim goes to the TA; a cited figure wins), see results/run_log.md G
-chart-claim-verifier check -c configs/exp/v2.yaml path/to/report.pdf
-```
-
-CPU-only smoke run with simulated tools:
-
-```bash
 chart-claim-verifier generate  -c configs/exp/smoke_cpu.yaml        # 12 calibration + 12 test reports
 chart-claim-verifier calibrate -c configs/exp/smoke_cpu.yaml
 chart-claim-verifier run       -c configs/exp/smoke_cpu.yaml --split test --policy all_tools
+chart-claim-verifier sweep     -c configs/exp/smoke_cpu.yaml --run runs/smoke/test_all_tools_rule_ours
+chart-claim-verifier check     -c configs/exp/smoke_cpu.yaml data/smoke/generated/test/test_000
 ```
 
-## Reproduce the final numbers
-
-Every reading is cached (`cache/local.sqlite`), so all policies replay without a model; `offline_misses` in `metrics.json` counts readings the cache lacked. The cache, the split lists and the generated calibration and evaluation reports are tracked in git (see `.gitignore`), so this works from a clone; run folders and the LoRA weights are not.
+Replay a policy from the reading cache (no model is loaded; `offline_misses` in `metrics.json` counts readings the cache lacked):
 
 ```bash
-# frozen configuration, every split, every policy (no model is loaded)
-for s in test dev holdout holdout2 holdout3 final; do for p in informed fixed_order all_tools; do
-  chart-claim-verifier run -c configs/exp/local_real.yaml --split $s --policy $p --offline --name fin_${s}_${p}; done; done
-python scripts/export_results.py --run test=fin_test dev=fin_dev holdout=fin_holdout holdout2=fin_holdout2 \
-    holdout3=fin_holdout3 final=fin_final --out results
-python scripts/margin_vs_b5.py --choose test=fin_test dev=fin_dev \
-    --evaluate holdout=fin_holdout holdout2=fin_holdout2 holdout3=fin_holdout3 final=fin_final
-python scripts/lora_wrong_flags.py                        # why LoRA raised wrong flags
-python scripts/safety_all.py                              # E8 from the e8_* runs (made live with --parser llm)
-PYTHONPATH=. python report/final_report/make_figures.py   # the report's figures and numbers.json
+chart-claim-verifier run -c configs/exp/local_real.yaml --split test --policy informed --offline --name replay_P3
+python scripts/analysis/compare_runs.py runs/local/test_P0 runs/local/replay_P3 --profile calibration_tables/local/<tools>.profile.json
+python scripts/analysis/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/replay_P3    # the four rules for a sentence that fits two figures
+python scripts/analysis/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing               # the parse stage alone (rules, then the LLM)
 ```
 
-Live runs (need the models): `run ... --split final --policy all_tools` fills the cache for a split; `baselines --run runs/local/<all_tools run> --which b1,b2,b3,b4`; the safety experiment is `run --split S --reports @S_clean --parser llm` against `run --split S_clean --parser llm`, compared with `safety --run ... --clean-run ...`.
+If the `chart-claim-verifier` command or `import chart_claim_verifier` stops working after the project folder is moved or renamed (the virtualenv remembers the old path), run `pip install -e .` again, or use `python -m chart_claim_verifier.cli ...` from the project folder.
 
-If the `chart-claim-verifier` command stops working after the folder is moved, run `pip install -e .` again or use `python -m chart_claim_verifier.cli ...`.
+On a T4 (Kaggle / Colab): `pip install -e ".[gpu,dev]"` and use `configs/exp/main_gpu.yaml`. Its header lists the commands for each experiment. `E4_homogeneous.yaml` and `E6_lora.yaml` cover E4 and E6.
 
 ## Layout
 
@@ -138,11 +114,21 @@ chart_claim_verifier/
   lms/              mock LMS and allow-list guard
   baselines/        B1–B4 (B5 is in evaluation/sweep.py)
   evaluation/       metrics, sweeps, tool correlation, safety
-finetune/           LoRA data (make_sft_data.py); scripts/finetune_lora.py trained the adapter
-scripts/            export_results, margin_vs_b5, lora_wrong_flags, safety_all, e4_samples, compare_runs, ambiguous_rules,
-                    eval_parse, pilot_legend
-results/            summary, per-claim CSVs, example reports, run log (every action, kept or rejected)
-report/             mid_report/ and final_report/ (LaTeX; figures drawn from the saved runs)
+scripts/
+  analysis/         compare_runs, intervals, ambiguous_rules, eval_parse, export_results
+  pilots/           go / no-go pilots: pilot_legend, pilot_legend_retrieval
+  diagnostics/      bench_ocr_pixel, diagnose_ocr_pixel
+  finetune/         LoRA data + training
+calibration_tables/
+  local/            live table + tool profile, base model
+  local_lora/       live table + tool profile, LoRA chart-to-table adapter
+  archive/          older tables kept for the record (see its README)
+results/
+  base/             summary, every claim, example reports (base model)
+  lora/             the same for the LoRA adapter
+  run_log.md        one row per run, kept by hand
+docs/               workflow.html, proposal/, mid_report/
+web/                student + TA web app: backend/ (FastAPI, PostgreSQL), frontend/ (React); see web/README.md
 tests/
 ```
 

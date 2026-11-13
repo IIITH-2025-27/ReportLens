@@ -34,7 +34,7 @@ def best_device() -> str:
 class VLM:
     """Qwen3-VL (default Qwen/Qwen3-VL-4B-Instruct) via transformers.
 
-    fp16 on a T4 (CUDA) or on Apple silicon (MPS); fp32 on plain CPU.
+    fp16 on a T4 (CUDA) or on Apple silicon (MPS); fp32 on plain CPU unless bfloat16 is asked for.
     """
 
     def __init__(self, model_id: str, dtype: str = "float16", lora_adapter: str | None = None,
@@ -46,7 +46,9 @@ class VLM:
         self.base_name = model_id               # the adapter is used only for the chart-to-table task (adapter=True)
         self.name = model_id + (f"+{lora_adapter}" if lora_adapter else "")
         self.has_adapter = bool(lora_adapter)
-        torch_dtype = getattr(torch, dtype) if self.device != "cpu" else torch.float32
+        # float16 is slow or unsupported on CPU, so it falls back to float32 there; bfloat16 is kept (half the
+        # memory of float32, which is what lets the 4B model fit on a 16 GB CPU machine such as a free Space)
+        torch_dtype = torch.float32 if self.device == "cpu" and dtype == "float16" else getattr(torch, dtype)
         kwargs = {"dtype": torch_dtype}
         if load_in_4bit and self.device == "cuda":
             from transformers import BitsAndBytesConfig

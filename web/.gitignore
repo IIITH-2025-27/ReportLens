@@ -1,0 +1,7 @@
+# secrets and local state
+backend/.env
+backend/storage/
+frontend/.env
+# dependencies and builds
+frontend/node_modules/
+frontend/dist/

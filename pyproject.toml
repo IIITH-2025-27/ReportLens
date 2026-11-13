@@ -19,12 +19,14 @@ dependencies = [
     "opencv-python-headless>=4.8",
     "pytesseract>=0.3.10",
     "pillow>=10",
+    "requests>=2.28",                   # remote model server (models/remote.py)
 ]
 
 [project.optional-dependencies]
 # GPU side (Kaggle / Colab T4): VLM tools, DePlot, LoRA fine-tuning.
 gpu = [
     "torch>=2.3",
+    "torchvision>=0.18",                # Qwen3-VL's processor imports it
     "transformers>=4.57",
     "accelerate>=0.34",
     "peft>=0.13",
@@ -38,9 +40,6 @@ chart-claim-verifier = "chart_claim_verifier.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["chart_claim_verifier*"]
-
-[tool.setuptools.package-data]
-chart_claim_verifier = ["agent/prompts/*.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

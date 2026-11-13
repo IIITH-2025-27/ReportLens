@@ -46,7 +46,7 @@ agent:
   policy: fixed_order     # all_tools | fixed_order | calibration_informed | informed | llm
   fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
   hand_off_rejected: false  # v2: a sentence that looks like a claim but the parser rejects goes to the TA (not dropped)
-  ambiguous_rule: both    # two figures fit a sentence: either | top | both | never (see scripts/ambiguous_rules.py).
+  ambiguous_rule: both    # two figures fit a sentence: either | top | both | never (see scripts/analysis/ambiguous_rules.py).
                           # Chosen on 14 ambiguous claims (test + dev): either/top accepted 5, one of them wrong; both/never 0 missed errors
   informed:               # the informed policy (agent/planner.py); every number is read from the tool profile
     min_answer: 0.10        # a tool that answers < 10% of the time here would almost surely refuse: skip it
@@ -71,4 +71,5 @@ models:
   vlm_fallback: Qwen/Qwen2.5-VL-7B-Instruct
   deplot: google/deplot
   lora_adapter: null                    # path after fine-tuning; null = base model
+  remote_url: null                      # model server URL (web/model_server); null = load the models here
   dtype: float16                        # T4 has no bf16
