@@ -1,0 +1,21 @@
+/* Additions to web/frontend/src/styles.css for the lite app. Same tokens, nothing redefined. */
+.nav { display: flex; gap: 4px; }
+.nav a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; font-weight: 500; }
+.nav a:hover { color: var(--ink); }
+.nav a.active { color: var(--accent); background: var(--accent-soft); }
+
+.drop { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center;
+  border: 2px dashed var(--line); border-radius: 8px; padding: 32px 16px; margin-top: 12px; cursor: pointer; background: var(--bg); }
+.drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.drop input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.drop strong { font-size: 1rem; overflow-wrap: anywhere; }
+
+.pdf-frame { width: 100%; height: min(80vh, 900px); border: 1px solid var(--line); border-radius: 6px; margin-top: 12px; background: var(--sunk); }
+.runs-pick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.history-row { cursor: pointer; }
+.history-row:hover td { background: var(--accent-soft); }
+.history-row a { color: var(--ink); font-weight: 500; text-decoration: none; overflow-wrap: anywhere; }
+.search { max-width: 320px; }
+.actions { text-align: right; width: 1%; white-space: nowrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
