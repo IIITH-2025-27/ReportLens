@@ -105,9 +105,14 @@ class OcrPixelTool(Tool):
     kind = "classical"
     version = "v1"          # unchanged by the legend hint: without a hint the behaviour is identical
 
-    def __init__(self, cache=None):
+    def __init__(self, cache=None, axis_modes: tuple = ("linear",)):
         super().__init__(cache)
         self.legend_hint: dict[str, list[str]] = {}      # image hash -> legend names read by the repair step (U7)
+        # v3 (B4): log / downward axes. Only tried where the ordinary fit fails, but a new cache version all the same,
+        # so no reading taken with the option can be mistaken for a frozen one
+        self.axis_modes = tuple(axis_modes)
+        if self.axis_modes != ("linear",):
+            self.version = "v1+" + "+".join(m for m in self.axis_modes if m != "linear")
 
     def cache_key(self, fig: Figure, q: PointQuery) -> tuple:
         key = super().cache_key(fig, q)
@@ -118,7 +123,7 @@ class OcrPixelTool(Tool):
 
     def _read(self, fig: Figure, q: PointQuery) -> float:
         try:
-            geo = analyse(fig.image_path)
+            geo = analyse(fig.image_path, self.axis_modes)
             img = load_bgr(fig.image_path)
             colour = series_colour(img, geo, q.series, self.legend_hint.get(image_key(fig.image_path)))
         except ChartReadError as e:

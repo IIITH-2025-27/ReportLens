@@ -1,0 +1,337 @@
+{
+ "report_id": "v3feat_018",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy of DistilBERT by dataset",
+   "table": {
+    "table_id": "v3feat_018_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of DistilBERT by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "MNIST",
+     "SST-2",
+     "CIFAR-10",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "DistilBERT": [
+      67.6,
+      78.9,
+      69.1,
+      83.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     98.64799999999998
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "DistilBERT": "#e41a1c"
+     }
+    }
+   },
+   "kind": "errbar"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Accuracy during training",
+   "table": {
+    "table_id": "v3feat_018_fig2",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25",
+     "30",
+     "35"
+    ],
+    "series": {
+     "GRU": [
+      55.5,
+      67.8,
+      76.9,
+      80.7,
+      85.2,
+      87.4,
+      88.6
+     ],
+     "ViT-S": [
+      57.0,
+      63.8,
+      67.8,
+      68.9,
+      72.4,
+      70.2,
+      71.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     53.845,
+     90.255
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "GRU": "#1f77b4",
+      "ViT-S": "#ff7f0e"
+     }
+    }
+   },
+   "kind": "dual"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "F1 score of ViT-S by dataset",
+   "table": {
+    "table_id": "v3feat_018_fig3",
+    "kind": "bar",
+    "title": "F1 score of ViT-S by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "SVHN",
+     "MNIST",
+     "AG News",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ViT-S": [
+      82.9,
+      88.2,
+      67.4,
+      85.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     -0.48,
+     3.4800000000000004
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:horizontal_bar"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_018_fig1_c0",
+   "sentence": "DistilBERT achieves 67.6% validation accuracy on SST-2.",
+   "figure_id": "fig1",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.9,
+   "claimed_value": 67.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 98.64799999999998,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "errbar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig1_c1",
+   "sentence": "DistilBERT reaches 78.9% validation accuracy on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 78.9,
+   "claimed_value": 78.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 98.64799999999998,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "errbar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig2_c0",
+   "sentence": "As shown in Figure 1, at epoch 30, GRU is 17.2 points better than ViT-S.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "30",
+   "series_b": "ViT-S",
+   "x_b": "30",
+   "true_value": 17.2,
+   "claimed_value": 17.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 36.41,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": 1
+  },
+  {
+   "claim_id": "v3feat_018_fig2_c1",
+   "sentence": "GRU reaches 87.9% accuracy at epoch 35.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "35",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.6,
+   "claimed_value": 87.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 36.41,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig2_c2",
+   "sentence": "GRU outperforms ViT-S by 24.7 percentage points at epoch 35 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "35",
+   "series_b": "ViT-S",
+   "x_b": "35",
+   "true_value": 17.4,
+   "claimed_value": 24.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 36.41,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig2_dual",
+   "sentence": "At epoch 35, the loss of GRU is 0.394.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "35",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.394,
+   "claimed_value": 0.394,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig3_c0",
+   "sentence": "ViT-S scores 3.1 points higher on MNIST than on CIFAR-10.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "MNIST",
+   "series_b": "ViT-S",
+   "x_b": "CIFAR-10",
+   "true_value": 3.1,
+   "claimed_value": 3.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.9600000000000004,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_018_fig3_c1",
+   "sentence": "As shown in Figure 3, on MNIST, ViT-S obtains a F1 score of 88.2%.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 88.2,
+   "claimed_value": 88.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.9600000000000004,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

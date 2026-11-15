@@ -1,0 +1,593 @@
+{
+ "report_id": "v3feat_011",
+ "layout": {
+  "two_column": false,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1a",
+   "number": 1,
+   "panel": "a",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(a) Test accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_011_fig1a",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "AG News",
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "EfficientNet": [
+      56.6,
+      64.0,
+      58.5,
+      48.2
+     ],
+     "MLP": [
+      61.9,
+      68.5,
+      62.8,
+      66.4
+     ],
+     "Transformer": [
+      52.9,
+      60.8,
+      47.8,
+      50.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     80.83
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "EfficientNet": "#1b9e77",
+      "MLP": "#d95f02",
+      "Transformer": "#7570b3"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig1b",
+   "number": 1,
+   "panel": "b",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(b) Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_011_fig1b",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "series": {
+     "MLP": [
+      68.3,
+      78.1,
+      82.9,
+      86.8,
+      89.4
+     ],
+     "Ours": [
+      69.0,
+      76.0,
+      79.8,
+      81.4,
+      81.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     67.24499999999999,
+     90.45500000000001
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "MLP": "#1b9e77",
+      "Ours": "#d95f02"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Validation accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_011_fig2",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "IMDB",
+     "SVHN"
+    ],
+    "series": {
+     "Baseline": [
+      0.632,
+      0.771,
+      0.858
+     ],
+     "ResNet-50": [
+      0.734,
+      0.813,
+      0.904
+     ],
+     "LSTM": [
+      0.62,
+      0.802,
+      0.812
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.0,
+     1.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Baseline": "#1f77b4",
+      "ResNet-50": "#ff7f0e",
+      "LSTM": "#2ca02c"
+     }
+    }
+   },
+   "kind": "fraction"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Training loss",
+   "table": {
+    "table_id": "v3feat_011_fig3",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60"
+    ],
+    "series": {
+     "Transformer": [
+      1.568,
+      1.084,
+      0.846,
+      0.646,
+      0.561,
+      0.505
+     ],
+     "Baseline": [
+      1.391,
+      0.973,
+      0.788,
+      0.665,
+      0.525,
+      0.504
+     ],
+     "ResNet-50": [
+      1.377,
+      0.943,
+      0.682,
+      0.635,
+      0.604,
+      0.523
+     ],
+     "VGG-16": [
+      0.768,
+      0.47,
+      0.396,
+      0.33,
+      0.286,
+      0.341
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.15290799999999996,
+     1.7010920000000003
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Transformer": "#0072b2",
+      "Baseline": "#d55e00",
+      "ResNet-50": "#009e73",
+      "VGG-16": "#cc79a7"
+     }
+    }
+   },
+   "kind": "band"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_011_fig1a_c0",
+   "sentence": "On SST-2, EffNet obtains a test accuracy of 48.2%.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 48.2,
+   "claimed_value": 48.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 80.83,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1a_c1",
+   "sentence": "As shown in Figure 1(a), MLP reaches between 63% and 70% test accuracy on SST-2.",
+   "figure_id": "fig1a",
+   "kind": "range_correct",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 66.4,
+   "claimed_value": 63.0,
+   "tolerance": 0.5,
+   "relation": "between",
+   "delta": null,
+   "span": 80.83,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "range",
+   "claimed_high": 70.0,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1b_c0",
+   "sentence": "Ours reaches 81.4% validation accuracy at epoch 4 (Figure 1(b)).",
+   "figure_id": "fig1b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.4,
+   "claimed_value": 81.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 23.210000000000022,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1b_c1",
+   "sentence": "MLP reaches 91.4% validation accuracy at epoch 4 (Figure 1).",
+   "figure_id": "fig1b",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 86.8,
+   "claimed_value": 91.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 23.210000000000022,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1b_c2",
+   "sentence": "Ours reaches about 80% validation accuracy at epoch 4.",
+   "figure_id": "fig1b",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.4,
+   "claimed_value": 80.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 23.210000000000022,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1b_peak",
+   "sentence": "The validation accuracy of MLP reaches its highest value of 82.9% at epoch 3.",
+   "figure_id": "fig1b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.9,
+   "claimed_value": 82.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 23.210000000000022,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig1b_peak_b",
+   "sentence": "The validation accuracy of MLP reaches its highest value of 82.9% at epoch 3.",
+   "figure_id": "fig1b",
+   "kind": "peak_planted",
+   "gold": "error",
+   "claim_type": "peak",
+   "series": "MLP",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": -6.5,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 23.210000000000022,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig2_c0",
+   "sentence": "ResNet-50 achieves 53.4% validation accuracy on Fashion-MNIST (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.4,
+   "claimed_value": 53.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig2_c1",
+   "sentence": "RN50 outperforms Baseline by about 5 percentage points on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": "Baseline",
+   "x_b": "SVHN",
+   "true_value": 4.6,
+   "claimed_value": 5.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig2_c2",
+   "sentence": "As shown in Figure 2, on IMDB, LSTM is 13.1 points better than Baseline.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "IMDB",
+   "series_b": "Baseline",
+   "x_b": "IMDB",
+   "true_value": 3.1,
+   "claimed_value": 13.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig3_c0",
+   "sentence": "As shown in Figure 3, VGG-16 has a loss of 0.020 at epoch 40.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.33,
+   "claimed_value": 0.02,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 1.5481840000000002,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig3_c1",
+   "sentence": "At epoch 30, the loss of Transformer is 0.536.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "30",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.846,
+   "claimed_value": 0.536,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 1.5481840000000002,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig3_c2",
+   "sentence": "ResNet-50 has a loss of about 0.9 at epoch 20.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "20",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.943,
+   "claimed_value": 0.9,
+   "tolerance": 0.1,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.5481840000000002,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig3_peak",
+   "sentence": "Baseline peaks at 0.665 loss at epoch 40.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.665,
+   "claimed_value": 0.665,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.5481840000000002,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_011_fig3_peak_b",
+   "sentence": "Baseline peaks at 0.665 loss at epoch 40.",
+   "figure_id": "fig3",
+   "kind": "peak_planted",
+   "gold": "error",
+   "claim_type": "peak",
+   "series": "Baseline",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": -0.726,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 1.5481840000000002,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

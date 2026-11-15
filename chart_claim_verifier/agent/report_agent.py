@@ -14,15 +14,18 @@ from pathlib import Path
 from typing import Callable, Literal
 
 from ..claims.finder import is_candidate, strip_figure_refs
+from ..ingest.pdf_parser import split_sentences
 from ..claims.parser import ParseError
 from ..claims.tolerance import find_numbers
 from ..decide.rule import batch_check
 from ..ingest.pdf_parser import parse_pdf
 from ..lms.guard import ActionGuard
 from ..retrieval.figure_index import FigureIndex
-from ..schemas import ClaimTrace, Decision, Report
+from ..schemas import ClaimSpec, ClaimTrace, Decision, Figure, Report, Sentence
 from .controller import ClaimController
+from .events import emit
 from .memory import ReportMemory
+from .notes import add_conflicts, citation_note, explain_flag
 
 RetrievalMode = Literal["ours", "nearest", "oracle"]
 AMBIGUOUS_RULES = ("either", "top", "both", "never")
@@ -60,7 +63,9 @@ class ReportAgent:
     def __init__(self, parser, controller: ClaimController, retrieval: RetrievalMode = "ours",
                  oracle: Callable[[str, str], str | None] | None = None, ref_bonus: float = 10.0,
                  vocab_match: int = 80, llm_parser=None, ambiguous_rule: str = "either", legend_reader=None,
-                 hand_off_rejected: bool = False, cited_first: bool = False, ambiguity_ratio: float = 0.8):
+                 hand_off_rejected: bool = False, cited_first: bool = False, ambiguity_ratio: float = 0.8,
+                 check_captions: bool = False, hand_off_unsupported: bool = False, aliases: dict | None = None,
+                 cross_chart: bool = False, equivalent_metrics: bool = False):
         if ambiguous_rule not in AMBIGUOUS_RULES:
             raise ValueError(f"unknown ambiguous_rule {ambiguous_rule!r}")
         self.ambiguous_rule = ambiguous_rule
@@ -73,6 +78,20 @@ class ReportAgent:
         # (a hidden instruction made the LLM parser drop 8 real claims, E8)
         self.hand_off_rejected = hand_off_rejected
         self.cited_first, self.ambiguity_ratio = cited_first, ambiguity_ratio    # retrieval options, see FigureIndex
+        # v3 switches (all off in the frozen configs)
+        self.check_captions = check_captions              # A4: claims written in captions, checked on their own figure
+        self.hand_off_unsupported = hand_off_unsupported  # B7: dual y-axes and chart kinds the tools cannot read -> TA
+        self.aliases = {k.lower(): v for k, v in (aliases or {}).items()}   # B9: "RN50" -> "ResNet-50"
+        self.cross_chart = cross_chart                    # B9: a difference whose two values sit on two figures
+        self.equivalent_metrics = equivalent_metrics      # B9: an error-rate claim may be checked on an accuracy chart
+        self.on_event = None                              # optional live activity feed (web app); see events.py
+
+    def _emit(self, **event) -> None:
+        emit(self.on_event, **event)
+
+    def _emit_stages(self, entries: list[dict], sentence: str) -> None:
+        for e in entries:
+            self._emit(stage=e.get("stage"), text=str(e.get("decision")), why=e.get("why"), sentence=sentence)
 
     def ingest(self, pdf_path: str | Path, work_dir: str | Path, report_id: str | None = None) -> Report:
         return parse_pdf(pdf_path, work_dir, report_id)
@@ -95,16 +114,25 @@ class ReportAgent:
 
     # ------------------------------------------------------------------ parse stage
     def _parse(self, sent, context: str, stages: list) -> tuple[object, str]:
-        """Returns (claim | None | 'error', parser name)."""
-        claim = self.parser.parse(sent.text, sent.sentence_id, context)
-        if claim is not None:
+        """Returns (list of claims | None | 'error', parser name). A sentence gives several claims only with the v3
+        parser switches (claims.split_multi / claims.extremum); otherwise at most one, exactly as before."""
+        multi = getattr(self.parser, "split_multi", False) or getattr(self.parser, "peaks", False)
+        if multi:
+            claims = self.parser.parse_all(sent.text, sent.sentence_id, context) or None
+        else:
+            one = self.parser.parse(sent.text, sent.sentence_id, context)
+            claims = [one] if one is not None else None
+        if claims is not None:
+            claim = claims[0]
             if self.parser.name == "llm":
                 stages.append({"stage": "parse", "decision": "LLM parser",
                                "why": f"the model read the sentence as a '{claim.claim_type}' claim"})
             else:
+                kinds = " + ".join(c.claim_type for c in claims)
                 stages.append({"stage": "parse", "decision": "rule parser",
-                               "why": f"sentence matches a known '{claim.claim_type}' phrasing"})
-            return claim, "rule"
+                               "why": f"sentence matches a known '{kinds}' phrasing"
+                               + (f" ({len(claims)} claims)" if len(claims) > 1 else "")})
+            return claims, "rule"
         if self.llm_parser is None:
             stages.append({"stage": "parse", "decision": "not a chart claim",
                            "why": "the LLM parser found no checkable chart claim" if self.parser.name == "llm"
@@ -113,67 +141,138 @@ class ReportAgent:
         stages.append({"stage": "parse", "decision": "escalate to LLM parser",
                        "why": "the sentence has a result-like number but no phrasing the rules know"})
         try:
-            return self.llm_parser.parse(sent.text, sent.sentence_id, context), "llm"
+            c = self.llm_parser.parse(sent.text, sent.sentence_id, context)
+            return ([c] if c is not None else None), "llm"
         except ParseError:
             return "error", "llm"
+
+    def _alias(self, claim: ClaimSpec, mem: ReportMemory, stages: list) -> ClaimSpec:
+        """B9: a series written under another name ("RN50") that no figure shows, while its alias is shown."""
+        if not self.aliases:
+            return claim
+        upd = {}
+        for field in ("series", "series_b"):
+            v = getattr(claim, field)
+            target = self.aliases.get((v or "").lower())
+            if target and not mem.index.shows(v) and mem.index.shows(target):
+                upd[field] = target
+        if upd:
+            stages.append({"stage": "parse", "decision": "alias",
+                           "why": "; ".join(f"read '{getattr(claim, k)}' as '{v}' (alias table)" for k, v in upd.items())})
+            claim = claim.model_copy(update=upd)
+        return claim
+
+    def _caption_sentences(self, report: Report) -> list[Sentence]:
+        """A4: sentences written in captions; each is about its own figure."""
+        out = []
+        for f in report.figures:
+            for j, text in enumerate(split_sentences(f.caption)):
+                out.append(Sentence(sentence_id=f"{report.report_id}_cap_{f.figure_id}_{j}", report_id=report.report_id,
+                                    text=text, page=f.page, figure_id=f.figure_id))
+        return out
 
     # ------------------------------------------------------------------ main loop
     def run(self, report: Report) -> tuple[list[ClaimTrace], ReportMemory]:
         mem = ReportMemory(report, FigureIndex(report.figures, self.ref_bonus, self.vocab_match,
                                                   legend_reader=self.legend_reader, cited_first=self.cited_first,
-                                                  ambiguity_ratio=self.ambiguity_ratio))
+                                                  ambiguity_ratio=self.ambiguity_ratio,
+                                                  equivalent_metrics=self.equivalent_metrics))
         self.plan(mem)
+        for fid, entry in mem.plan.items():
+            tools = entry.get("callable_tools")
+            self._emit(stage="plan", text=f"{fid}: looks like {entry.get('looks_like')}",
+                       why=("tools worth calling: " + (", ".join(tools) or "none")) if tools is not None else None)
         context = mem.context()
         planned, traces = [], []
-        for sent in report.sentences:
+        sentences = list(report.sentences) + (self._caption_sentences(report) if self.check_captions else [])
+        for sent in sentences:
             if not find_numbers(strip_figure_refs(sent.text)):
                 continue                                   # no number: nothing to check
             base = dict(report_id=report.report_id, sentence_id=sent.sentence_id, sentence=sent.text,
                         policy=self.controller.policy.name)
             if not is_candidate(sent.text):
+                self._emit(stage="parse", text="skip: not a result claim", sentence=sent.text)
                 traces.append(ClaimTrace(**base, decision=Decision(verdict="SKIPPED", reason="not a result claim")))
                 continue
             stages: list[dict] = []
-            claim, used = self._parse(sent, context, stages)
-            if claim == "error":
+            claims, used = self._parse(sent, context, stages)
+            self._emit_stages(stages, sent.text)
+            if claims == "error":
                 traces.append(ClaimTrace(**base, stages=stages,
                                          decision=Decision(verdict="NOT_SURE", reason="could not parse")))
                 continue
-            if claim is None:
+            if claims is None:
                 verdict = "NOT_SURE" if self.hand_off_rejected else "SKIPPED"
                 traces.append(ClaimTrace(**base, stages=stages,
                                          decision=Decision(verdict=verdict, reason="parser: not a chart claim")))
                 continue
-            figs, cands = self._locate(claim, sent, mem)
-            if not figs and used == "rule" and self.llm_parser is not None and self.retrieval == "ours":
-                stages.append({"stage": "figure", "decision": "re-parse with LLM",
+            for atom, claim in enumerate(claims):
+                abase = {**base, "atom": atom}
+                st = list(stages)
+                claim = self._alias(claim, mem, st)
+                op_figs = None
+                if sent.figure_id:                         # a caption sentence: its own figure
+                    figs, cands = [mem.figure(sent.figure_id)], []
+                    st.append({"stage": "figure", "decision": sent.figure_id, "why": "the sentence is this figure's caption"})
+                else:
+                    figs, cands = self._locate(claim, sent, mem)
+                if not figs and len(claims) == 1 and used == "rule" and self.llm_parser is not None \
+                        and self.retrieval == "ours" and not sent.figure_id:
+                    st.append({"stage": "figure", "decision": "re-parse with LLM",
                                "why": f"no figure shows '{claim.series}' at '{claim.x}': possibly a mis-parse"})
-                try:
-                    again = self.llm_parser.parse(sent.text, sent.sentence_id, context)
-                except ParseError:
-                    again = None
-                if again is not None:
-                    figs2, cands2 = self._locate(again, sent, mem)
-                    if figs2:
-                        claim, figs, cands = again, figs2, cands2
-            if not figs:
-                stages.append({"stage": "figure", "decision": "NO_FIGURE",
+                    try:
+                        again = self.llm_parser.parse(sent.text, sent.sentence_id, context)
+                    except ParseError:
+                        again = None
+                    if again is not None:
+                        figs2, cands2 = self._locate(again, sent, mem)
+                        if figs2:
+                            claim, figs, cands = again, figs2, cands2
+                if not figs and self.cross_chart:
+                    figs, op_figs = self._locate_across(claim, mem)
+                    if figs:
+                        st.append({"stage": "figure", "decision": " + ".join(f.figure_id for f in op_figs),
+                                   "why": "each value of the claim is shown on a different figure"})
+                if not figs:
+                    st.append({"stage": "figure", "decision": "NO_FIGURE",
                                "why": f"no figure shows series '{claim.series}' at x '{claim.x}'"})
-                traces.append(ClaimTrace(**base, claim=claim, figure_candidates=cands, stages=stages,
-                                         decision=Decision(verdict="NO_FIGURE", reason="no figure shows this series / x")))
-                continue
-            stages.append(self._figure_note(claim, figs, cands, mem))
-            planned.append((figs[0].figure_id, len(planned), base, claim, figs, cands, stages))
+                    self._emit_stages(st[len(stages):], sent.text)
+                    note = citation_note(claim, None, report.figures)
+                    traces.append(ClaimTrace(**abase, claim=claim, figure_candidates=cands, stages=st,
+                                             notes=[note] if note else [],
+                                             decision=Decision(verdict="NO_FIGURE", reason="no figure shows this series / x")))
+                    continue
+                if not sent.figure_id and op_figs is None:
+                    st.append(self._figure_note(claim, figs, cands, mem))
+                self._emit_stages(st[len(stages):], sent.text)
+                planned.append((figs[0].figure_id, len(planned), abase, claim, figs, cands, st, op_figs))
 
         mem.pending = Counter(p[0] for p in planned)       # claims waiting on each figure: shares a table tool's cost
-        for fid0, _, base, claim, figs, cands, stages in sorted(planned, key=lambda p: (p[0], p[1])):
-            key = _norm(claim.sentence)
+        for fid0, _, base, claim, figs, cands, stages, op_figs in sorted(planned, key=lambda p: (p[0], p[1])):
+            key = _norm(claim.sentence) + (f"#{base['atom']}" if base.get("atom") else "")
             if key in mem.checked:                         # duplicate sentence: same answer, no calls
                 old = mem.checked[key]
-                traces.append(old.model_copy(update={"sentence_id": base["sentence_id"], "tool_calls": 0}))
+                traces.append(old.model_copy(update={"sentence_id": base["sentence_id"], "tool_calls": 0}, deep=True))
+                self._emit(stage="decide", text=old.decision.verdict, why="same sentence as an earlier one: answer reused, no calls",
+                           sentence=claim.sentence)
                 mem.pending[fid0] -= 1
                 continue
-            runs = [(f, self.controller.run(claim, f, mem)) for f in figs]
+            why_not = unsupported(figs[0]) if self.hand_off_unsupported else None
+            if why_not:                                    # B7: the tools cannot read this kind of chart
+                mem.pending[fid0] -= 1
+                stages = stages + [{"stage": "decide", "decision": "NOT_SURE", "why": why_not}]
+                self._emit_stages(stages[-1:], claim.sentence)
+                note = citation_note(claim, figs[0], report.figures)        # A1: also on a handed-off claim
+                tr = ClaimTrace(**base, claim=claim, figure_id=figs[0].figure_id, figure_candidates=cands,
+                                chart_type=figs[0].chart_type, y_span=figs[0].y_span, stages=stages,
+                                notes=[note] if note else [],
+                                decision=Decision(verdict="NOT_SURE", reason="handed off: " + why_not))
+                mem.checked[key] = tr
+                traces.append(tr)
+                continue
+            self._emit(stage="claim", text=f"check {claim.claim_type} claim on {' and '.join(f.figure_id for f in figs)}",
+                       why=f"claimed {claim.claimed_value} for {claim.series} at {claim.x}", sentence=claim.sentence)
+            runs = [(f, self.controller.run(claim, f, mem, op_figs if len(figs) == 1 else None)) for f in figs]
             mem.pending[fid0] -= 1
             fig, r = runs[0]
             figure_runs = {}
@@ -194,14 +293,23 @@ class ReportAgent:
                                              else s["action"].get("tool") or s["action"]["action"]),
                                 "why": s["action"].get("why", ""), "result": s.get("result")} for s in r.steps]
             stages.append({"stage": "decide", "decision": r.decision.verdict, "why": r.decision.reason})
+            self._emit_stages(stages[-1:], claim.sentence)
+            notes = list(r.notes)
+            if op_figs is None:
+                if (n := citation_note(claim, fig, report.figures)):
+                    notes.append(n)
+                if not r.notes and (n := explain_flag(claim, fig, r.decision, self.controller.tools, mem.tables_used)):
+                    notes.append(n)
             tr = ClaimTrace(**base, claim=claim, figure_id=fig.figure_id, figure_candidates=cands,
                             chart_type=fig.chart_type, y_span=fig.y_span, tool_values=r.tool_values,
                             readings=r.readings, controller_steps=r.steps, decision=r.decision,
-                            blocked_actions=r.blocked, tool_calls=r.calls, stages=stages, figure_runs=figure_runs)
+                            blocked_actions=r.blocked, tool_calls=r.calls, stages=stages, figure_runs=figure_runs,
+                            notes=notes)
             mem.checked[key] = tr
             traces.append(tr)
-        order = {s.sentence_id: i for i, s in enumerate(report.sentences)}
-        return sorted(traces, key=lambda t: order.get(t.sentence_id, 0)), mem
+        add_conflicts(traces)
+        order = {s.sentence_id: i for i, s in enumerate(sentences)}
+        return sorted(traces, key=lambda t: (order.get(t.sentence_id, len(order)), t.atom)), mem
 
     @staticmethod
     def _figure_note(claim, figs, cands, mem) -> dict:
@@ -231,6 +339,40 @@ class ReportAgent:
             return ([f] if f else []), []
         return mem.index.locate(claim)
 
+    def _locate_across(self, claim: ClaimSpec, mem: ReportMemory) -> tuple[list[Figure], list[Figure] | None]:
+        """B9: a difference whose two values are on two different figures of the same kind. Each value must have
+        exactly one figure, and the two axes must be alike (same chart family, spans within 1.5x)."""
+        if claim.claim_type != "difference":
+            return [], None
+        found = []
+        for s, x in claim.operands():
+            one = claim.model_copy(update={"claim_type": "point", "series": s, "x": x, "series_b": None,
+                                           "x_b": None, "figure_hint": None})
+            figs, _ = mem.index.locate(one)
+            if len(figs) != 1:
+                return [], None
+            found.append(figs[0])
+        a, b = found
+        fam = lambda f: "line" if f.chart_type == "line" else "bar"
+        if a.figure_id == b.figure_id or fam(a) != fam(b) or not a.y_span or not b.y_span \
+                or max(a.y_span, b.y_span) > 1.5 * min(a.y_span, b.y_span):
+            return [], None
+        return [a], [a, b]
+
+
+def unsupported(fig: Figure) -> str | None:
+    """B7: why the tools cannot read this chart, or None."""
+    if "dual_y" in fig.flags:
+        return "the chart has two y-axes, and which series belongs to which axis is not known"
+    kinds = [f.split(":", 1)[1] for f in fig.flags if f.startswith("unsupported:")]
+    if kinds:
+        return f"{kinds[0]} charts are not supported by the reading tools"
+    if "scanned" in fig.flags and not fig.y_span:
+        # C5: on a scanned page whose chart axis could not be read, the margins have no axis range to scale with
+        # (and a % claim cannot be told from a 0-1 axis); on the v3feat scans every wrong flag was on such a chart
+        return "the chart comes from a scanned page and its y-axis could not be read, so the reading error has no scale"
+    return None
+
 
 def finalize(traces: list[ClaimTrace], guard: ActionGuard | None, alpha: float = 0.10,
              use_batch_check: bool = True) -> list[ClaimTrace]:
@@ -253,4 +395,5 @@ def evidence_card(t: ClaimTrace) -> dict:
             "claimed": t.claim.claimed_value if t.claim else None,
             "allowed_rounding": t.claim.tolerance if t.claim else None,
             "readings": {k: round(v, 4) for k, v in t.tool_values.items()},
-            "estimate": d.estimate, "error_margin": d.margin_flag, "p_value": d.p_value, "why": d.reason}
+            "estimate": d.estimate, "error_margin": d.margin_flag, "p_value": d.p_value, "why": d.reason,
+            "notes": list(t.notes)}

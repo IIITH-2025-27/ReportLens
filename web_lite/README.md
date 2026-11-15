@@ -19,6 +19,13 @@ web_lite/
 
 Every run is kept. A report page shows the latest run by default; `?run=<id>` opens an earlier one.
 
+**Agent activity.** While a run is going, the report page lists each step as it happens: reading the PDF, the
+plan for each figure, how each sentence was parsed, which figure it was matched to, every tool call (with the
+reason the agent picked that tool, what it read and how long it took), and the verdict. The verifier reports
+these through an optional `on_event` listener (`chart_claim_verifier/agent/events.py`, passed to
+`pipeline.verify_pdf`); the backend stores them in `run_events_v2`. The listener only reports: verdicts are the
+same with or without it, and a failing listener never stops a run.
+
 ## One verifier, one database
 
 - **Verifier.** The agent is built by `chart_claim_verifier.pipeline.build_agent` and a report is checked by
@@ -30,6 +37,28 @@ Every run is kept. A report page shows the latest run by default; `?run=<id>` op
   files leave the other app's tables out of autogenerate.
 - **Settings.** `web_lite/backend/.env` is optional. Whatever it does not set (`DATABASE_URL`, `VERIFIER_*`,
   `CCV_REMOTE_*`) is read from `web/backend/.env`.
+
+## Start and stop
+
+```bash
+./start.sh     # API on :8001 and the page on http://localhost:5174, in the background
+./stop.sh
+```
+
+`start.sh` applies migrations, then starts both servers detached from the terminal (closing the terminal or the
+editor does not stop them; they run until `./stop.sh` or a restart of the Mac). Logs and process ids go to
+`web_lite/logs/`. Python is `$PYTHON` if set, else the first virtualenv found (`web/backend/.venv`,
+`web_lite/backend/.venv`, `../chart-claim verifier/.venv`). It runs without `--reload`, so editing code does not
+restart a run halfway; run `./stop.sh && ./start.sh` after a change.
+
+**Models load at start-up** (`LITE_PRELOAD=1`, the default): about 1.5 minutes after start, `/api/health` shows
+`"models": "ready"`, and from then on a report does not wait for them, however long the app has been idle. They
+hold about 11 GB while the app runs. Set `LITE_PRELOAD=0` to load them on the first run instead (the memory is
+then held from that run on).
+
+On Apple silicon the models are loaded one tensor at a time (`HF_DEACTIVATE_ASYNC_LOAD=1`, set by
+`chart_claim_verifier/models/vlm.py`): transformers' parallel loading deadlocks on MPS, which made the first run
+hang forever at ~400% CPU.
 
 ## Backend
 
@@ -57,6 +86,7 @@ API docs: http://localhost:8001/docs
 | `DELETE` | `/api/reports/{id}` | delete the report, its runs and claims, the PDF and the figures (refused while a run is active) |
 | `POST` | `/api/reports/{id}/verify` | start a new run |
 | `GET` | `/api/runs/{id}` | a run with its claims and figures |
+| `GET` | `/api/runs/{id}/events?after=` | the agent's activity feed, oldest first; `after` = the last `seq` already shown |
 | `GET` | `/api/runs/{id}/figures/{figure_id}` | a figure image extracted from the report |
 
 Lite-only settings (`.env`): `LITE_STORAGE_DIR` (default `storage/`), `LITE_CORS_ORIGINS` (default

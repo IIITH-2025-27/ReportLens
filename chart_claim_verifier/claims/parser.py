@@ -20,10 +20,11 @@ from pydantic import BaseModel, ValidationError, field_validator
 
 from ..models.vlm import LLM, extract_json
 from ..schemas import ClaimSpec
-from .finder import figure_hint, strip_figure_refs
-from .tolerance import NUMBER_RE, find_numbers
+from .finder import figure_hint, panel_hint, strip_figure_refs
+from .tolerance import NUM_TEXT, find_numbers, find_range
 
-NUM = r"(?P<num>(?:(?:about|around|roughly|approximately|nearly|over|more than|above|under|below|less than|at least|at most) )?-?\d+(?:\.\d+)?%?)"
+NUM = (r"(?P<num>(?:(?:about|around|roughly|approximately|nearly|over|more than|above|under|below|less than|at least|at most|up to) )?"
+       + NUM_TEXT + r"\s?%?)")       # v3 (A5): also 0,912 / 1,000 / 3e-4 / 1.2k
 VERB = r"(?:reaches|achieves|attains|obtains|scores|has|gets|yields)"
 METRIC = r"(?:[A-Za-z0-9\-]+(?: [A-Za-z0-9\-]+){0,2})"
 
@@ -43,16 +44,28 @@ PATTERNS: list[tuple[str, re.Pattern]] = [
 ]
 
 
+# v3 (B3): "x is the highest point" phrasings. Each gives two claims: the value at x, and that x is the peak.
+PEAK_PATTERNS: list[re.Pattern] = [
+    re.compile(rf"^(?P<s>.+?) peaks at {NUM}(?: {METRIC})? (?:at epoch|after epoch|on|at) (?P<x>.+?)\.?$", re.I),
+    re.compile(rf"^(?:The {METRIC} of )?(?P<s>.+?) reaches (?:its|a) (?:highest|maximum|peak|best)(?: {METRIC})? of {NUM}(?: {METRIC})? "
+               rf"(?:at epoch|after epoch|on|at) (?P<x>.+?)\.?$", re.I),
+    re.compile(rf"^(?:At epoch|At|On) (?P<x>[^,]+), (?:the {METRIC} of )?(?P<s>.+?) reaches (?:its|a) (?:highest|maximum|peak|best)"
+               rf"(?: {METRIC})? of {NUM}(?: {METRIC})?\.?$", re.I),
+]
+# v3 (B2): where a sentence with several claims splits ("A reaches 91% at epoch 10 and 93% at epoch 20")
+CLAUSE_SPLIT = re.compile(r"\s*;\s*|,?\s+(?:and|while|whereas|but)\s+", re.I)
+
+
 def _number_at(sentence: str, num_text: str, pos: int | None = None):
     """The tolerance-aware reading of the number as written in the sentence.
 
     `pos` is where the number phrase starts; without it the LAST occurrence of
     `num_text` is used (claims put the claimed value after "epoch 10" etc.).
     """
-    digits = NUMBER_RE.search(num_text)
-    if not digits:
+    found = find_numbers(num_text)          # same reading as in the sentence: "0,912", "1.2k", "3e-4" (v3, A5)
+    if not found:
         return None
-    value = float(digits.group("num"))
+    value = found[0].value
     if pos is None:
         pos = sentence.rfind(num_text.strip())
     for n in find_numbers(sentence):
@@ -72,8 +85,67 @@ def _clean(sentence: str) -> str:
 class RuleParser:
     name = "rule"
 
+    def __init__(self, ranges: bool = False, split_multi: bool = False, peaks: bool = False):
+        # v3 switches (claims.ranges / claims.split_multi / claims.extremum); all off = the frozen parser
+        self.ranges, self.split_multi, self.peaks = ranges, split_multi, peaks
+
     def parse(self, sentence: str, claim_id: str, context: str = "") -> ClaimSpec | None:
+        rng = find_range(_clean(sentence)) if self.ranges else None
+        if rng is not None:                        # "between 85% and 90%": parse with the low bound, then widen
+            s0 = _clean(sentence)
+            low_text = s0[rng.low.start:rng.low.end].strip()
+            rest = s0[rng.end:].lstrip()           # the high bound's span may end with the space before the next word
+            sep = "" if rest[:1] in ("", ".", ",", ";", ":", ")") else " "
+            c = self._parse(s0[:rng.start] + low_text + sep + rest, claim_id, sentence)
+            if c is None or c.claim_type != "point":
+                return None
+            return c.model_copy(update={"relation": "between", "claimed_value": rng.low.value,
+                                        "claimed_high": rng.high.value, "tolerance": rng.tolerance,
+                                        "unit": "percent" if rng.percent else c.unit})
+        return self._parse(_clean(sentence), claim_id, sentence)
+
+    def parse_all(self, sentence: str, claim_id: str, context: str = "") -> list[ClaimSpec]:
+        """Every claim of a sentence (v3): a peak phrasing gives two, a sentence joined by "and" / ";" one per part."""
         s = _clean(sentence)
+        if self.peaks:
+            for pat in PEAK_PATTERNS:
+                m = pat.match(s)
+                if m and (n := _number_at(s, m.group("num"), m.start("num"))) is not None:
+                    common = dict(sentence=sentence, series=m.group("s").strip(),
+                                  x=re.sub(r"^epoch\s+", "", m.group("x").strip(), flags=re.I),
+                                  figure_hint=figure_hint(sentence), panel_hint=panel_hint(sentence))
+                    return [ClaimSpec(claim_id=claim_id, claim_type="point", claimed_value=n.value,
+                                      unit="percent" if n.percent else "abs", relation=n.relation,
+                                      tolerance=n.tolerance, **common),
+                            ClaimSpec(claim_id=f"{claim_id}_peak", claim_type="peak", claimed_value=0.0,
+                                      relation="greater", tolerance=0.0, **common)]
+        if self.split_multi:
+            parts = [p.strip(" ,.") for p in CLAUSE_SPLIT.split(s) if p.strip(" ,.")]
+            if len(parts) >= 2 and sum(bool(find_numbers(p)) for p in parts) >= 2:
+                out = self._split_claims(parts, sentence, claim_id)
+                if out:
+                    return out
+        one = self.parse(sentence, claim_id, context)
+        return [one] if one is not None else []
+
+    def _split_claims(self, parts: list[str], sentence: str, claim_id: str) -> list[ClaimSpec]:
+        """Parse each part; a part that lacks the subject or the x borrows it from the part before ("... and 93% at
+        epoch 20", "... and ViT-S reaches 89%"). Every part must parse, or the sentence is not split."""
+        out: list[ClaimSpec] = []
+        for i, part in enumerate(parts):
+            cid = f"{claim_id}_{i}" if i else claim_id
+            tries = [part]
+            if out:
+                prev = out[-1]
+                where = f"at epoch {prev.x}" if _is_num(prev.x) else f"on {prev.x}"
+                tries += [f"{prev.series} reaches {part}", f"{part} {where}", f"{prev.series} reaches {part} {where}"]
+            c = next((c for t in tries if (c := self._parse(_clean(t), cid, sentence)) is not None), None)
+            if c is None:
+                return []
+            out.append(c.model_copy(update={"figure_hint": figure_hint(sentence), "panel_hint": panel_hint(sentence)}))
+        return out
+
+    def _parse(self, s: str, claim_id: str, sentence: str) -> ClaimSpec | None:
         for ctype, pat in PATTERNS:
             m = pat.match(s)
             if not m:
@@ -92,8 +164,16 @@ class RuleParser:
             return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type=ctype, series=series,
                              x=re.sub(r"^epoch\s+", "", x, flags=re.I), series_b=sb and sb.strip(),
                              x_b=xb and xb.strip(), claimed_value=n.value, unit=unit, relation=n.relation,
-                             tolerance=n.tolerance, figure_hint=figure_hint(sentence))
+                             tolerance=n.tolerance, figure_hint=figure_hint(sentence), panel_hint=panel_hint(sentence))
         return None
+
+
+def _is_num(s: str | None) -> bool:
+    try:
+        float(s)
+        return True
+    except (TypeError, ValueError):
+        return False
 
 
 # --------------------------------------------------------------------- LLM parser
@@ -162,6 +242,13 @@ class LLMParser:
                     return None
                 if not complete:
                     raise ValueError("claim_type, series, x and number_as_written are required")
+                rng = find_range(form.number_as_written)
+                if rng is not None and form.claim_type == "point":       # v3 (A6): "between 85% and 90%"
+                    return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type="point", series=form.series,
+                                     x=re.sub(r"^epoch\s+", "", form.x, flags=re.I), claimed_value=rng.low.value,
+                                     claimed_high=rng.high.value, relation="between", tolerance=rng.tolerance,
+                                     unit="percent" if rng.percent else "abs", figure_hint=figure_hint(sentence),
+                                     panel_hint=panel_hint(sentence))
                 n = _number_at(sentence, form.number_as_written)
                 if n is None:
                     raise ValueError(f"'{form.number_as_written}' does not appear in the sentence")
@@ -170,7 +257,8 @@ class LLMParser:
                 return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type=ctype, series=form.series,
                                  x=re.sub(r"^epoch\s+", "", form.x, flags=re.I), series_b=form.series_b,
                                  x_b=form.x_b, claimed_value=n.value, unit=unit, relation=n.relation,
-                                 tolerance=n.tolerance, figure_hint=figure_hint(sentence))
+                                 tolerance=n.tolerance, figure_hint=figure_hint(sentence),
+                                 panel_hint=panel_hint(sentence))
             except (ValueError, ValidationError) as e:
                 self.last_errors.append(str(e))
                 error = f"\nYour previous answer was invalid: {str(e)[:200]}. Answer again with valid JSON."

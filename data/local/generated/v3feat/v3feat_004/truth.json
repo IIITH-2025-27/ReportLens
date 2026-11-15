@@ -1,0 +1,297 @@
+{
+ "report_id": "v3feat_004",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "F1 score during training",
+   "table": {
+    "table_id": "v3feat_004_fig1",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "series": {
+     "EfficientNet": [
+      46.3,
+      55.1,
+      61.4,
+      65.9,
+      69.2,
+      71.5,
+      73.3,
+      75.4,
+      75.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     44.824999999999996,
+     77.27499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "EfficientNet": "#1f77b4"
+     }
+    }
+   },
+   "kind": "dual"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Training loss (log scale)",
+   "table": {
+    "table_id": "v3feat_004_fig2",
+    "kind": "line",
+    "title": "Training loss (log scale)",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16"
+    ],
+    "series": {
+     "EfficientNet": [
+      2.848,
+      1.526,
+      0.896,
+      0.547,
+      0.332,
+      0.183,
+      0.111,
+      0.062
+     ],
+     "DistilBERT": [
+      1.567,
+      1.059,
+      0.685,
+      0.519,
+      0.337,
+      0.204,
+      0.152,
+      0.105
+     ],
+     "ResNet-18": [
+      2.194,
+      1.255,
+      0.7,
+      0.395,
+      0.216,
+      0.117,
+      0.066,
+      0.037
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.02977726535055962,
+     3.538807165783597
+    ],
+    "meta": {
+     "colors": {
+      "EfficientNet": "#1f77b4",
+      "DistilBERT": "#ff7f0e",
+      "ResNet-18": "#2ca02c"
+     }
+    }
+   },
+   "kind": "log"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_004_fig1_c0",
+   "sentence": "From epoch 6 to epoch 9, the F1 score of EfficientNet improves by a relative 1.5%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "EfficientNet",
+   "x": "6",
+   "series_b": null,
+   "x_b": "9",
+   "true_value": 6.013986,
+   "claimed_value": 1.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 32.449999999999996,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig1_c1",
+   "sentence": "From epoch 1 to epoch 2, the F1 score of EfficientNet improves by a relative 12.0% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "EfficientNet",
+   "x": "1",
+   "series_b": null,
+   "x_b": "2",
+   "true_value": 19.006479,
+   "claimed_value": 12.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 32.449999999999996,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig1_c2",
+   "sentence": "From epoch 1 to epoch 9, the F1 score of EfficientNet improves by a relative 60.2% (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "EfficientNet",
+   "x": "1",
+   "series_b": null,
+   "x_b": "9",
+   "true_value": 63.714903,
+   "claimed_value": 60.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 32.449999999999996,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig1_dual",
+   "sentence": "At epoch 9, the loss of EfficientNet is 0.460.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "9",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.46,
+   "claimed_value": 0.46,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig2_c0",
+   "sentence": "At epoch 4, the loss of ResNet-18 is about 1.3.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.255,
+   "claimed_value": 1.3,
+   "tolerance": 0.1,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.5090299004330374,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig2_peak",
+   "sentence": "The loss of ResNet-18 reaches its highest value of 2.194 at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 2.194,
+   "claimed_value": 2.194,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.5090299004330374,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_004_fig2_peak_b",
+   "sentence": "The loss of ResNet-18 reaches its highest value of 2.194 at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "peak_correct",
+   "gold": "correct",
+   "claim_type": "peak",
+   "series": "ResNet-18",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.939,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 3.5090299004330374,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

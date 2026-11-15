@@ -1,0 +1,591 @@
+{
+ "report_id": "v3feat_015",
+ "layout": {
+  "two_column": false,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy of MLP by dataset",
+   "table": {
+    "table_id": "v3feat_015_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of MLP by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "IMDB",
+     "AG News",
+     "Fashion-MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "MLP": [
+      74.2,
+      55.3,
+      90.0,
+      76.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     76.65
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:histogram"
+  },
+  {
+   "figure_id": "fig2a",
+   "number": 2,
+   "panel": "a",
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "(a) Test accuracy of MobileNet by dataset",
+   "table": {
+    "table_id": "v3feat_015_fig2a",
+    "kind": "bar",
+    "title": "Test accuracy of MobileNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "AG News",
+     "MNIST",
+     "SVHN",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "MobileNet": [
+      76.1,
+      52.4,
+      70.5,
+      75.7,
+      53.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     89.79799999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "MobileNet": "#1f77b4"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2b",
+   "number": 2,
+   "panel": "b",
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "(b) Training loss",
+   "table": {
+    "table_id": "v3feat_015_fig2b",
+    "kind": "line",
+    "title": "Training loss",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60",
+     "70"
+    ],
+    "series": {
+     "BERT-base": [
+      1.749,
+      1.331,
+      1.053,
+      0.865,
+      0.745,
+      0.588,
+      0.571
+     ],
+     "ViT-S": [
+      1.653,
+      1.108,
+      0.928,
+      0.695,
+      0.617,
+      0.598,
+      0.561
+     ],
+     "LSTM": [
+      1.059,
+      0.578,
+      0.396,
+      0.286,
+      0.189,
+      0.121,
+      0.056
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     -0.028650000000000002,
+     1.83365
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "BERT-base": "#1f77b4",
+      "ViT-S": "#ff7f0e",
+      "LSTM": "#2ca02c"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Accuracy by dataset (vision) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_015_fig3_0",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (vision)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "ViT-S": [
+      75.0,
+      79.0,
+      65.5
+     ],
+     "GRU": [
+      74.7,
+      71.1,
+      63.8
+     ],
+     "Ours": [
+      72.2,
+      77.3,
+      60.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     93.22
+    ],
+    "meta": {
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "GRU": "#377eb8",
+      "Ours": "#4daf4a"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "panel": null,
+   "image": "fig4.png",
+   "vector": "fig4.pdf",
+   "caption": "Accuracy by dataset (text) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_015_fig3_1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (text)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SVHN",
+     "CIFAR-10",
+     "IMDB"
+    ],
+    "series": {
+     "ViT-S": [
+      67.2,
+      82.9,
+      79.8
+     ],
+     "GRU": [
+      72.4,
+      77.8,
+      86.2
+     ],
+     "Ours": [
+      68.5,
+      80.0,
+      88.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "colors": {
+      "ViT-S": "#e41a1c",
+      "GRU": "#377eb8",
+      "Ours": "#4daf4a"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_015_fig1_c0",
+   "sentence": "MLP reaches 72.7% validation accuracy on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.2,
+   "claimed_value": 72.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 76.65,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:histogram",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig1_c1",
+   "sentence": "MLP scores 15.8 points higher on Fashion-MNIST than on IMDB (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "Fashion-MNIST",
+   "series_b": "MLP",
+   "x_b": "IMDB",
+   "true_value": 15.8,
+   "claimed_value": 15.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 76.65,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:histogram",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2a_c0",
+   "sentence": "As shown in Figure 2(a), MobileNet reaches 62.2% test accuracy on Fashion-MNIST.",
+   "figure_id": "fig2a",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 53.2,
+   "claimed_value": 62.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 89.79799999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2a_c1",
+   "sentence": "MobileNet reaches 70.5% test accuracy on MNIST.",
+   "figure_id": "fig2a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.5,
+   "claimed_value": 70.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 89.79799999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2a_c2",
+   "sentence": "MobileNet achieves 67.1% test accuracy on CIFAR-10.",
+   "figure_id": "fig2a",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MobileNet",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.1,
+   "claimed_value": 67.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 89.79799999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2b_c0",
+   "sentence": "At epoch 10, the loss of BERT-base is 1.059 (Figure 2).",
+   "figure_id": "fig2b",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.749,
+   "claimed_value": 1.059,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.8623,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2b_c1",
+   "sentence": "At epoch 40, the loss of ViT-S is 0.695.",
+   "figure_id": "fig2b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.695,
+   "claimed_value": 0.695,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.8623,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2b_c2",
+   "sentence": "ViT-S has a loss of 0.598 at epoch 60.",
+   "figure_id": "fig2b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "60",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.598,
+   "claimed_value": 0.598,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.8623,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2b_peak",
+   "sentence": "The loss of ViT-S reaches its highest value of 1.653 at epoch 10.",
+   "figure_id": "fig2b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.653,
+   "claimed_value": 1.653,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 1.8623,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig2b_peak_b",
+   "sentence": "The loss of ViT-S reaches its highest value of 1.653 at epoch 10.",
+   "figure_id": "fig2b",
+   "kind": "peak_correct",
+   "gold": "correct",
+   "claim_type": "peak",
+   "series": "ViT-S",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.545,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 1.8623,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig3_c0",
+   "sentence": "On Fashion-MNIST, ViT-S obtains a accuracy of 93.6%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 75.0,
+   "claimed_value": 93.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 93.22,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig4_c0",
+   "sentence": "As shown in Figure 1, Ours outperforms GRU by 12.1 percentage points on IMDB.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "IMDB",
+   "series_b": "GRU",
+   "x_b": "IMDB",
+   "true_value": 2.1,
+   "claimed_value": 12.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": 1
+  },
+  {
+   "claim_id": "v3feat_015_fig4_c1",
+   "sentence": "As shown in Figure 4, GRU reaches 67.8% accuracy on CIFAR-10.",
+   "figure_id": "fig4",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.8,
+   "claimed_value": 67.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_015_fig4_cross",
+   "sentence": "GRU scores 14.0 points higher on CIFAR-10 than on SST-2.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "CIFAR-10",
+   "series_b": "GRU",
+   "x_b": "SST-2",
+   "true_value": 14.0,
+   "claimed_value": 14.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "cross_chart",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

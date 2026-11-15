@@ -1,0 +1,214 @@
+{
+ "report_id": "v3feat_000",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy of Transformer by dataset",
+   "table": {
+    "table_id": "v3feat_000_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of Transformer by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "CIFAR-10",
+     "SVHN"
+    ],
+    "series": {
+     "Transformer": [
+      79.5,
+      64.1,
+      83.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     -0.42999999999999994,
+     2.4299999999999997
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:horizontal_bar"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Training loss (log scale)",
+   "table": {
+    "table_id": "v3feat_000_fig2",
+    "kind": "line",
+    "title": "Training loss (log scale)",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "series": {
+     "ViT-S": [
+      2.285,
+      1.298,
+      0.843,
+      0.573,
+      0.411,
+      0.251,
+      0.184,
+      0.103
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.08821344353897981,
+     2.6680173741998994
+    ],
+    "meta": {
+     "colors": {
+      "ViT-S": "#e41a1c"
+     }
+    }
+   },
+   "kind": "log"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_000_fig1_c0",
+   "sentence": "As shown in Figure 1, Transformer scores 20.4 points higher on SVHN than on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "SVHN",
+   "series_b": "Transformer",
+   "x_b": "CIFAR-10",
+   "true_value": 19.8,
+   "claimed_value": 20.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 2.8599999999999994,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_000_fig1_c1",
+   "sentence": "Transformer scores about 4 points higher on SVHN than on Fashion-MNIST (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "SVHN",
+   "series_b": "Transformer",
+   "x_b": "Fashion-MNIST",
+   "true_value": 4.4,
+   "claimed_value": 4.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 2.8599999999999994,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_000_fig1_c2",
+   "sentence": "Transformer scores about 20 points higher on SVHN than on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "SVHN",
+   "series_b": "Transformer",
+   "x_b": "CIFAR-10",
+   "true_value": 19.8,
+   "claimed_value": 20.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 2.8599999999999994,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_000_fig2_c0",
+   "sentence": "ViT-Small has a loss of over 2.2 at epoch 1 (Figure 3).",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 2.285,
+   "claimed_value": 2.2,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 2.5798039306609195,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": 3
+  },
+  {
+   "claim_id": "v3feat_000_fig2_c1",
+   "sentence": "ViT-Small has a loss of 0.573 at epoch 4 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.573,
+   "claimed_value": 0.573,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 2.5798039306609195,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

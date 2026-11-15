@@ -44,6 +44,8 @@ class DePlotTool(TableTool):
         super().__init__(cache)
         self.model_id, self.offline, self.server = model_id, offline, server   # server: models.remote.ModelServer
         self._model = None
+        from ..models.vlm import new_usage
+        self.usage = new_usage()                     # v3 (A8): calls, tokens, seconds, peak memory
 
     def _load(self):
         if self._model is None:
@@ -56,13 +58,17 @@ class DePlotTool(TableTool):
 
     def linearize(self, image) -> str:
         """DePlot's raw answer for one chart image (path or PIL). The model server calls this too."""
+        import time
         import torch
         from PIL import Image
+        from ..models.vlm import record_usage
+        t0 = time.perf_counter()
         proc, model = self._load()
         im = Image.open(image) if isinstance(image, str) else image
         inputs = proc(images=im.convert("RGB"), text=PROMPT, return_tensors="pt").to(model.device)
         with torch.inference_mode():
             out = model.generate(**inputs, max_new_tokens=512)
+        record_usage(self.usage, int(inputs["flattened_patches"].shape[1]), int(out.shape[1]), time.perf_counter() - t0)
         return proc.decode(out[0], skip_special_tokens=True)
 
     def extract_table(self, fig: Figure) -> Table:

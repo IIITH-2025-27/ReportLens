@@ -84,3 +84,42 @@ def test_pipeline_end_to_end(tmp_path):
     assert guard.unsafe_executed == 0
     assert all(t.decision.verdict in ("CONSISTENT", "MISMATCH", "NOT_SURE", "NO_FIGURE", "SKIPPED") for t in final)
     assert all(t.tool_calls <= 8 for t in final)
+
+
+def test_activity_feed_reports_steps_and_changes_nothing(tmp_path):
+    """The web app's live feed (agent/events.py): it logs each step, and verdicts are the same with or without it,
+    even when the listener itself fails."""
+    truth_index = TruthIndex()
+    tools = build_tools(["ocr_pixel", "sim_deplot", "sim_vlm_table", "sim_vlm_crop"], truth=truth_index)
+    items = []
+    for i in range(3):
+        report, truth = _ingest(tmp_path, f"cal{i}", f"e2e-cal-{i}", truth_index)
+        by_num = {f["number"]: f for f in truth["figures"]}
+        for f in report.figures:
+            items += collect_figure(f, ChartTable.from_dict(by_num[f.number]["table"]), tools, random.Random(0))[0]
+    table = fit_table(items, eps=0.005, min_group_size=20)
+    agent = ReportAgent(RuleParser(), ClaimController(tools, FixedOrderPolicy(list(tools)), table, RuleConfig()))
+    report, _ = _ingest(tmp_path, "test0", "e2e-test-0", truth_index)
+
+    def verdicts():
+        return [(t.sentence_id, t.atom, t.decision.verdict, t.decision.estimate, t.tool_calls) for t in agent.run(report)[0]]
+
+    plain = verdicts()
+    events = []
+    agent.on_event = agent.controller.on_event = events.append
+    watched = verdicts()
+
+    def broken(_):
+        raise RuntimeError("listener down")
+    agent.on_event = agent.controller.on_event = broken
+    with_broken = verdicts()
+    assert plain == watched == with_broken
+
+    stages = [e["stage"] for e in events]
+    assert "plan" in stages and "parse" in stages and "decide" in stages
+    starts = [e for e in events if e["stage"] == "tool" and e["status"] == "start"]
+    ends = [e for e in events if e["stage"] == "tool" and e.get("status") in ("ok", "error")]
+    assert starts and len(starts) == len(ends)                    # every tool call that began also finished
+    assert all(e["tool"] in tools and e["text"] for e in starts)
+    checked = [t for t in agent.run(report)[0] if t.figure_id]   # one decide event per claim measured on a figure
+    assert sum(e["stage"] == "decide" for e in events) >= len(checked)

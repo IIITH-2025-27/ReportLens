@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import functools
 import itertools
+import math
 import re
 from dataclasses import dataclass, field
 
@@ -39,15 +40,16 @@ class PlotArea:
 
 @dataclass
 class YFit:
-    a: float          # value = a * y_pixel + b
+    a: float          # value = a * y_pixel + b  (log axis: log10(value) = a * y_pixel + b)
     b: float
     ticks: list[tuple[float, float]]
+    log: bool = False         # v3 (B4): a log-scale axis
 
     def value(self, y: float) -> float:
-        return self.a * y + self.b
+        return 10.0 ** (self.a * y + self.b) if self.log else self.a * y + self.b
 
     def pixel(self, v: float) -> float:
-        return (v - self.b) / self.a
+        return ((math.log10(v) if self.log else v) - self.b) / self.a
 
 
 @dataclass
@@ -213,27 +215,49 @@ def fit_x(ticks: list[tuple[float, str]], tol_px: float = 3.0) -> tuple[float, f
     return float(a), float(b)
 
 
-def fit_y(ticks: list[tuple[float, float]], tol_px: float = 3.0) -> YFit:
-    """Robust line fit: try every pair of ticks, keep the fit most ticks agree with."""
-    if len(ticks) < 2:
-        raise ChartReadError("too_few_y_ticks")
+def _robust_fit(ticks: list[tuple[float, float]], tol_px: float, upward: bool = True):
+    """Try every pair of ticks, keep the line most ticks agree with: (a, b, inliers) or (None, None, [])."""
     best, best_in = None, []
     for (y1, v1), (y2, v2) in itertools.combinations(ticks, 2):
         if abs(y1 - y2) < 3 or v1 == v2:
             continue
         a = (v1 - v2) / (y1 - y2)
-        if a >= 0:                                     # values must grow upwards
+        if (a >= 0) if upward else (a <= 0):           # values must grow upwards (downwards for an inverted axis)
             continue
         b = v1 - a * y1
         inl = [(y, v) for y, v in ticks if abs((v - b) / a - y) < tol_px]
         if len(inl) > len(best_in):
             best, best_in = (a, b), inl
+    return best, best_in
+
+
+def fit_y(ticks: list[tuple[float, float]], tol_px: float = 3.0, modes: tuple = ("linear",)) -> YFit:
+    """Robust line fit: try every pair of ticks, keep the fit most ticks agree with.
+
+    v3 (B4): with "inverted" in `modes` a downward axis is accepted, and with "log" a log-scale axis (fitted on
+    log10 of the tick values, needing 3 agreeing ticks). Both are tried only after the ordinary fit fails, so with
+    `modes=("linear",)` (the default) the result is exactly the frozen one."""
+    if len(ticks) < 2:
+        raise ChartReadError("too_few_y_ticks")
+    best, best_in = _robust_fit(ticks, tol_px)
     # two misread ticks can agree by chance, three rarely do: if 3+ ticks were read, 3 must agree
-    if best is None or len(best_in) < min(3, len(ticks)):
-        raise ChartReadError("y_fit_failed")
-    ys, vs = np.array([p[0] for p in best_in]), np.array([p[1] for p in best_in])
-    a, b = np.polyfit(ys, vs, 1)
-    return YFit(float(a), float(b), best_in)
+    if best is not None and len(best_in) >= min(3, len(ticks)):
+        ys, vs = np.array([p[0] for p in best_in]), np.array([p[1] for p in best_in])
+        a, b = np.polyfit(ys, vs, 1)
+        return YFit(float(a), float(b), best_in)
+    if "inverted" in modes:
+        best, best_in = _robust_fit(ticks, tol_px, upward=False)
+        if best is not None and len(best_in) >= min(3, len(ticks)):
+            a, b = np.polyfit([p[0] for p in best_in], [p[1] for p in best_in], 1)
+            return YFit(float(a), float(b), best_in)
+    if "log" in modes:
+        pos = [(y, math.log10(v)) for y, v in ticks if v > 0]
+        if len(pos) >= 3:
+            best, best_in = _robust_fit(pos, tol_px)
+            if best is not None and len(best_in) >= 3:
+                a, b = np.polyfit([p[0] for p in best_in], [p[1] for p in best_in], 1)
+                return YFit(float(a), float(b), [(y, 10.0 ** v) for y, v in best_in], log=True)
+    raise ChartReadError("y_fit_failed")
 
 
 # ----------------------------------------------------------------- colour
@@ -411,7 +435,7 @@ def n_colours(img: np.ndarray, area: PlotArea) -> int:
 
 # ----------------------------------------------------------------- main entry
 @functools.lru_cache(maxsize=256)
-def analyse(path: str) -> Geometry:
+def analyse(path: str, modes: tuple = ("linear",)) -> Geometry:
     img = load_bgr(path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape
@@ -431,7 +455,7 @@ def analyse(path: str) -> Geometry:
         v = _num(_ocr_crop(gray, max(0, area.left - 7 * fpx), y - 0.8 * fpx, area.left - gap, y + 0.8 * fpx, True))
         if v is not None:
             yticks.append((y, v))
-    yfit = fit_y(yticks)
+    yfit = fit_y(yticks, modes=modes)
 
     half = 0.48 * (min(np.diff(xt)) if len(xt) > 1 else 3 * fpx)
     boxes = [(x - half, area.bottom + gap, x + half, area.bottom + gap + 1.8 * fpx) for x in xt]

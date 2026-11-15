@@ -11,6 +11,7 @@ calibration and the correlation analysis (E4) have something real to find.
 from __future__ import annotations
 
 import hashlib
+import math
 import random
 from dataclasses import dataclass
 
@@ -69,6 +70,10 @@ def simulate(name: str, nm: NoiseModel, t: ChartTable, fig_key: str, series: str
             i = t.x_values.index(x)
             v = t.value(series, t.x_values[i - 1 if i else 1])
     shared = _rng(nm.family, fig_key, series, x).gauss(0, nm.shared_sd * scale)
+    if t.meta.get("log_y") and v > 0 and t.ylim:
+        # a reader misplaces a point by a share of the axis height; on a log axis that is a share of its log range
+        lo, hi = (max(b, 1e-9) for b in t.ylim)
+        return 10 ** (math.log10(v) + (shared + r.gauss(0, nm.sd * scale)) * (math.log10(hi) - math.log10(lo)))
     return v + (shared + r.gauss(0, nm.sd * scale)) * t.span
 
 

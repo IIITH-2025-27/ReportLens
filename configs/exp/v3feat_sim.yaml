@@ -1,0 +1,69 @@
+# v3feat with SIMULATED readers (run_log H): the real ocr_pixel plus sim_deplot / sim_vlm_table / sim_vlm_crop,
+# which read the truth with noise. It tests the v3 logic (parsing, linking, units, peaks, ranges, notes, hand-offs)
+# on charts no real VLM has read; it says nothing about how well the real VLMs read the new chart kinds.
+# The calibration table is the real one under the simulated tools' name (its groups do not depend on tool names).
+generator:
+  reports:
+    calib: 12
+    dev: 0
+    test: 20
+    style_shift: 0
+    v3feat: 0
+decision:
+  min_group_size: 30
+calibration:
+  splits:
+  - calib
+  - calib_easy
+tools:
+  enabled:
+  - ocr_pixel
+  - sim_deplot
+  - sim_vlm_table
+  - sim_vlm_crop
+retrieval:
+  cited_first: true
+  equivalent_metrics: true
+  aliases:
+    RN18: ResNet-18
+    RN-18: ResNet-18
+    RN50: ResNet-50
+    RN-50: ResNet-50
+    ViT-Small: ViT-S
+    EffNet: EfficientNet
+    VGG16: VGG-16
+    BERT: BERT-base
+  legend_names: false
+claims:
+  ranges: true
+  split_multi: true
+  extremum: true
+  unit_convert: true
+  log_values: true
+ingest:
+  two_column: true
+  vector_figures: true
+  split_panels: true
+  detect_kinds: true
+  ocr_scanned: true
+  axis_modes:
+  - linear
+  - log
+  - inverted
+agent:
+  policy: fixed_order
+  fixed_order:
+  - ocr_pixel
+  - sim_deplot
+  - sim_vlm_table
+  - sim_vlm_crop
+  hand_off_rejected: true
+  check_captions: true
+  hand_off_unsupported: true
+  cross_chart: true
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/v3feat_sim.sqlite
+  calibration_dir: calibration_tables/v3feat_sim
+  runs_dir: runs/v3feat

@@ -42,15 +42,16 @@ class Row:
     trace: ClaimTrace
 
 
-def gold_lookup(truths: list[dict]) -> dict[tuple[str, str], dict]:
-    return {(t["report_id"], norm(c["sentence"])): c for t in truths for c in t["claims"]}
+def gold_lookup(truths: list[dict]) -> dict[tuple[str, str, int], dict]:
+    """(report, sentence, atom) -> gold claim. `atom` (v3) numbers the claims of a sentence that holds several."""
+    return {(t["report_id"], norm(c["sentence"]), c.get("atom", 0)): c for t in truths for c in t["claims"]}
 
 
 def join(traces: list[ClaimTrace], truths: list[dict]) -> list[Row]:
     gold = gold_lookup(truths)
     rows = []
     for t in traces:
-        g = gold.get((t.report_id, norm(t.sentence)))
+        g = gold.get((t.report_id, norm(t.sentence), t.atom))
         if g is None:
             if t.decision.verdict == "SKIPPED":
                 continue                         # e.g. "Figure 1 shows ..." lead-in sentences

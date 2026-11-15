@@ -1,0 +1,206 @@
+{
+ "report_id": "v3feat_022",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Test accuracy of LSTM by dataset",
+   "table": {
+    "table_id": "v3feat_022_fig1",
+    "kind": "bar",
+    "title": "Test accuracy of LSTM by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "SVHN",
+     "IMDB",
+     "SST-2"
+    ],
+    "series": {
+     "LSTM": [
+      94.3,
+      88.8,
+      61.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     -0.42999999999999994,
+     2.4299999999999997
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:horizontal_bar"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "F1 score of EfficientNet by dataset",
+   "table": {
+    "table_id": "v3feat_022_fig2",
+    "kind": "bar",
+    "title": "F1 score of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "Fashion-MNIST",
+     "AG News",
+     "IMDB",
+     "CIFAR-10",
+     "SST-2"
+    ],
+    "series": {
+     "EfficientNet": [
+      82.5,
+      56.8,
+      56.1,
+      81.3,
+      73.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     51.02509408024359,
+     87.92986844710256
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:box"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_022_fig1_c0",
+   "sentence": "As shown in Figure 1, LSTM scores 31.7 points higher on SVHN than on SST-2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "SVHN",
+   "series_b": "LSTM",
+   "x_b": "SST-2",
+   "true_value": 33.1,
+   "claimed_value": 31.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 2.8599999999999994,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_022_fig1_c1",
+   "sentence": "LSTM scores 5.4 points higher on SVHN than on IMDB.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "SVHN",
+   "series_b": "LSTM",
+   "x_b": "IMDB",
+   "true_value": 5.5,
+   "claimed_value": 5.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 2.8599999999999994,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:horizontal_bar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_022_fig2_c0",
+   "sentence": "EfficientNet achieves 81% F1 score on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.3,
+   "claimed_value": 81.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 36.90477436685897,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_022_fig2_c1",
+   "sentence": "As shown in Figure 2, EfficientNet achieves 56.1% F1 score on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 56.1,
+   "claimed_value": 56.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 36.90477436685897,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_022_nofig",
+   "sentence": "On Fashion-MNIST, Random Forest obtains an accuracy of 76.4%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 76.4,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

@@ -1,0 +1,330 @@
+{
+ "report_id": "v3feat_025",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1a",
+   "number": 1,
+   "panel": "a",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(a) Test accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_025_fig1a",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "IMDB",
+     "CIFAR-10"
+    ],
+    "series": {
+     "VGG-16": [
+      57.4,
+      63.1
+     ],
+     "Transformer": [
+      58.6,
+      63.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     75.28399999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "VGG-16": "#0072b2",
+      "Transformer": "#d55e00"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig1b",
+   "number": 1,
+   "panel": "b",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(b) F1 score by dataset",
+   "table": {
+    "table_id": "v3feat_025_fig1b",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "IMDB",
+     "AG News",
+     "CIFAR-10",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "CNN": [
+      91.2,
+      76.3,
+      90.2,
+      81.0,
+      67.8
+     ],
+     "VGG-16": [
+      90.9,
+      72.7,
+      87.3,
+      79.2,
+      67.1
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "CNN": "#0072b2",
+      "VGG-16": "#d55e00"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "F1 score of ResNet-50 by dataset",
+   "table": {
+    "table_id": "v3feat_025_fig2",
+    "kind": "bar",
+    "title": "F1 score of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "SST-2",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "ResNet-50": [
+      61.1,
+      57.7,
+      77.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     51.41914131595206,
+     81.2885032521472
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:box"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_025_fig1a_c0",
+   "sentence": "Transformer achieves 64% test accuracy on CIFAR-10, while Transformer obtains 63.8% test accuracy on CIFAR-10.",
+   "figure_id": "fig1a",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.8,
+   "claimed_value": 64.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 75.28399999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig1a_c1_b",
+   "sentence": "Transformer achieves 64% test accuracy on CIFAR-10, while Transformer obtains 63.8% test accuracy on CIFAR-10.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.8,
+   "claimed_value": 63.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 75.28399999999999,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig1a_err",
+   "sentence": "Transformer has an error rate of 45.2% on IMDB.",
+   "figure_id": "fig1a",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 41.4,
+   "claimed_value": 45.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 75.28399999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "error_rate",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig1b_c0",
+   "sentence": "As shown in Figure 1(b), on IMDB, VGG16 obtains a F1 score of 122.7%.",
+   "figure_id": "fig1b",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.7,
+   "claimed_value": 122.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig1b_c1",
+   "sentence": "VGG-16 reaches between 84% and 91% F1 score on AG News.",
+   "figure_id": "fig1b",
+   "kind": "range_correct",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 87.3,
+   "claimed_value": 84.0,
+   "tolerance": 0.5,
+   "relation": "between",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "range",
+   "claimed_high": 91.0,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig2_c0",
+   "sentence": "ResNet-50 reaches 83.0% F1 score on Fashion-MNIST.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 77.0,
+   "claimed_value": 83.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 29.869361936195133,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig2_c1",
+   "sentence": "ResNet-50 scores 9.4 points higher on MNIST than on SST-2 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "MNIST",
+   "series_b": "ResNet-50",
+   "x_b": "SST-2",
+   "true_value": 3.4,
+   "claimed_value": 9.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 29.869361936195133,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_025_fig2_c2",
+   "sentence": "ResNet-50 scores 12.9 points higher on Fashion-MNIST than on MNIST (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-50",
+   "x": "Fashion-MNIST",
+   "series_b": "ResNet-50",
+   "x_b": "MNIST",
+   "true_value": 15.9,
+   "claimed_value": 12.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 29.869361936195133,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

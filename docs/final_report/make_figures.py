@@ -50,23 +50,23 @@ per["five earlier"] = summarize(pooled_rows)
 numbers["per_split_informed"] = {s: {k: per[s][k] for k in ("n_claims", "coverage", "accuracy_when_decided",
                                                              "wrong_flag_rate", "missed_errors", "n_flagged")}
                                  for s in per}
-labels = ["test", "dev", "holdout", "holdout2", "holdout3", "5 earlier\npooled", "final\nuntouched"]
+labels = ["test", "dev", "holdout", "holdout\n2", "holdout\n3", "5 earlier\npooled", "final\nheld-out"]
 keys = SPLITS[:-1] + ["five earlier", "final"]
 fig, (a, b) = plt.subplots(1, 2, figsize=(10.5, 3.6), gridspec_kw={"width_ratios": [1.25, 1]})
 xs, w = range(len(keys)), 0.38
 a.bar([x - w / 2 for x in xs], [pct(per[k]["coverage"]) for k in keys], w, color=BLUE, label="coverage (decided)")
 a.bar([x + w / 2 for x in xs], [pct(per[k]["accuracy_when_decided"]) for k in keys], w, color=GREEN,
       label="right, of those decided")
-a.set_ylim(0, 105); a.set_xticks(list(xs)); a.set_xticklabels(labels, fontsize=7.5); a.set_ylabel("%")
+a.set_ylim(0, 105); a.set_xticks(list(xs)); a.set_xticklabels(labels, fontsize=8.5); a.set_ylabel("%")
 a.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.24), ncol=2, frameon=False)
 a.set_title("How much it decides, and how often it is right", fontsize=10)
 wf = [pct(per[k]["wrong_flag_rate"]) for k in keys]
 b.bar(list(xs), wf, color=[GREY] * 5 + [BLUE, GREEN])
 for x, v in zip(xs, wf):
     b.text(x, v + 0.25, f"{v:.1f}", ha="center", fontsize=8)
-b.set_xticks(list(xs)); b.set_xticklabels(labels, fontsize=7.5); b.set_ylabel("% of flags that were wrong")
+b.set_xticks(list(xs)); b.set_xticklabels(labels, fontsize=8.5); b.set_ylabel("% of flags that were wrong")
 b.set_title("Wrong flags (lower is better)", fontsize=10)
-fig.tight_layout(); fig.savefig(OUT / "per_split.png"); plt.close(fig)
+fig.tight_layout(); fig.savefig(OUT / "per_split.png", dpi=220); plt.close(fig)
 
 # ------------------------------------------------------------------ 2. smallest error caught (main policy, all six splits)
 all_rows = pooled_rows + rows_of(RUNS / f"{PREFIX}_final_informed")

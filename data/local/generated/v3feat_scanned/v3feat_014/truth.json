@@ -1,0 +1,436 @@
+{
+ "report_id": "v3feat_014",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1a",
+   "number": 1,
+   "panel": "a",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(a) Test accuracy during training",
+   "table": {
+    "table_id": "v3feat_014_fig1a",
+    "kind": "line",
+    "title": "Test accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "series": {
+     "Ours": [
+      59.9,
+      70.8,
+      74.7,
+      76.2,
+      77.0,
+      77.6,
+      75.5
+     ],
+     "Baseline": [
+      61.7,
+      72.5,
+      76.4,
+      79.4,
+      79.6,
+      80.6,
+      79.7
+     ],
+     "EfficientNet": [
+      56.6,
+      62.8,
+      68.5,
+      70.5,
+      71.5,
+      72.4,
+      73.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     55.4,
+     81.8
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Ours": "#1b9e77",
+      "Baseline": "#d95f02",
+      "EfficientNet": "#7570b3"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig1b",
+   "number": 1,
+   "panel": "b",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(b) Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_014_fig1b",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "series": {
+     "BERT-base": [
+      60.8,
+      72.8,
+      80.7,
+      85.1,
+      87.6,
+      90.7
+     ],
+     "Ours": [
+      43.2,
+      53.8,
+      61.1,
+      64.3,
+      67.6,
+      69.1
+     ],
+     "GRU": [
+      64.4,
+      76.9,
+      81.6,
+      86.2,
+      88.4,
+      89.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     40.825,
+     93.075
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "BERT-base": "#1b9e77",
+      "Ours": "#d95f02",
+      "GRU": "#7570b3"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_014_fig2",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10"
+    ],
+    "series": {
+     "ResNet-50": [
+      76.4,
+      85.9,
+      90.4,
+      91.4,
+      92.6
+     ],
+     "DistilBERT": [
+      69.1,
+      78.9,
+      85.3,
+      85.1,
+      86.9
+     ],
+     "Ours": [
+      59.1,
+      67.0,
+      72.4,
+      73.8,
+      74.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     57.425000000000004,
+     94.27499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ResNet-50": "#1f77b4",
+      "DistilBERT": "#ff7f0e",
+      "Ours": "#2ca02c"
+     }
+    }
+   },
+   "kind": "dual"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_014_fig1a_c0",
+   "sentence": "At epoch 3, Ours is 3.6 points better than EfficientNet (Figure 1(a)).",
+   "figure_id": "fig1a",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "3",
+   "series_b": "EfficientNet",
+   "x_b": "3",
+   "true_value": 6.2,
+   "claimed_value": 3.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 26.4,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig1a_c1",
+   "sentence": "At epoch 3, Ours achieves between 73% and 76% test accuracy (Figure 4).",
+   "figure_id": "fig1a",
+   "kind": "range_correct",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.7,
+   "claimed_value": 73.0,
+   "tolerance": 0.5,
+   "relation": "between",
+   "delta": null,
+   "span": 26.4,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "range",
+   "claimed_high": 76.0,
+   "wrong_citation": 4
+  },
+  {
+   "claim_id": "v3feat_014_fig1a_peak",
+   "sentence": "At epoch 2, Ours reaches its maximum test accuracy of 70.8%.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 70.8,
+   "claimed_value": 70.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 26.4,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig1a_peak_b",
+   "sentence": "At epoch 2, Ours reaches its maximum test accuracy of 70.8%.",
+   "figure_id": "fig1a",
+   "kind": "peak_planted",
+   "gold": "error",
+   "claim_type": "peak",
+   "series": "Ours",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": -6.8,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 26.4,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig1b_c0",
+   "sentence": "BERT-base reaches 61% validation accuracy at epoch 1 (Figure 1(b)).",
+   "figure_id": "fig1b",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.8,
+   "claimed_value": 61.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 52.25,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig1b_c1",
+   "sentence": "Ours attains a validation accuracy of 63.7% at epoch 3.",
+   "figure_id": "fig1b",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 61.1,
+   "claimed_value": 63.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 52.25,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig2_c0",
+   "sentence": "From epoch 2 to epoch 6, the validation accuracy of Ours improves by a relative 53.7% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "2",
+   "series_b": null,
+   "x_b": "6",
+   "true_value": 22.50423,
+   "claimed_value": 53.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 36.84999999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig2_c1",
+   "sentence": "ResNet-50 attains a validation accuracy of 86% at epoch 4.",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.9,
+   "claimed_value": 86.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 36.84999999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig2_c2",
+   "sentence": "Ours attains a validation accuracy of 74.7% at epoch 10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.7,
+   "claimed_value": 74.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 36.84999999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_014_fig2_dual",
+   "sentence": "At epoch 6, the loss of ResNet-50 is 0.746.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "6",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.746,
+   "claimed_value": 0.746,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

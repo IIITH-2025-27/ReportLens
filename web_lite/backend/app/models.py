@@ -1,6 +1,7 @@
 """Tables (all suffixed _v2; they sit in the same database as the full web app's tables).
 
     reports_v2 ─< verification_runs_v2 ─< claim_results_v2
+                               └──< run_events_v2   (the agent's live activity feed)
 
 No accounts: anyone can upload a report, run the verifier on it, and open any earlier report from the history.
 Running the verifier again on a report adds a new run; earlier runs are kept and can still be opened.
@@ -50,6 +51,8 @@ class VerificationRun(Base):
     report: Mapped[Report] = relationship(back_populates="runs")
     claims: Mapped[list["ClaimResult"]] = relationship(back_populates="run", order_by="ClaimResult.position",
                                                        cascade="all, delete-orphan")
+    events: Mapped[list["RunEvent"]] = relationship(back_populates="run", order_by="RunEvent.seq",
+                                                    cascade="all, delete-orphan")
 
 
 class ClaimResult(Base):
@@ -72,3 +75,20 @@ class ClaimResult(Base):
     trace: Mapped[dict] = mapped_column(Json)
 
     run: Mapped[VerificationRun] = relationship(back_populates="claims")
+
+
+class RunEvent(Base):
+    """One step of the agent's activity feed (chart_claim_verifier/agent/events.py), written while the run goes on."""
+    __tablename__ = "run_events_v2"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    run_id: Mapped[int] = mapped_column(ForeignKey("verification_runs_v2.id"), index=True)
+    seq: Mapped[int] = mapped_column(Integer)                  # order within the run, from 1
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+    stage: Mapped[str] = mapped_column(String(16))
+    status: Mapped[str | None] = mapped_column(String(8), nullable=True)
+    text: Mapped[str] = mapped_column(Text)
+    why: Mapped[str | None] = mapped_column(Text, nullable=True)
+    tool: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    sentence: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    run: Mapped[VerificationRun] = relationship(back_populates="events")

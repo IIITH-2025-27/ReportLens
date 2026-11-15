@@ -71,7 +71,7 @@ def main() -> None:
         gold = gold_lookup([truth])
         context = ReportMemory(report, FigureIndex(report.figures)).context()
         for s in report.sentences:
-            g = gold.get((report.report_id, norm(s.text)))
+            g = gold.get((report.report_id, norm(s.text), 0))
             if g is None or g["gold"] not in ("correct", "error") or not is_candidate(s.text):
                 continue
             if not find_numbers(strip_figure_refs(s.text)):

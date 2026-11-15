@@ -35,6 +35,8 @@ VERIFIER_PARSER = os.environ.get("VERIFIER_PARSER", "agent")
 CORS_ORIGINS = [o.strip() for o in os.environ.get("LITE_CORS_ORIGINS", "http://localhost:5174").split(",") if o.strip()]
 MAX_UPLOAD_MB = int(os.environ.get("MAX_UPLOAD_MB", "25"))
 MAX_QUEUED_RUNS = int(os.environ.get("LITE_MAX_QUEUED_RUNS", "10"))   # open to everyone: cap the waiting line
+# load the models when the server starts (1, default) or on the first run (0)
+PRELOAD = os.environ.get("LITE_PRELOAD", "1") != "0"
 
 
 def require() -> None:

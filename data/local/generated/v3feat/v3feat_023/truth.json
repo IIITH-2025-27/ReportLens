@@ -1,0 +1,218 @@
+{
+ "report_id": "v3feat_023",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_023_fig1",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "series": {
+     "Baseline": [
+      56.8,
+      74.7,
+      84.7,
+      89.9,
+      92.2,
+      93.0,
+      95.4,
+      95.5,
+      95.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     50.663,
+     101.63699999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Baseline": "#e41a1c"
+     }
+    }
+   },
+   "kind": "band"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Validation accuracy of ResNet-50 by dataset",
+   "table": {
+    "table_id": "v3feat_023_fig2",
+    "kind": "bar",
+    "title": "Validation accuracy of ResNet-50 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "CIFAR-10"
+    ],
+    "series": {
+     "ResNet-50": [
+      0.675,
+      0.846
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.0,
+     0.99828
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ResNet-50": "#1b9e77"
+     }
+    }
+   },
+   "kind": "fraction"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_023_fig1_c0",
+   "sentence": "Baseline reaches 70.0% validation accuracy at epoch 8 (Figure 3).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "8",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 95.5,
+   "claimed_value": 70.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 50.97399999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": 3
+  },
+  {
+   "claim_id": "v3feat_023_fig1_c1",
+   "sentence": "Baseline scores 10.5 points higher on 7 than on 2.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Baseline",
+   "x": "7",
+   "series_b": "Baseline",
+   "x_b": "2",
+   "true_value": 20.7,
+   "claimed_value": 10.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 50.97399999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_023_fig2_c0",
+   "sentence": "On SVHN, ResNet-50 obtains a validation accuracy of 72.5% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 67.5,
+   "claimed_value": 72.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 99.82799999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_023_fig2_c1",
+   "sentence": "ResNet-50 reaches 89.6% validation accuracy on CIFAR-10 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-50",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 84.6,
+   "claimed_value": 89.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 99.82799999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_023_nofig",
+   "sentence": "On Tiny-ImageNet, Random Forest obtains an accuracy of 66.7%.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "Random Forest",
+   "x": "Tiny-ImageNet",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 66.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

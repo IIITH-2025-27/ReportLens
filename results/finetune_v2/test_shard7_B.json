@@ -1,0 +1,17 @@
+{
+ "adapter": "/kaggle/input/datasets/karanthayat/reportlens-shard7-b-adapter/shard7_B/adapter",
+ "model": "Qwen/Qwen3-VL-4B-Instruct",
+ "split": "test",
+ "ids": "/kaggle/input/datasets/hritik567/reportlens-chart-claims/kaggle/shards/test_300.txt",
+ "complete": true,
+ "chart2table": {
+  "examples": 300,
+  "parsed": 0.993,
+  "error_median": 0.005954743946010336,
+  "error_p90": 0.23535851122058027,
+  "badly_wrong_over_5pct": 0.227,
+  "within_2pct": 0.676,
+  "seconds_each": 19.4,
+  "cells_answered": 0.879
+ }
+}

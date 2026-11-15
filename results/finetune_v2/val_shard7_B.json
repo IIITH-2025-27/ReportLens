@@ -1,0 +1,7 @@
+{
+ "examples": 200,
+ "ids": "/kaggle/input/datasets/hritik567/reportlens-chart-claims/kaggle/shards/val_200.txt",
+ "loss": {
+  "shard7_B": 0.230733335163377
+ }
+}

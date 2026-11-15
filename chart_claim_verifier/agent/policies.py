@@ -126,6 +126,8 @@ TOOL_DESCRIPTIONS = {
     "deplot": "DePlot chart-to-table model",
     "vlm_table": "vision-language model converts the chart to a table",
     "vlm_crop": "vision-language model reads one value from a zoomed crop",
+    "vlm2_table": "a second vision-language model (another maker) converts the chart to a table",
+    "vlm2_crop": "a second vision-language model (another maker) reads one value from a zoomed crop",
     "sim_deplot": "simulated chart-to-table tool",
     "sim_vlm_table": "simulated VLM table tool",
     "sim_vlm_crop": "simulated VLM crop reader",

@@ -1,0 +1,190 @@
+{
+ "report_id": "v3feat_012",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy of EfficientNet by dataset",
+   "table": {
+    "table_id": "v3feat_012_fig1",
+    "kind": "bar",
+    "title": "Validation accuracy of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SVHN",
+     "SST-2",
+     "Fashion-MNIST",
+     "IMDB"
+    ],
+    "series": {
+     "EfficientNet": [
+      0.622,
+      0.767,
+      0.771,
+      0.843
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.0,
+     0.99474
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "EfficientNet": "#1b9e77"
+     }
+    }
+   },
+   "kind": "fraction"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_012_fig2",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "CIFAR-10"
+    ],
+    "series": {
+     "DistilBERT": [
+      75.5,
+      64.6
+     ],
+     "Transformer": [
+      84.7,
+      61.0
+     ],
+     "ViT-S": [
+      82.6,
+      71.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     2.5,
+     -0.5
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:heatmap"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_012_fig1_c0",
+   "sentence": "As shown in Figure 3, EffNet achieves 62% validation accuracy on SVHN.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 62.2,
+   "claimed_value": 62.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 99.47399999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": 3
+  },
+  {
+   "claim_id": "v3feat_012_fig1_c1",
+   "sentence": "EfficientNet scores 64.2 points higher on SST-2 than on SVHN.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "SST-2",
+   "series_b": "EfficientNet",
+   "x_b": "SVHN",
+   "true_value": 14.5,
+   "claimed_value": 64.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 99.47399999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_012_fig2_c0",
+   "sentence": "As shown in Figure 2, on CIFAR-10, DistilBERT obtains a accuracy of 64.5%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 64.6,
+   "claimed_value": 64.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": -3.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:heatmap",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_012_fig2_c1",
+   "sentence": "On IMDB, ViT-S obtains a accuracy of 82.6% (Figure 3).",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 82.6,
+   "claimed_value": 82.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": -3.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:heatmap",
+   "claimed_high": null,
+   "wrong_citation": 3
+  }
+ ]
+}

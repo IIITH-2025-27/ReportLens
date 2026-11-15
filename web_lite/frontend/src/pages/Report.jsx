@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api, pdfUrl } from "../api";
+import Activity from "../components/Activity";
 import ClaimCard from "../components/ClaimCard";
 import { ErrorNote, RunBadge, VERDICT_ORDER, VerdictBadge, isActive, size, verdictLabel, when } from "../components/bits";
 
@@ -151,9 +152,11 @@ export default function Report() {
               <span className="spinner" aria-hidden="true" />{" "}
               {run.status === "queued"
                 ? `Waiting for the worker${run.queue_position > 1 ? ` (${run.queue_position - 1} report${run.queue_position === 2 ? "" : "s"} ahead)` : ""}…`
-                : "Reading charts. This can take a minute or more per report; the first run also loads the models."}
+                : "Reading charts. This can take a minute or more per report; the first run also loads the models. Each step appears below as it happens."}
             </p>
           )}
+
+          {run.status !== "queued" && <Activity runId={run.id} status={run.status} />}
 
           {run.status === "failed" && (
             <div className="error" role="alert">

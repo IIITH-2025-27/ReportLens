@@ -17,7 +17,7 @@ from pathlib import Path
 
 from . import config
 from .db import SessionLocal
-from .models import ClaimResult, VerificationRun, now
+from .models import ClaimResult, RunEvent, VerificationRun, now
 
 _executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="verifier")
 _lock = threading.Lock()
@@ -69,6 +69,60 @@ def enqueue(run_id: int) -> None:
     _executor.submit(_run_job, run_id)
 
 
+def _warm(rt: dict) -> None:
+    """The tools load their models on first use; load the local ones now. Models on a remote server (CCV_REMOTE_URL)
+    and offline replays have nothing to load."""
+    seen = set()
+    for tool in rt["agent"].controller.tools.values():
+        if hasattr(tool, "_load") and getattr(tool, "server", None) is None and not getattr(tool, "offline", False):
+            tool._load()                                           # DePlot
+        llm = getattr(tool, "llm", None)
+        if hasattr(llm, "load") and id(llm) not in seen:           # Qwen3-VL, shared by the table and crop tools
+            seen.add(id(llm))
+            llm.load()
+
+
+# "idle" (not asked to load yet), "loading", "ready" or "failed: <reason>"; shown by /api/health
+models_state = "idle"
+
+
+def preload() -> None:
+    """Load the verifier and its models at start-up, on the worker thread, so the first report does not wait for
+    them and a loading problem shows at once rather than on someone's first upload. A run started meanwhile waits
+    behind it in the same queue."""
+    def job():
+        global models_state
+        models_state = "loading"
+        try:
+            _warm(_load_runtime())
+            models_state = "ready"
+        except Exception as e:                                     # the first run will try again and report it
+            models_state = f"failed: {type(e).__name__}: {e}"[:300]
+            traceback.print_exc()
+    _executor.submit(job)
+
+
+class _Feed:
+    """Writes the agent's activity events for one run, each committed at once so the page sees it while the run
+    goes on. Its own session, so a failed run's rollback does not take the feed with it."""
+
+    def __init__(self, run_id: int):
+        self.run_id, self.seq, self.db = run_id, 0, SessionLocal()
+
+    def __call__(self, e: dict) -> None:
+        self.seq += 1
+        self.db.add(RunEvent(run_id=self.run_id, seq=self.seq, stage=str(e.get("stage", ""))[:16],
+                             status=e.get("status"), text=str(e.get("text", "")), why=e.get("why"),
+                             tool=e.get("tool"), sentence=e.get("sentence")))
+        try:
+            self.db.commit()
+        except Exception:                                          # the feed must never stop a run
+            self.db.rollback()
+
+    def close(self) -> None:
+        self.db.close()
+
+
 def _run_job(run_id: int) -> None:
     db = SessionLocal()
     try:
@@ -79,13 +133,20 @@ def _run_job(run_id: int) -> None:
         db.commit()
         report_row = run.report
         t0 = time.perf_counter()
+        feed = _Feed(run_id)
         try:
             from chart_claim_verifier.pipeline import verify_pdf
 
+            if _runtime is None:
+                feed({"stage": "run", "status": "start", "text": "load the verifier and its models (first run only)"})
             rt = _load_runtime()
+            global models_state
+            models_state = "ready"
+            feed({"stage": "run", "status": "ok", "text": "verifier ready",
+                  "why": f"policy {rt['policy']}, parser {rt['parser']}, tools {', '.join(rt['tools'])}"})
             work = config.STORAGE_DIR / "work" / f"run_{run.id}"
             report, traces = verify_pdf(rt["ctx"], rt["agent"], rt["rc"], report_row.file_path, work,
-                                        report_id=f"lite{report_row.id}")
+                                        report_id=f"lite{report_row.id}", on_event=feed)
             pages = {s.sentence_id: s.page for s in report.sentences}
             run.figures = {f.figure_id: {"path": f.image_path, "caption": f.caption, "number": f.number,
                                          "chart_type": f.chart_type, "page": f.page} for f in report.figures}
@@ -102,14 +163,18 @@ def _run_job(run_id: int) -> None:
                            "tool_calls": sum(t.tool_calls for t in traces), "seconds": round(time.perf_counter() - t0, 1),
                            "policy": rt["policy"], "parser": rt["parser"], "tools": rt["tools"]}
             run.status = "done"
+            feed({"stage": "run", "status": "ok", "text": "finished",
+                  "why": ", ".join(f"{n} {v}" for v, n in counts.most_common()) + f" in {run.summary['seconds']}s"})
         except Exception as e:                                     # models missing, unreadable PDF, ...
             db.rollback()
             run = db.get(VerificationRun, run_id)
             run.status = "failed"
             run.error = f"{type(e).__name__}: {e}"[:2000]
+            feed({"stage": "run", "status": "error", "text": "the verifier could not finish", "why": run.error})
             traceback.print_exc()
         run.finished_at = now()
         db.commit()
+        feed.close()
     finally:
         db.close()
 

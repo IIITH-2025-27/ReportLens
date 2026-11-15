@@ -1,0 +1,365 @@
+{
+ "report_id": "v3feat_028",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_028_fig1",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50"
+    ],
+    "series": {
+     "Ours": [
+      0.637,
+      0.693,
+      0.72,
+      0.749,
+      0.747
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.6314,
+     0.7546
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Ours": "#0072b2"
+     }
+    }
+   },
+   "kind": "fraction"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "F1 score by dataset",
+   "table": {
+    "table_id": "v3feat_028_fig2",
+    "kind": "grouped_bar",
+    "title": "F1 score by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "AG News",
+     "CIFAR-10",
+     "IMDB",
+     "SST-2"
+    ],
+    "series": {
+     "MLP": [
+      61.8,
+      70.4,
+      70.7,
+      84.4
+     ],
+     "CNN": [
+      67.7,
+      79.6,
+      79.7,
+      89.9
+     ],
+     "GRU": [
+      63.8,
+      65.1,
+      77.7,
+      78.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "MLP": "#0072b2",
+      "CNN": "#d55e00",
+      "GRU": "#009e73"
+     }
+    }
+   },
+   "kind": "plain"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "F1 score of ViT-S by dataset",
+   "table": {
+    "table_id": "v3feat_028_fig3",
+    "kind": "bar",
+    "title": "F1 score of ViT-S by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "IMDB",
+     "SVHN",
+     "SST-2",
+     "AG News",
+     "MNIST"
+    ],
+    "series": {
+     "ViT-S": [
+      87.1,
+      84.6,
+      87.5,
+      82.5,
+      65.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ViT-S": "#1b9e77"
+     }
+    }
+   },
+   "kind": "errbar"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_028_fig1_c0",
+   "sentence": "Ours scores 7.1 points higher on 30 than on 10.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "30",
+   "series_b": "Ours",
+   "x_b": "10",
+   "true_value": 8.3,
+   "claimed_value": 7.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.1,
+   "span": 12.320000000000014,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig1_c1",
+   "sentence": "From epoch 10 to epoch 50, the validation accuracy of Ours improves by a relative 16.3%.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Ours",
+   "x": "10",
+   "series_b": null,
+   "x_b": "50",
+   "true_value": 17.268446,
+   "claimed_value": 16.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 12.320000000000014,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "fraction",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig1_peak",
+   "sentence": "At epoch 40, Ours reaches its maximum validation accuracy of 74.9%.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 74.9,
+   "claimed_value": 74.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 12.320000000000014,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig1_peak_b",
+   "sentence": "At epoch 40, Ours reaches its maximum validation accuracy of 74.9%.",
+   "figure_id": "fig1",
+   "kind": "peak_correct",
+   "gold": "correct",
+   "claim_type": "peak",
+   "series": "Ours",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.2,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 12.320000000000014,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig2_c0",
+   "sentence": "GRU reaches 61.8% F1 score on AG News.",
+   "figure_id": "fig2",
+   "kind": "mixup",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 63.8,
+   "claimed_value": 61.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "plain",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig2_c1",
+   "sentence": "CNN achieves 79.6% F1 score on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 79.6,
+   "claimed_value": 79.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "plain",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig3_c0",
+   "sentence": "As shown in Figure 3, ViT-S scores 4.6 points higher on IMDB than on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "ViT-S",
+   "x_b": "AG News",
+   "true_value": 4.6,
+   "claimed_value": 4.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "errbar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig3_c1",
+   "sentence": "ViT-S scores 2.5 points higher on IMDB than on SVHN.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "ViT-S",
+   "x_b": "SVHN",
+   "true_value": 2.5,
+   "claimed_value": 2.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "errbar",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_028_fig3_c2",
+   "sentence": "ViT-Small scores 69.2 points higher on SVHN than on MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "SVHN",
+   "series_b": "ViT-S",
+   "x_b": "MNIST",
+   "true_value": 19.2,
+   "claimed_value": 69.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

@@ -48,7 +48,7 @@ Policies to compare (ablation E5): `all_tools` (P0), `fixed_order` (P1), `calibr
 
 ## Status
 
-Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
+Final state (15 Nov 2026). Final report: `docs/final_report/report.pdf`.
 
 | Part | State |
 |---|---|
@@ -65,7 +65,9 @@ Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
 | Offline replay (`run --offline`): policies re-run from the reading cache, a missing reading is counted and never calls a model | working |
 | Mock LMS + action guard | working |
 | Metrics, sweeps (coverage at 10% wrong flags, B5), E4 correlation, E8 safety | working |
-| LoRA data + training script | data script works; training script **not yet run** |
+| LoRA fine-tuning v1 (918 charts, laptop) | done; adapter in `checkpoints/lora_chart2table`, results `results/lora/` |
+| LoRA fine-tuning v2 (seven adapters on 21,167 charts, merged) | done on Kaggle + laptop; see *Fine-tuning v2* below |
+| Second reader family (Granite Vision, Phi-4-multimodal, Qwen3-VL-8B) | measured, not kept (`results/vlm2.md`, `results/phi.md`, run log section I) |
 
 ## Quick start (CPU, simulated tools)
 
@@ -91,6 +93,32 @@ python scripts/analysis/compare_runs.py runs/local/test_P0 runs/local/replay_P3 
 python scripts/analysis/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/replay_P3    # the four rules for a sentence that fits two figures
 python scripts/analysis/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing               # the parse stage alone (rules, then the LLM)
 ```
+
+### v3 switches (13 Nov, `results/run_log.md` section H)
+
+`configs/exp/v3.yaml` is v2 plus the changes from the questions.txt review, each a switch that is off in
+`configs/default.yaml` (so `local_real.yaml` and `v2.yaml` behave exactly as before):
+
+| Section | Switch | What it does |
+|---|---|---|
+| `claims` | `ranges`, `split_multi`, `extremum` | "between 85% and 90%"; one claim per number of a sentence; "peaks at 91.2% at epoch 14" |
+| `claims` | `unit_convert`, `log_values` | a % claim on a 0-1 axis; a point claim on a log-scale axis compared in log units |
+| `ingest` | `two_column`, `vector_figures`, `split_panels`, `detect_kinds`, `ocr_scanned`, `axis_modes` | two-column pages, vector charts, multi-panel figures, dual axes / unsupported chart kinds, scanned pages, log and downward axes |
+| `agent` | `check_captions`, `hand_off_unsupported`, `cross_chart` | claims in captions; charts the tools cannot read go to the TA; a difference across two figures |
+| `retrieval` | `equivalent_metrics`, `aliases` | an error-rate claim on an accuracy chart; other names of a series |
+
+Notes on the TA's card (wrong figure number, a value that matches another series, two sentences that disagree) are
+always on: they never change a verdict. `v3feat` is a generated split with all these features, plus a one-column
+raster twin and a scanned twin of every report (`generator/v3feat.py`); `scripts/analysis/v3feat_eval.py` scores it
+(`results/v3feat_eval.md`, simulated readers plus the real `ocr_pixel`) and `scripts/analysis/v3feat_ingest.py` checks
+what the PDF reader finds (`results/v3feat_ingest.md`). `scripts/real/import_wpd.py` turns a real report plus two
+WebPlotDigitizer reading sessions into a truth file.
+
+All switches were kept (section H has each rule and result). On the six evaluation splits v3 gives the same verdict
+as v2 on every claim; the only addition is two planted hidden-instruction captions (E8), which are now also read and
+sent to the TA. Four ideas were measured first and not built or not kept: margins calibrated on the planner's own stopping
+(`results/c3_planner.md`), asking the table model for unlabelled x values (`results/b8_table_at_x.md`), hidden bar
+tops behind the legend (`results/c1_hidden_bars.md`) and agreement on tick values (`results/c2_tick_agreement.md`).
 
 If the `chart-claim-verifier` command or `import chart_claim_verifier` stops working after the project folder is moved or renamed (the virtualenv remembers the old path), run `pip install -e .` again, or use `python -m chart_claim_verifier.cli ...` from the project folder.
 

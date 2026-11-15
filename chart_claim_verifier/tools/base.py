@@ -121,6 +121,15 @@ class TableTool(Tool):
     def has_table(self, fig: Figure) -> bool:
         return fig.image_path in self._tables
 
+    def known_table(self, fig: Figure) -> Table | None:
+        """The table if it was already read (in memory or in the reading cache), else None. Never calls the model:
+        a cached point reading does not load the table into memory, so `has_table` alone misses it (v3, A3)."""
+        tab = self._tables.get(fig.image_path)
+        if tab is None and self.cache:
+            hit = self.cache.get((self.name, self.version, image_key(fig.image_path), "__table__", ""))
+            tab = hit.get("table") if hit else None
+        return tab if isinstance(tab, dict) and tab else None
+
     def _read(self, fig: Figure, q: PointQuery) -> float:
         return lookup(self.table(fig), q.series, q.x)
 

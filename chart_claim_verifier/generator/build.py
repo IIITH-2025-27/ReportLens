@@ -11,7 +11,8 @@ from pathlib import Path
 
 from .report_builder import build_report
 
-SPLITS = ["calib", "calib_easy", "dev", "test", "style_shift", "phrasing", "holdout", "holdout2", "calib_grouped", "holdout3", "ft_pool", "final"]
+SPLITS = ["calib", "calib_easy", "dev", "test", "style_shift", "phrasing", "holdout", "holdout2", "calib_grouped", "holdout3", "ft_pool", "final",
+          "v3feat"]
 NOVEL_SHARE = 0.6        # "phrasing" split: share of claims worded in ways the rule parser does not know (U8)
 
 
@@ -27,6 +28,13 @@ def build_split(split: str, n: int, root: Path, gen_cfg: dict, seed: int = 0) ->
         gen_cfg = {**gen_cfg, "hard_share": 0.0}
     if split == "calib_grouped":                 # U17: grouped-bar groups rested on 15 charts (< 20), so they used the pooled margin
         gen_cfg = {**gen_cfg, "force_kind": "grouped_bar", "injection_rate": 0.0}
+    if split == "v3feat":                        # v3: its own builder (generator/v3feat.py), plus two twins per report
+        from .v3feat import build_v3feat_report
+        for i in range(n):
+            rid = f"{split}_{i:03d}"
+            build_v3feat_report(rid, random.Random(f"{seed}-{split}-{i}"), root, gen_cfg)
+            ids.append(rid)
+        return ids
     for i in range(n):
         rid = f"{split}_{i:03d}"
         rng = random.Random(f"{seed}-{split}-{i}")

@@ -9,16 +9,22 @@ from .simulated import SimPointTool, SimSampleTool, SimTableTool, TruthIndex
 
 def build_tools(names: list[str], cache: ReadingCache | None = None, llm=None,
                 truth: TruthIndex | None = None, deplot_model: str = "google/deplot",
-                offline: bool = False, server=None) -> dict[str, Tool]:
+                offline: bool = False, server=None, axis_modes: tuple = ("linear",), llm2=None) -> dict[str, Tool]:
     tools: dict[str, Tool] = {}
     for n in names:
-        if n.startswith("vlm_crop@s"):              # E4: K samples of one model at T > 0
+        if n == "vlm2_crop":                        # run_log I: the same crop and prompt on a second model family
+            from .vlm_crop import VlmCropTool
+            tools[n] = VlmCropTool(_need(llm2, n), cache, name=n)
+        elif n == "vlm2_table":
+            from .vlm2_table import Vlm2TableTool
+            tools[n] = Vlm2TableTool(_need(llm2, n), cache)
+        elif n.startswith("vlm_crop@s"):            # E4: K samples of one model at T > 0
             from .vlm_crop import VlmCropTool
             tools[n] = VlmCropTool(_need(llm, n), cache, temperature=0.7, name=n)
         elif n.startswith("sim_vlm_crop@s"):
             tools[n] = SimSampleTool(n, _need(truth, n), cache)
         elif n == "ocr_pixel":
-            tools[n] = OcrPixelTool(cache)
+            tools[n] = OcrPixelTool(cache, axis_modes)
         elif n == "vlm_table":
             from .vlm_table import VlmTableTool
             tools[n] = VlmTableTool(_need(llm, n), cache)

@@ -1,7 +1,7 @@
 """Database rows -> what the frontend gets."""
 from __future__ import annotations
 
-from .models import ClaimResult, Report, VerificationRun
+from .models import ClaimResult, Report, RunEvent, VerificationRun
 
 
 def run_brief(r: VerificationRun | None) -> dict | None:
@@ -22,6 +22,11 @@ def claim(c: ClaimResult) -> dict:
             "readings": t.get("readings") or [], "stages": t.get("stages") or [],
             "calibration_group": d.get("calibration_group"), "n_readings": d.get("n_readings"),
             "tool_calls": t.get("tool_calls", 0)}
+
+
+def event(e: RunEvent) -> dict:
+    return {"seq": e.seq, "at": e.at, "stage": e.stage, "status": e.status, "text": e.text, "why": e.why,
+            "tool": e.tool, "sentence": e.sentence}
 
 
 def run_full(r: VerificationRun) -> dict:
