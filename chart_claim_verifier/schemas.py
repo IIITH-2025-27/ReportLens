@@ -10,8 +10,9 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 ChartType = Literal["bar", "grouped_bar", "line", "unknown"]
-ClaimType = Literal["point", "difference", "relative_change"]
-Relation = Literal["approx", "greater", "less"]
+ClaimType = Literal["point", "difference", "relative_change", "peak"]
+# peak (v3, B3): "x is the highest point of the series" -- each tool's value at x minus its highest value elsewhere
+Relation = Literal["approx", "greater", "less", "between"]     # between (v3, A6): claimed_value .. claimed_high
 Verdict = Literal["CONSISTENT", "MISMATCH", "NOT_SURE", "NO_FIGURE", "SKIPPED"]
 # SKIPPED = the sentence has a number but is not a chart claim
 # ("we trained for 50 epochs"). It is excluded from coverage but a MISMATCH on
@@ -28,6 +29,9 @@ class Figure(BaseModel):
     page: int = 0
     text_lines: list[str] = Field(default_factory=list)  # OCR'd legend / ticks / titles
     y_span: float | None = None        # axis range, used for the disagreement floor
+    panel: str | None = None           # v3 (B5): "a", "b", ... when a multi-panel figure was split
+    y_range: list[float] | None = None # v3 (B4): axis values at the bottom and top of the plot (log-scale span)
+    flags: list[str] = Field(default_factory=list)   # v3: "log_y", "dual_y", "unsupported:<kind>", "vector", "scanned"
 
 
 class Sentence(BaseModel):
@@ -36,6 +40,7 @@ class Sentence(BaseModel):
     text: str
     page: int = 0
     nearest_figure_id: str | None = None   # figure closest above on the page (ablation)
+    figure_id: str | None = None           # v3 (A4): a caption sentence is about its own figure
 
 
 class Report(BaseModel):
@@ -59,13 +64,17 @@ class ClaimSpec(BaseModel):
     relation: Relation = "approx"
     tolerance: float = 0.0             # allowed rounding, same units as the value
     figure_hint: int | None = None     # 3 if the sentence says "Figure 3"
+    claimed_high: float | None = None  # v3 (A6): upper bound of a range claim (relation "between")
+    panel_hint: str | None = None      # v3 (B5): "b" if the sentence says "Figure 3(b)"
 
     def operands(self) -> list[tuple[str, str]]:
         """The chart points that must be read to check this claim."""
         if self.claim_type == "point":
             return [(self.series, self.x)]
-        if self.claim_type == "difference":
+        if self.claim_type in ("difference",):
             return [(self.series, self.x), (self.series_b or self.series, self.x_b or self.x)]
+        if self.claim_type == "peak":
+            return [(self.series, self.x)]
         return [(self.series, self.x), (self.series, self.x_b or self.x)]
 
 
@@ -118,3 +127,5 @@ class ClaimTrace(BaseModel):
     figure_runs: dict[str, dict] = Field(default_factory=dict)
     tool_calls: int = 0                # uncached calls
     policy: str = ""
+    atom: int = 0                      # v3 (B2): which claim of a sentence with several (0 for the first / only one)
+    notes: list[str] = Field(default_factory=list)   # v3 (A1-A3, A5): extra lines for the TA card; never change the verdict

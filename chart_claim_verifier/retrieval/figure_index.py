@@ -35,26 +35,41 @@ METRICS = {"accuracy": r"\baccurac", "loss": r"\bloss", "f1": r"\bf1\b", "precis
            "recall": r"\brecall"}
 
 
-def metric_words(text: str) -> set[str]:
+# v4 (retrieval.split_aware): a "test accuracy" claim is not checked on a chart of validation accuracy
+SPLITS = {"train": r"\btrain(?:ing)?\b", "val": r"\b(?:val|validation|dev)\b", "test": r"\btest(?:ing)?\b"}
+
+
+def split_words(text: str) -> set[str]:
+    return {k for k, pat in SPLITS.items() if re.search(pat, text, re.I)}
+
+
+def metric_words(text: str, with_error: bool = False) -> set[str]:
     t = text.lower()
-    return {m for m, pat in METRICS.items() if re.search(pat, t)}
+    found = {m for m, pat in METRICS.items() if re.search(pat, t)}
+    if with_error and re.search(r"\berror\b", t):         # v3 (B9): "error rate" is a metric of its own
+        found.add("error")
+    return found
 
 
 class FigureIndex:
     def __init__(self, figures: list[Figure], ref_bonus: float = 10.0, vocab_match: int = 80,
                  embed: Callable[[str, list[str]], list[float]] | None = None, embed_weight: float = 2.0,
                  ambiguity_ratio: float = 0.8, legend_reader: Callable[[Figure], list[str] | None] | None = None,
-                 cited_first: bool = False):
+                 cited_first: bool = False, equivalent_metrics: bool = False, strict_names: bool = False,
+                 split_aware: bool = False):
         self.figures = figures
         self.legend_reader = legend_reader              # VLM legend names, asked only when OCR text finds nothing (U11b)
         self.rescued: dict[tuple[str, str], str] = {}   # (figure_id, series) -> how the figure was found despite OCR
         self.ref_bonus, self.vocab_match, self.ambiguity_ratio = ref_bonus, vocab_match, ambiguity_ratio
         self.cited_first = cited_first      # v2: a cited "Figure N" that OCR cannot fully read beats an uncited figure
+        self.equivalent_metrics = equivalent_metrics   # v3 (B9): an error-rate claim may be checked on an accuracy chart
+        self.strict_names = strict_names    # v4: "ResNet-18" is not found in a figure that only shows "ResNet-50"
+        self.split_aware = split_aware      # v4: train / validation / test must not contradict
         self.embed, self.embed_weight = embed, embed_weight
         docs = [tokenize(figure_text(f)) or ["_"] for f in figures]
         self.bm25 = BM25Plus(docs) if figures else None      # BM25Plus: no negative scores on tiny corpora
 
-    def rank(self, sentence: str, hint: int | None = None) -> list[tuple[Figure, float]]:
+    def rank(self, sentence: str, hint: int | None = None, panel: str | None = None) -> list[tuple[Figure, float]]:
         if not self.figures:
             return []
         scores = list(self.bm25.get_scores(tokenize(sentence)))
@@ -64,27 +79,64 @@ class FigureIndex:
         for i, f in enumerate(self.figures):
             if hint is not None and f.number == hint:
                 scores[i] += self.ref_bonus
+                if panel is not None and f.panel == panel:      # v3 (B5): "Figure 3(b)" -> panel b of Figure 3
+                    scores[i] += self.ref_bonus / 2
         return sorted(zip(self.figures, scores), key=lambda p: -p[1])
+
+    def _present(self, f: Figure, term: str | None) -> bool:
+        vocab = [figure_text(f)] + f.text_lines
+        if not term:
+            return True
+        if len(term) <= 4:                                # "SVM" must not match "SVHN"
+            tokens = set(tokenize(" ".join(vocab)))
+            return all(t in tokens for t in tokenize(term))
+        if self.strict_names:
+            return self._present_strict(vocab, term)
+        # default=0: a figure with no caption and no readable text shows no name (it used to crash on v3feat)
+        return max((fuzz.partial_ratio(term.lower(), v.lower()) for v in vocab if v), default=0) >= self.vocab_match
+
+    def _present_strict(self, vocab: list[str], term: str) -> bool:
+        """The same fuzzy test, but the words it lines up with must not be another family member ("ResNet-50" for
+        "ResNet-18", "CIFAR-10" for "CIFAR-100")."""
+        from ..tools.base import names_conflict
+        for v in vocab:
+            if not v:
+                continue
+            al = fuzz.partial_ratio_alignment(term.lower(), v.lower())
+            if al is None or al.score < self.vocab_match:
+                continue
+            a, b = al.dest_start, al.dest_end
+            while a > 0 and (v[a - 1].isalnum() or v[a - 1] in "-_."):
+                a -= 1
+            while b < len(v) and (v[b].isalnum() or v[b] in "-_."):
+                b += 1
+            token = v[a:b]
+            # only a clean name can be another family member ("ResNet-50"); OCR that ran labels together
+            # ("CIFAR-1LOFashion-MNISTAG") says nothing either way, so the fuzzy match stands
+            clean = len(token) <= len(term) + 4 and re.fullmatch(r"[A-Za-z][\w.]*(?:[-\s]\w+)*", token)
+            if not (clean and names_conflict(term, token)):
+                return True
+        return False
+
+    def shows(self, term: str | None) -> bool:
+        """Does any figure show this name? (v3, B9: used before reading a name through the alias table)"""
+        return bool(term) and any(self._present(f, term) for f in self.figures)
 
     def covers(self, f: Figure, claim: ClaimSpec) -> bool:
         """Does this figure show the claim's series (and x, for category axes)?"""
-        vocab = [figure_text(f)] + f.text_lines
-
-        tokens = set(tokenize(" ".join(vocab)))
-
-        def present(term: str | None) -> bool:
-            if not term:
-                return True
-            if len(term) <= 4:                            # "SVM" must not match "SVHN"
-                return all(t in tokens for t in tokenize(term))
-            return max(fuzz.partial_ratio(term.lower(), v.lower()) for v in vocab if v) >= self.vocab_match
-
+        present = lambda term: self._present(f, term)
         names = {claim.series, claim.series_b or claim.series}
         if not all(present(n) for n in names):
             return False
-        said, shown = metric_words(claim.sentence), metric_words(figure_text(f))
+        eq = self.equivalent_metrics
+        said, shown = metric_words(claim.sentence, eq), metric_words(figure_text(f), eq)
         if said and shown and not (said & shown):         # "accuracy" claim vs a loss chart
-            return False
+            if not (eq and said == {"error"} and "accuracy" in shown):     # B9: error rate = 100 - accuracy
+                return False
+        if self.split_aware:
+            said_split, shown_split = split_words(claim.sentence), split_words(figure_text(f))
+            if said_split and shown_split and not (said_split & shown_split):
+                return False
         for x in {claim.x, claim.x_b or claim.x}:
             if _is_number(x):
                 if f.chart_type not in ("line", "unknown"):
@@ -123,9 +175,20 @@ class FigureIndex:
         blank = claim.model_copy(update={"series": "", "series_b": None})
         return [f for f in self.figures if f.number == claim.figure_hint and self.covers(f, blank)]
 
+    def _unreadable_match(self, ranked, claim: ClaimSpec) -> list[Figure]:
+        """v3 (B7): no readable figure fits, but a chart the tools cannot read (two y-axes, an unsupported kind) is
+        cited or names the series. Its x values and second axis cannot be checked from its text, so "no figure" would
+        be a guess: return it, and the agent hands the claim to the TA. Only figures with these flags (set by
+        `ingest.detect_kinds`) are considered, so nothing changes without that switch."""
+        for f, _ in ranked:
+            flagged = "dual_y" in f.flags or any(fl.startswith("unsupported:") for fl in f.flags)
+            if flagged and (f.number == claim.figure_hint or (claim.series and self._present(f, claim.series))):
+                return [f]
+        return []
+
     def locate(self, claim: ClaimSpec) -> tuple[list[Figure], list[tuple[str, float]]]:
         """Figures that could be meant: one if clear, two if ambiguous, none -> NO_FIGURE."""
-        ranked = self.rank(claim.sentence, claim.figure_hint)
+        ranked = self.rank(claim.sentence, claim.figure_hint, claim.panel_hint)
         cands = [(f.figure_id, round(float(s), 3)) for f, s in ranked]
         covering = [(f, s) for f, s in ranked if self.covers(f, claim)]
         if not covering:
@@ -134,6 +197,8 @@ class FigureIndex:
             cited = self.cited_figure(claim)
             for f in cited:
                 self.rescued[(f.figure_id, claim.series)] = f"Figure {f.number} is cited and OCR did not read the series name"
+            if not cited:
+                cited = self._unreadable_match(ranked, claim)
             return cited, cands
         if claim.figure_hint is not None and covering[0][0].number == claim.figure_hint:
             return [covering[0][0]], cands                # an explicit "Figure N" settles it

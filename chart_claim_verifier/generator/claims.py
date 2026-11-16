@@ -40,6 +40,11 @@ class ClaimRecord:
     delta: float | None = None     # planted error, signed, fraction of axis range
     span: float | None = None
     cites_figure: bool = False
+    # v3 (the v3feat split only; every older truth file lacks these and reads them as the defaults)
+    atom: int = 0                  # which claim of a sentence that holds several
+    feature: str = ""              # what the claim tests ("range", "peak", "two_numbers", "fraction", ...)
+    claimed_high: float | None = None   # upper bound of a range claim
+    wrong_citation: int | None = None   # the wrong "Figure N" the sentence was given
 
     def to_dict(self) -> dict:
         return asdict(self)

@@ -1,0 +1,310 @@
+{
+ "report_id": "v3feat_021",
+ "layout": {
+  "two_column": false,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Accuracy by dataset (vision) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_021_fig1_0",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (vision)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "AG News",
+     "SVHN",
+     "CIFAR-10"
+    ],
+    "series": {
+     "LSTM": [
+      80.4,
+      64.3,
+      85.3
+     ],
+     "CNN": [
+      72.6,
+      73.9,
+      80.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "colors": {
+      "LSTM": "#1b9e77",
+      "CNN": "#d95f02"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Accuracy by dataset (text) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_021_fig1_1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (text)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SST-2",
+     "IMDB",
+     "MNIST"
+    ],
+    "series": {
+     "LSTM": [
+      84.4,
+      69.4,
+      85.3
+     ],
+     "CNN": [
+      83.4,
+      65.4,
+      84.0
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "colors": {
+      "LSTM": "#1b9e77",
+      "CNN": "#d95f02"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Validation accuracy during training. At epoch 40, DistilBERT achieves 73.5% validation accuracy.",
+   "table": {
+    "table_id": "v3feat_021_fig3",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50"
+    ],
+    "series": {
+     "Transformer": [
+      76.8,
+      84.5,
+      88.6,
+      88.7,
+      89.1
+     ],
+     "MobileNet": [
+      66.3,
+      71.3,
+      70.6,
+      72.0,
+      70.6
+     ],
+     "EfficientNet": [
+      62.1,
+      76.4,
+      86.5,
+      89.4,
+      91.2
+     ],
+     "DistilBERT": [
+      59.4,
+      66.9,
+      70.7,
+      73.5,
+      73.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     53.7972,
+     96.8028
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Transformer": "#e41a1c",
+      "MobileNet": "#377eb8",
+      "EfficientNet": "#4daf4a",
+      "DistilBERT": "#984ea3"
+     }
+    }
+   },
+   "kind": "band"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_021_fig1_c0",
+   "sentence": "As shown in Figure 4, CNN achieves 72.6% accuracy on AG News.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "CNN",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.6,
+   "claimed_value": 72.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": 4
+  },
+  {
+   "claim_id": "v3feat_021_fig1_c1",
+   "sentence": "As shown in Figure 1, LSTM outperforms CNN by 4 percentage points on CIFAR-10.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "LSTM",
+   "x": "CIFAR-10",
+   "series_b": "CNN",
+   "x_b": "CIFAR-10",
+   "true_value": 4.5,
+   "claimed_value": 4.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_021_fig2_c0",
+   "sentence": "LSTM reaches 84.4% accuracy on SST-2.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 84.4,
+   "claimed_value": 84.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_021_fig3_c0",
+   "sentence": "From epoch 20 to epoch 30, the validation accuracy of Transformer improves by a relative 15.0%.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "relative_change",
+   "series": "Transformer",
+   "x": "20",
+   "series_b": null,
+   "x_b": "30",
+   "true_value": 4.852071,
+   "claimed_value": 15.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 43.00560000000001,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_021_fig3_c1",
+   "sentence": "Transformer outperforms EfficientNet by 36.2 percentage points at epoch 10.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Transformer",
+   "x": "10",
+   "series_b": "EfficientNet",
+   "x_b": "10",
+   "true_value": 14.7,
+   "claimed_value": 36.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.5,
+   "span": 43.00560000000001,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "band",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_021_fig3_cap",
+   "sentence": "At epoch 40, DistilBERT achieves 73.5% validation accuracy.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "DistilBERT",
+   "x": "40",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.5,
+   "claimed_value": 73.5,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 43.00560000000001,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "caption",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

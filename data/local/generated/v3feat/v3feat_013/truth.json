@@ -1,0 +1,421 @@
+{
+ "report_id": "v3feat_013",
+ "layout": {
+  "two_column": false,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Test accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_013_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "AG News",
+     "SST-2"
+    ],
+    "series": {
+     "Baseline": [
+      84.0,
+      59.3
+     ],
+     "GRU": [
+      85.8,
+      63.5
+     ],
+     "ResNet-50": [
+      76.1,
+      55.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.21377799098438,
+     87.39934390519122
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:scatter"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Training loss (log scale)",
+   "table": {
+    "table_id": "v3feat_013_fig2",
+    "kind": "line",
+    "title": "Training loss (log scale)",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "2",
+     "4",
+     "6",
+     "8",
+     "10",
+     "12",
+     "14",
+     "16"
+    ],
+    "series": {
+     "LSTM": [
+      2.48,
+      1.388,
+      0.824,
+      0.464,
+      0.244,
+      0.129,
+      0.074,
+      0.043
+     ],
+     "Transformer": [
+      2.937,
+      1.723,
+      0.881,
+      0.521,
+      0.283,
+      0.163,
+      0.1,
+      0.055
+     ],
+     "Baseline": [
+      2.258,
+      1.232,
+      0.685,
+      0.368,
+      0.189,
+      0.106,
+      0.056,
+      0.03
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.02385514826446852,
+     3.6935423340561253
+    ],
+    "meta": {
+     "colors": {
+      "LSTM": "#1b9e77",
+      "Transformer": "#d95f02",
+      "Baseline": "#7570b3"
+     }
+    }
+   },
+   "kind": "log"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Training loss (log scale)",
+   "table": {
+    "table_id": "v3feat_013_fig3",
+    "kind": "line",
+    "title": "Training loss (log scale)",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6"
+    ],
+    "series": {
+     "BERT-base": [
+      2.192,
+      1.199,
+      0.711,
+      0.363,
+      0.177,
+      0.105
+     ],
+     "VGG-16": [
+      1.976,
+      0.835,
+      0.427,
+      0.182,
+      0.078,
+      0.034
+     ],
+     "ViT-S": [
+      2.899,
+      1.243,
+      0.522,
+      0.224,
+      0.095,
+      0.042
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.02722328013079264,
+     3.6206511311805722
+    ],
+    "meta": {
+     "colors": {
+      "BERT-base": "#e41a1c",
+      "VGG-16": "#377eb8",
+      "ViT-S": "#4daf4a"
+     }
+    }
+   },
+   "kind": "log"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_013_fig1_c0",
+   "sentence": "GRU reaches over 80% test accuracy on AG News.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.8,
+   "claimed_value": 80.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 35.18556591420683,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:scatter",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig1_c1",
+   "sentence": "As shown in Figure 3, GRU outperforms Baseline by about 4 percentage points on SST-2.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "SST-2",
+   "series_b": "Baseline",
+   "x_b": "SST-2",
+   "true_value": 4.2,
+   "claimed_value": 4.0,
+   "tolerance": 1.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 35.18556591420683,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:scatter",
+   "claimed_high": null,
+   "wrong_citation": 3
+  },
+  {
+   "claim_id": "v3feat_013_fig1_c2",
+   "sentence": "GRU reaches 85.8% test accuracy on AG News (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.8,
+   "claimed_value": 85.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 35.18556591420683,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:scatter",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig2_c0",
+   "sentence": "As shown in Figure 2, LSTM has a loss of 0.129 at epoch 12.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "12",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.129,
+   "claimed_value": 0.129,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.669687185791657,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig2_peak",
+   "sentence": "The loss of Baseline reaches its highest value of 2.258 at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 2.258,
+   "claimed_value": 2.258,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.669687185791657,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig2_peak_b",
+   "sentence": "The loss of Baseline reaches its highest value of 2.258 at epoch 2.",
+   "figure_id": "fig2",
+   "kind": "peak_correct",
+   "gold": "correct",
+   "claim_type": "peak",
+   "series": "Baseline",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.026,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 3.669687185791657,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig3_c0",
+   "sentence": "ViT-S has a loss of 1.602 at epoch 2 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.243,
+   "claimed_value": 1.602,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 3.5934278510497797,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig3_c1",
+   "sentence": "At epoch 5, the loss of VGG-16 is 0.797 (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "5",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.078,
+   "claimed_value": 0.797,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 3.5934278510497797,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig3_peak",
+   "sentence": "At epoch 3, BERT-base reaches its maximum loss of 0.711.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "BERT-base",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.711,
+   "claimed_value": 0.711,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.5934278510497797,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_013_fig3_peak_b",
+   "sentence": "At epoch 3, BERT-base reaches its maximum loss of 0.711.",
+   "figure_id": "fig3",
+   "kind": "peak_planted",
+   "gold": "error",
+   "claim_type": "peak",
+   "series": "BERT-base",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": -1.481,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 3.5934278510497797,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

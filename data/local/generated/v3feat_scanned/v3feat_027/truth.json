@@ -1,0 +1,253 @@
+{
+ "report_id": "v3feat_027",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Accuracy during training",
+   "table": {
+    "table_id": "v3feat_027_fig1",
+    "kind": "line",
+    "title": "Accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "5",
+     "10",
+     "15",
+     "20",
+     "25"
+    ],
+    "series": {
+     "ResNet-18": [
+      65.9,
+      71.8,
+      76.1,
+      78.5,
+      80.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     65.17500000000001,
+     81.125
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ResNet-18": "#1b9e77"
+     }
+    }
+   },
+   "kind": "dual"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Test accuracy of VGG-16 by dataset",
+   "table": {
+    "table_id": "v3feat_027_fig2",
+    "kind": "bar",
+    "title": "Test accuracy of VGG-16 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "IMDB",
+     "SST-2"
+    ],
+    "series": {
+     "VGG-16": [
+      56.1,
+      71.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.73595552116746,
+     76.43519842929402
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:box"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_027_fig1_c0",
+   "sentence": "From epoch 10 to epoch 15, the accuracy of ResNet-18 improves by a relative 6%.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "relative_change",
+   "series": "ResNet-18",
+   "x": "10",
+   "series_b": null,
+   "x_b": "15",
+   "true_value": 5.988858,
+   "claimed_value": 6.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 15.949999999999989,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_fig1_c1",
+   "sentence": "ResNet-18 scores 4.6 points higher on 15 than on 10.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "15",
+   "series_b": "ResNet-18",
+   "x_b": "10",
+   "true_value": 4.3,
+   "claimed_value": 4.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": 15.949999999999989,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_fig1_c2",
+   "sentence": "ResNet-18 reaches 72.4% accuracy at epoch 25 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "25",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 80.4,
+   "claimed_value": 72.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 15.949999999999989,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_fig1_dual",
+   "sentence": "At epoch 25, the loss of ResNet-18 is 0.578.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "25",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.578,
+   "claimed_value": 0.578,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_fig2_c0",
+   "sentence": "As shown in Figure 2, VGG-16 scores 15.4 points higher on SST-2 than on IMDB.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "VGG-16",
+   "x": "SST-2",
+   "series_b": "VGG-16",
+   "x_b": "IMDB",
+   "true_value": 15.4,
+   "claimed_value": 15.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 23.699242908126557,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_fig2_c1",
+   "sentence": "On IMDB, VGG-16 obtains a test accuracy of 51.4% (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 56.1,
+   "claimed_value": 51.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.2,
+   "span": 23.699242908126557,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:box",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_027_nofig",
+   "sentence": "XGBoost reaches 64.0% accuracy on Yelp.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "Yelp",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 64.0,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

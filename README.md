@@ -48,7 +48,7 @@ Policies to compare (ablation E5): `all_tools` (P0), `fixed_order` (P1), `calibr
 
 ## Status
 
-Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
+Final state (15 Nov 2026). Final report: `docs/final_report/report.pdf`.
 
 | Part | State |
 |---|---|
@@ -65,7 +65,9 @@ Week-0/1 skeleton of the implementation plan, plus most of the CPU-side system.
 | Offline replay (`run --offline`): policies re-run from the reading cache, a missing reading is counted and never calls a model | working |
 | Mock LMS + action guard | working |
 | Metrics, sweeps (coverage at 10% wrong flags, B5), E4 correlation, E8 safety | working |
-| LoRA data + training script | data script works; training script **not yet run** |
+| LoRA fine-tuning v1 (918 charts, laptop) | done; adapter in `checkpoints/lora_chart2table`, results `results/lora/` |
+| LoRA fine-tuning v2 (seven adapters on 21,167 charts, merged) | done on Kaggle + laptop; see *Fine-tuning v2* below |
+| Second reader family (Granite Vision, Phi-4-multimodal, Qwen3-VL-8B) | measured, not kept (`results/vlm2.md`, `results/phi.md`, run log section I) |
 
 ## Quick start (CPU, simulated tools)
 
@@ -74,7 +76,7 @@ Needs Python ≥ 3.10 and Tesseract (`brew install tesseract` / `apt install tes
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-pytest                                                    # 72 tests
+pytest                                                    # 218 tests
 
 chart-claim-verifier generate  -c configs/exp/smoke_cpu.yaml        # 12 calibration + 12 test reports
 chart-claim-verifier calibrate -c configs/exp/smoke_cpu.yaml
@@ -91,6 +93,72 @@ python scripts/analysis/compare_runs.py runs/local/test_P0 runs/local/replay_P3 
 python scripts/analysis/ambiguous_rules.py -c configs/exp/local_real.yaml runs/local/replay_P3    # the four rules for a sentence that fits two figures
 python scripts/analysis/eval_parse.py -c configs/exp/phrasing.yaml --split phrasing               # the parse stage alone (rules, then the LLM)
 ```
+
+### v3 switches (13 Nov, `results/run_log.md` section H)
+
+`configs/exp/v3.yaml` is v2 plus the changes from the questions.txt review, each a switch that is off in
+`configs/default.yaml` (so `local_real.yaml` and `v2.yaml` behave exactly as before):
+
+| Section | Switch | What it does |
+|---|---|---|
+| `claims` | `ranges`, `split_multi`, `extremum` | "between 85% and 90%"; one claim per number of a sentence; "peaks at 91.2% at epoch 14" |
+| `claims` | `unit_convert`, `log_values` | a % claim on a 0-1 axis; a point claim on a log-scale axis compared in log units |
+| `claims` | `number_words` | numbers written in words, including decimals ("ninety-one point two percent" is read as 91.2%), H23 |
+| `ingest` | `two_column`, `vector_figures`, `split_panels`, `detect_kinds`, `ocr_scanned`, `axis_modes` | two-column pages, vector charts, multi-panel figures, dual axes / unsupported chart kinds, scanned pages, log and downward axes |
+| `agent` | `check_captions`, `hand_off_unsupported`, `cross_chart` | claims in captions; charts the tools cannot read go to the TA; a difference across two figures |
+| `retrieval` | `equivalent_metrics`, `aliases` | an error-rate claim on an accuracy chart; other names of a series |
+
+Notes on the TA's card (wrong figure number, a value that matches another series, two sentences that disagree) are
+always on: they never change a verdict. `v3feat` is a generated split with all these features, plus a one-column
+raster twin and a scanned twin of every report (`generator/v3feat.py`); `scripts/analysis/v3feat_eval.py` scores it
+(`results/v3feat_eval.md`, simulated readers plus the real `ocr_pixel`) and `scripts/analysis/v3feat_ingest.py` checks
+what the PDF reader finds (`results/v3feat_ingest.md`). `scripts/real/import_wpd.py` turns a real report plus two
+WebPlotDigitizer reading sessions into a truth file.
+
+All switches were kept (section H has each rule and result). On the six evaluation splits v3 gives the same verdict
+as v2 on every claim; the only addition is two planted hidden-instruction captions (E8), which are now also read and
+sent to the TA. Four ideas were measured first and not built or not kept: margins calibrated on the planner's own stopping
+(`results/c3_planner.md`), asking the table model for unlabelled x values (`results/b8_table_at_x.md`), hidden bar
+tops behind the legend (`results/c1_hidden_bars.md`) and agreement on tick values (`results/c2_tick_agreement.md`).
+
+### v4 switches (16 Nov, `results/run_log.md` section J)
+
+`configs/exp/v4.yaml` is v3 plus fixes for text and charts found in real reports, each a switch that is off in
+`configs/default.yaml`. The lite web app runs v4 (`web_lite/backend/app/config.py`, `LITE_VERIFIER_CONFIG`).
+
+| Section | Switch | What it does |
+|---|---|---|
+| `claims` | `more_phrasings` | past tense ("achieved"), "~91%", ">90%", "91.2 ± 0.4%", "84-86%", "after 14 epochs", "X's accuracy is", "The accuracy of X at epoch 14 is", "(see Table 2)", "In Fig. 3,"; more result words (AUC, BLEU, mAP, RMSE, perplexity, "hits", "converges to") |
+| `claims` | `directions` | "decreases by 40%" is a change of -40%, "loss improves by 40%" too; "A is 6.2 points lower than B" / "A trails B" is B - A. A negated sentence ("does not reach", "never") goes to the TA |
+| `claims` | `ambiguous_percent` | "accuracy improves by 8.2%" (no "relative") is flagged only if it is wrong both as a relative change and as percentage points |
+| `retrieval` | `strict_names`, `split_aware` | ResNet-18 never matches ResNet-50, CIFAR-100 never CIFAR-10, BERT-base never BERT-large (in the figure search and in every tool); a "test accuracy" claim is not checked on a validation chart |
+| `decision` | `no_flag_without_axis` | a chart whose y-axis could not be read (Excel / Google Sheets look, seaborn, small images) is never flagged: 31 of 231 such flags in all earlier runs were wrong |
+| `ingest` | `clean_text`, `caption_formats` | PDF ligatures and line-end hyphens, sentence splits after "Dr." / "vs." / "Eq."; captions "Fig 3:", "FIGURE 3 -", "Figure 3 Accuracy", above the figure, and never taken from below the next figure |
+| `ingest` | `axis_modes: [..., inward]`, `detect_kinds` | ticks drawn inside the frame and grid lines (pgfplots); a multiplier above the y-axis ("1e-5", "+1e3") hands the chart to the TA |
+
+Always on (they change nothing in the generated reports): the LaTeX minus sign, "3.5 × 10−4", ".35", "per cent",
+">", "≥", footnote marks after a number; "about 1000" allows up to 5% instead of ±5; a password-protected or
+broken PDF gets a plain message; a run warns when the PDF has no text or no figures.
+
+**Real-world sample reports.** `sample_reports/real_world/` holds seven reports the generated splits never contain
+(LaTeX two-column with vector figures, Word with Excel-look charts, tricky wording, near-identical model names,
+hard chart kinds, a scanned copy, a pgfplots report), each with `truth.json` (true chart values) and
+`expected.json` (what every sentence should get). Rebuild them with `python scripts/real/make_sample_reports.py`
+and score a config with `python scripts/real/check_samples.py [-c configs/exp/local_real.yaml] [--readers real]`.
+
+### v5 switches (16 Nov, `results/run_log.md` section K): fewer claims for the TA
+
+`configs/exp/v5.yaml` is v4 plus two switches, both off in `configs/default.yaml`. The lite web app runs v5. On the six
+evaluation splits (1,205 claims, offline replay) they cut the claims sent to the TA from 255 to 199 (coverage 78.8% ->
+83.5%) with the same 13 wrong flags and the same 4 missed errors; all 56 changed verdicts are right.
+
+| Section | Switch | What it does |
+|---|---|---|
+| `agent` | `interpolation_error: 0.048` | before a hand-off on a line chart where no tool gave a value: an x without a tick label ("epoch 7" on an axis labelled 1, 5, 9) is read off a straight line between DePlot's values at the labelled x on either side, and checked against `vlm_crop`. A flag must also clear the curve's bend between two ticks (4.8% of the axis, the 95th percentile on the calibration charts, `results/interp_fallback.md`), halved because the estimate averages the two readings. +45 decisions, 0 wrong |
+| `agent` | `ambiguous_flag: both` | two figures fit the sentence and the claim is a MISMATCH on both: flagged, since it is wrong whichever figure is meant (before: always to the TA). +11 flags, 0 wrong |
+
+What still goes to the TA, and why, is in section K: mostly blurry line charts where only one reader can see the
+point, and readings that disagree too much to judge.
 
 If the `chart-claim-verifier` command or `import chart_claim_verifier` stops working after the project folder is moved or renamed (the virtualenv remembers the old path), run `pip install -e .` again, or use `python -m chart_claim_verifier.cli ...` from the project folder.
 

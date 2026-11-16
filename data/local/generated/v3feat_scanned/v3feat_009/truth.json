@@ -1,0 +1,362 @@
+{
+ "report_id": "v3feat_009",
+ "layout": {
+  "two_column": true,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1a",
+   "number": 1,
+   "panel": "a",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(a) Accuracy of MLP by dataset",
+   "table": {
+    "table_id": "v3feat_009_fig1a",
+    "kind": "bar",
+    "title": "Accuracy of MLP by dataset",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "MNIST",
+     "AG News",
+     "SST-2",
+     "Fashion-MNIST",
+     "IMDB"
+    ],
+    "series": {
+     "MLP": [
+      85.2,
+      64.6,
+      67.6,
+      70.3,
+      59.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "MLP": "#0072b2"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig1b",
+   "number": 1,
+   "panel": "b",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(b) Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_009_fig1b",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "series": {
+     "GRU": [
+      56.5,
+      63.6,
+      71.1,
+      73.7,
+      78.9,
+      79.0,
+      81.8,
+      83.2,
+      82.0
+     ],
+     "Transformer": [
+      58.1,
+      62.4,
+      65.9,
+      68.6,
+      69.8,
+      71.0,
+      72.5,
+      72.5,
+      73.3
+     ],
+     "ResNet-18": [
+      68.3,
+      75.2,
+      78.8,
+      82.0,
+      82.4,
+      82.6,
+      81.4,
+      83.3,
+      81.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     55.16,
+     84.64
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "GRU": "#0072b2",
+      "Transformer": "#d55e00",
+      "ResNet-18": "#009e73"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Validation accuracy during training",
+   "table": {
+    "table_id": "v3feat_009_fig2",
+    "kind": "line",
+    "title": "Validation accuracy during training",
+    "x_label": "Epoch",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "series": {
+     "ViT-S": [
+      53.2,
+      60.9,
+      63.9,
+      66.2,
+      67.5
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.485,
+     68.215
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ViT-S": "#1b9e77"
+     }
+    }
+   },
+   "kind": "dual"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_009_fig1a_c0",
+   "sentence": "MLP achieves 85.2% accuracy on MNIST, while MLP obtains 64.6% accuracy on AG News.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.2,
+   "claimed_value": 85.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig1a_c1_b",
+   "sentence": "MLP achieves 85.2% accuracy on MNIST, while MLP obtains 64.6% accuracy on AG News.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 64.6,
+   "claimed_value": 64.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig1a_err",
+   "sentence": "MLP has an error rate of 32.4% on SST-2.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 32.4,
+   "claimed_value": 32.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "error_rate",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig1b_c0",
+   "sentence": "Transformer reaches 72% validation accuracy at epoch 7.",
+   "figure_id": "fig1b",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Transformer",
+   "x": "7",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 72.5,
+   "claimed_value": 72.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 29.480000000000004,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig1b_c1",
+   "sentence": "As shown in Figure 1(b), ResNet-18 outperforms GRU by 8.3 percentage points at epoch 4.",
+   "figure_id": "fig1b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ResNet-18",
+   "x": "4",
+   "series_b": "GRU",
+   "x_b": "4",
+   "true_value": 8.3,
+   "claimed_value": 8.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 29.480000000000004,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig2_c0",
+   "sentence": "As shown in Figure 2, ViT-S reaches 53.2% validation accuracy at epoch 1.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 53.2,
+   "claimed_value": 53.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 15.730000000000004,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig2_c1",
+   "sentence": "ViT-S reaches about 70% validation accuracy at epoch 4 (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 66.2,
+   "claimed_value": 70.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 15.730000000000004,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_009_fig2_dual",
+   "sentence": "At epoch 4, the loss of ViT-S is 0.559.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "4",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.559,
+   "claimed_value": 0.559,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

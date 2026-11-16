@@ -1,0 +1,148 @@
+{
+ "report": "01_latex_ieee_two_column",
+ "about": "IEEE two-column LaTeX with matplotlib PDF (vector) figures: hyphenation across lines, ligatures, the LaTeX minus sign, 10^{-4} exponents, 'Fig. N' references and IEEE 'Fig. 1.' captions.",
+ "claims": [
+  {
+   "sentence": "Each model was trained for 20 epochs with a batch size of 128 on a single GPU.",
+   "truth": "setup",
+   "accept": [
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "training setup, not a result"
+  },
+  {
+   "sentence": "ResNet-50 reached 91.2% validation accuracy at epoch 20 (Fig. 1).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "past tense; ResNet-50 at epoch 20 is 91.2"
+  },
+  {
+   "sentence": "VGG-16 achieved 88.0% validation accuracy at epoch 20.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "VGG-16 at epoch 20 is 84.7"
+  },
+  {
+   "sentence": "At epoch 10, VGG-16 is 6.7 points lower than ResNet-50.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "'lower than': ResNet-50 84.6 minus VGG-16 77.9 = 6.7"
+  },
+  {
+   "sentence": "From epoch 2 to epoch 20, the training loss of ResNet-50 decreased by 76%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "a fall: 1.92 -> 0.46 is -76.0%"
+  },
+  {
+   "sentence": "The training loss of VGG-16 was 0.63 at epoch 20.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "VGG-16 loss at epoch 20 is 0.63"
+  },
+  {
+   "sentence": "The training loss of ResNet-50 was 0.30 at epoch 20.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "ResNet-50 loss at epoch 20 is 0.46"
+  },
+  {
+   "sentence": "On SVHN, ResNet-50 achieves 95.4% test accuracy (Fig. 3).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "bar chart, SVHN 95.4"
+  },
+  {
+   "sentence": "On STL-10, ResNet-50 is 2.1 points better than VGG-16.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "78.6 - 72.3 = 6.3"
+  },
+  {
+   "sentence": "VGG-16 reaches eighty-four point seven percent validation accuracy at epoch twenty.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "number words: 84.7 at epoch 20"
+  },
+  {
+   "sentence": "The training loss of ResNet-50 is 4.6 × 10−1 at epoch 20.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "exponent as LaTeX prints it: 4.6e-1 = 0.46"
+  },
+  {
+   "sentence": "We used a weight decay of 5 × 10−4 and a learning rate of 10−3.",
+   "truth": "setup",
+   "accept": [
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "exponents in a setup sentence: must not become a claim"
+  }
+ ]
+}

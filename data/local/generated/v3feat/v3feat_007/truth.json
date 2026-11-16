@@ -1,0 +1,520 @@
+{
+ "report_id": "v3feat_007",
+ "layout": {
+  "two_column": false,
+  "vector": false
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "F1 score during training",
+   "table": {
+    "table_id": "v3feat_007_fig1",
+    "kind": "line",
+    "title": "F1 score during training",
+    "x_label": "Epoch",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "10",
+     "20",
+     "30",
+     "40",
+     "50",
+     "60"
+    ],
+    "series": {
+     "Baseline": [
+      74.5,
+      83.7,
+      89.4,
+      90.7,
+      92.6,
+      92.6
+     ],
+     "GRU": [
+      56.0,
+      64.8,
+      67.8,
+      70.7,
+      69.9,
+      70.6
+     ],
+     "ResNet-18": [
+      54.1,
+      61.2,
+      66.5,
+      70.2,
+      69.6,
+      70.9
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     52.175000000000004,
+     94.52499999999999
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Baseline": "#e41a1c",
+      "GRU": "#377eb8",
+      "ResNet-18": "#4daf4a"
+     }
+    }
+   },
+   "kind": "dual"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Accuracy by dataset (vision) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_007_fig2_0",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (vision)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "MNIST",
+     "SST-2",
+     "CIFAR-10"
+    ],
+    "series": {
+     "LSTM": [
+      72.6,
+      69.7,
+      94.8
+     ],
+     "CNN": [
+      72.5,
+      77.4,
+      88.2
+     ],
+     "MLP": [
+      83.0,
+      80.1,
+      92.2
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "colors": {
+      "LSTM": "#0072b2",
+      "CNN": "#d55e00",
+      "MLP": "#009e73"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Accuracy by dataset (text) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_007_fig2_1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (text)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "SVHN",
+     "AG News",
+     "Fashion-MNIST"
+    ],
+    "series": {
+     "LSTM": [
+      68.2,
+      62.0,
+      68.4
+     ],
+     "CNN": [
+      65.9,
+      65.6,
+      67.9
+     ],
+     "MLP": [
+      59.9,
+      56.7,
+      73.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     86.49399999999999
+    ],
+    "meta": {
+     "colors": {
+      "LSTM": "#0072b2",
+      "CNN": "#d55e00",
+      "MLP": "#009e73"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig4",
+   "number": 4,
+   "panel": null,
+   "image": "fig4.png",
+   "vector": "fig4.pdf",
+   "caption": "Training loss (log scale)",
+   "table": {
+    "table_id": "v3feat_007_fig4",
+    "kind": "line",
+    "title": "Training loss (log scale)",
+    "x_label": "Epoch",
+    "y_label": "Loss",
+    "metric_word": "loss",
+    "x_values": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "series": {
+     "Ours": [
+      2.935,
+      1.743,
+      1.068,
+      0.607,
+      0.358,
+      0.21,
+      0.134,
+      0.079,
+      0.046
+     ],
+     "MobileNet": [
+      2.311,
+      1.569,
+      1.011,
+      0.635,
+      0.476,
+      0.286,
+      0.193,
+      0.123,
+      0.077
+     ]
+    },
+    "percent": false,
+    "decimals": 3,
+    "ylim": [
+     0.03736933056740392,
+     3.6128557282148606
+    ],
+    "meta": {
+     "colors": {
+      "Ours": "#e41a1c",
+      "MobileNet": "#377eb8"
+     }
+    }
+   },
+   "kind": "log"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_007_fig1_c0",
+   "sentence": "GRU reaches 56.0% F1 score at epoch 10 (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 56.0,
+   "claimed_value": 56.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 42.34999999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig1_c1",
+   "sentence": "As shown in Figure 1, ResNet-18 attains a F1 score of over 50% at epoch 10.",
+   "figure_id": "fig1",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 54.1,
+   "claimed_value": 50.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 42.34999999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig1_dual",
+   "sentence": "At epoch 60, the loss of Baseline is 0.460.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Baseline",
+   "x": "60",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.46,
+   "claimed_value": 0.46,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "dual",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig2_c0",
+   "sentence": "As shown in Figure 2, LSTM reaches 79.7% accuracy on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 69.7,
+   "claimed_value": 79.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig3_c0",
+   "sentence": "As shown in Figure 3, MLP achieves 77.6% accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "MLP",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.3,
+   "claimed_value": 77.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 86.49399999999999,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig3_c1",
+   "sentence": "LSTM achieves 68.4% accuracy on Fashion-MNIST.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "LSTM",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 68.4,
+   "claimed_value": 68.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 86.49399999999999,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig3_cross",
+   "sentence": "MLP scores 23.1 points higher on MNIST than on SVHN.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "MLP",
+   "x": "MNIST",
+   "series_b": "MLP",
+   "x_b": "SVHN",
+   "true_value": 23.1,
+   "claimed_value": 23.1,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "cross_chart",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig4_c0",
+   "sentence": "Ours has a loss of over 1.0 at epoch 3 (Figure 3).",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "3",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 1.068,
+   "claimed_value": 1.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 3.5754863976474565,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": 3
+  },
+  {
+   "claim_id": "v3feat_007_fig4_c1",
+   "sentence": "Ours has a loss of about 2.9 at epoch 1.",
+   "figure_id": "fig4",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "1",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 2.935,
+   "claimed_value": 2.9,
+   "tolerance": 0.1,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.5754863976474565,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "log",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig4_peak",
+   "sentence": "At epoch 9, Ours reaches its maximum loss of 0.046.",
+   "figure_id": "fig4",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "9",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 0.046,
+   "claimed_value": 0.046,
+   "tolerance": 0.0005,
+   "relation": "approx",
+   "delta": null,
+   "span": 3.5754863976474565,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_fig4_peak_b",
+   "sentence": "At epoch 9, Ours reaches its maximum loss of 0.046.",
+   "figure_id": "fig4",
+   "kind": "peak_planted",
+   "gold": "error",
+   "claim_type": "peak",
+   "series": "Ours",
+   "x": "9",
+   "series_b": null,
+   "x_b": null,
+   "true_value": -2.889,
+   "claimed_value": 0.0,
+   "tolerance": 0.0,
+   "relation": "greater",
+   "delta": null,
+   "span": 3.5754863976474565,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "peak",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_007_nofig",
+   "sentence": "XGBoost reaches 70.7% accuracy on CIFAR-10.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 70.7,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

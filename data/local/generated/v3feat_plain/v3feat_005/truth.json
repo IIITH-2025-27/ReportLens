@@ -1,0 +1,358 @@
+{
+ "report_id": "v3feat_005",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1",
+   "number": 1,
+   "panel": null,
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "Test accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_005_fig1",
+    "kind": "grouped_bar",
+    "title": "Test accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Test accuracy (%)",
+    "metric_word": "test accuracy",
+    "x_values": [
+     "IMDB",
+     "MNIST"
+    ],
+    "series": {
+     "ViT-S": [
+      60.9,
+      67.5
+     ],
+     "MLP": [
+      61.2,
+      52.1
+     ],
+     "Baseline": [
+      58.5,
+      54.3
+     ],
+     "CNN": [
+      55.6,
+      60.3
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     3.5,
+     -0.5
+    ],
+    "meta": {
+     "hard": false
+    }
+   },
+   "kind": "unsupported:heatmap"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "Accuracy by dataset (vision) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_005_fig2_0",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (vision)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "CIFAR-10",
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "GRU": [
+      74.8,
+      60.3,
+      65.3
+     ],
+     "VGG-16": [
+      73.4,
+      65.1,
+      65.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     88.264
+    ],
+    "meta": {
+     "colors": {
+      "GRU": "#0072b2",
+      "VGG-16": "#d55e00"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Accuracy by dataset (text) for the models in this experiment.",
+   "table": {
+    "table_id": "v3feat_005_fig2_1",
+    "kind": "grouped_bar",
+    "title": "Accuracy by dataset (text)",
+    "x_label": "Dataset",
+    "y_label": "Accuracy (%)",
+    "metric_word": "accuracy",
+    "x_values": [
+     "IMDB",
+     "Fashion-MNIST",
+     "SVHN"
+    ],
+    "series": {
+     "GRU": [
+      79.5,
+      80.2,
+      67.8
+     ],
+     "VGG-16": [
+      79.1,
+      86.3,
+      71.8
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "colors": {
+      "GRU": "#0072b2",
+      "VGG-16": "#d55e00"
+     }
+    }
+   },
+   "kind": "cross_pair"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_005_fig1_c0",
+   "sentence": "On IMDB, ViT-S is 2.4 points better than Baseline.",
+   "figure_id": "fig1",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "Baseline",
+   "x_b": "IMDB",
+   "true_value": 2.4,
+   "claimed_value": 2.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": -4.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:heatmap",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig1_c1",
+   "sentence": "On IMDB, ViT-S is 4.9 points better than CNN (Figure 1).",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": "CNN",
+   "x_b": "IMDB",
+   "true_value": 5.3,
+   "claimed_value": 4.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.1,
+   "span": -4.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "unsupported:heatmap",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig1_c2",
+   "sentence": "ViT-S achieves 60.8% test accuracy on IMDB.",
+   "figure_id": "fig1",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.9,
+   "claimed_value": 60.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.02,
+   "span": -4.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "unsupported:heatmap",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig2_c0",
+   "sentence": "VGG-16 achieves 73.4% accuracy on CIFAR-10.",
+   "figure_id": "fig2",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 73.4,
+   "claimed_value": 73.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 88.264,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig2_c1",
+   "sentence": "On SST-2, VGG-16 obtains a accuracy of 21.3%.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 65.4,
+   "claimed_value": 21.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.5,
+   "span": 88.264,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig3_c0",
+   "sentence": "GRU achieves 67.8% accuracy on SVHN (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 67.8,
+   "claimed_value": 67.8,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig3_c1",
+   "sentence": "On SVHN, GRU obtains a accuracy of 68%.",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "GRU",
+   "x": "SVHN",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 67.8,
+   "claimed_value": 68.0,
+   "tolerance": 0.5,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_fig3_cross",
+   "sentence": "GRU scores 20.2 points higher on IMDB than on SST-2.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "GRU",
+   "x": "IMDB",
+   "series_b": "GRU",
+   "x_b": "SST-2",
+   "true_value": 14.2,
+   "claimed_value": 20.2,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "cross_chart",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_005_nofig",
+   "sentence": "XGBoost reaches 91.8% accuracy on Fashion-MNIST.",
+   "figure_id": null,
+   "kind": "no_figure",
+   "gold": "no_figure",
+   "claim_type": "point",
+   "series": "XGBoost",
+   "x": "Fashion-MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": null,
+   "claimed_value": 91.8,
+   "tolerance": null,
+   "relation": "approx",
+   "delta": null,
+   "span": null,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

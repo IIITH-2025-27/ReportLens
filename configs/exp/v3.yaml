@@ -1,0 +1,52 @@
+# v3 (13 Nov): v2 plus the switches of groups A, B and C from the questions.txt review (results/run_log.md, section H).
+# Each switch was kept or rejected by the rule written in section H before its replay. Every split had been seen by
+# then, so v3 results are development results; the frozen numbers of the report stay those of local_real.yaml.
+# Outcome (13 Nov): every switch below was kept. Not part of v3: C3 planner margins (H20, rejected; its own config is
+# c3_planner.yaml), B8 table-at-x (H16), C1 hidden bars (H18) and C2 tick agreement (H19), all NO-GO before building.
+generator:
+  reports: {calib: 12, dev: 0, test: 20, style_shift: 0, v3feat: 0}
+decision:
+  min_group_size: 30
+calibration:
+  splits: [calib, calib_easy]
+tools:
+  enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]
+retrieval:
+  cited_first: true         # G2
+  equivalent_metrics: true  # B9: an error-rate claim may be checked on an accuracy chart (as 100 - accuracy)
+  aliases:                  # B9: used only when no figure shows the name as written but one shows the alias
+    RN18: ResNet-18
+    RN-18: ResNet-18
+    RN50: ResNet-50
+    RN-50: ResNet-50
+    ViT-Small: ViT-S
+    EffNet: EfficientNet
+    VGG16: VGG-16
+    BERT: BERT-base
+claims:
+  ranges: true              # A6
+  split_multi: true         # B2
+  extremum: true            # B3
+  unit_convert: true        # A5
+  log_values: true          # B4
+  number_words: true        # H23
+ingest:
+  two_column: true          # A7
+  vector_figures: true      # B1
+  split_panels: true        # B5
+  detect_kinds: true        # B7
+  ocr_scanned: true         # C5
+  axis_modes: [linear, log, inverted]   # B4
+agent:
+  policy: informed
+  fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  hand_off_rejected: true   # G1
+  check_captions: true      # A4
+  hand_off_unsupported: true  # B7
+  cross_chart: true         # B9
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local
+  runs_dir: runs/v3

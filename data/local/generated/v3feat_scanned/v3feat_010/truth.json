@@ -1,0 +1,454 @@
+{
+ "report_id": "v3feat_010",
+ "layout": {
+  "two_column": true,
+  "vector": true
+ },
+ "figures": [
+  {
+   "figure_id": "fig1a",
+   "number": 1,
+   "panel": "a",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(a) Validation accuracy by dataset",
+   "table": {
+    "table_id": "v3feat_010_fig1a",
+    "kind": "grouped_bar",
+    "title": "Validation accuracy by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "Fashion-MNIST",
+     "IMDB",
+     "CIFAR-10",
+     "SST-2",
+     "MNIST"
+    ],
+    "series": {
+     "ViT-S": [
+      85.3,
+      94.6,
+      58.6,
+      71.5,
+      83.1
+     ],
+     "Ours": [
+      84.6,
+      92.5,
+      58.5,
+      68.1,
+      82.4
+     ],
+     "VGG-16": [
+      80.7,
+      94.5,
+      52.9,
+      70.3,
+      78.6
+     ],
+     "ResNet-18": [
+      81.5,
+      89.6,
+      54.1,
+      70.8,
+      76.4
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "ViT-S": "#0072b2",
+      "Ours": "#d55e00",
+      "VGG-16": "#009e73",
+      "ResNet-18": "#cc79a7"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig1b",
+   "number": 1,
+   "panel": "b",
+   "image": "fig1.png",
+   "vector": "fig1.pdf",
+   "caption": "(b) F1 score of Ours by dataset",
+   "table": {
+    "table_id": "v3feat_010_fig1b",
+    "kind": "bar",
+    "title": "F1 score of Ours by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "MNIST",
+     "SST-2"
+    ],
+    "series": {
+     "Ours": [
+      54.0,
+      81.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     96.28799999999998
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "Ours": "#0072b2"
+     }
+    }
+   },
+   "kind": "panels"
+  },
+  {
+   "figure_id": "fig2",
+   "number": 2,
+   "panel": null,
+   "image": "fig2.png",
+   "vector": "fig2.pdf",
+   "caption": "F1 score of EfficientNet by dataset. EfficientNet achieves 110.6% F1 score on IMDB.",
+   "table": {
+    "table_id": "v3feat_010_fig2",
+    "kind": "bar",
+    "title": "F1 score of EfficientNet by dataset",
+    "x_label": "Dataset",
+    "y_label": "F1 score (%)",
+    "metric_word": "F1 score",
+    "x_values": [
+     "AG News",
+     "IMDB"
+    ],
+    "series": {
+     "EfficientNet": [
+      96.5,
+      90.6
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "EfficientNet": "#0072b2"
+     }
+    }
+   },
+   "kind": "errbar"
+  },
+  {
+   "figure_id": "fig3",
+   "number": 3,
+   "panel": null,
+   "image": "fig3.png",
+   "vector": "fig3.pdf",
+   "caption": "Validation accuracy of VGG-16 by dataset",
+   "table": {
+    "table_id": "v3feat_010_fig3",
+    "kind": "bar",
+    "title": "Validation accuracy of VGG-16 by dataset",
+    "x_label": "Dataset",
+    "y_label": "Validation accuracy (%)",
+    "metric_word": "validation accuracy",
+    "x_values": [
+     "SST-2",
+     "AG News",
+     "SVHN",
+     "IMDB"
+    ],
+    "series": {
+     "VGG-16": [
+      80.3,
+      60.3,
+      64.7,
+      85.7
+     ]
+    },
+    "percent": true,
+    "decimals": 1,
+    "ylim": [
+     0.0,
+     100.0
+    ],
+    "meta": {
+     "hard": false,
+     "colors": {
+      "VGG-16": "#0072b2"
+     }
+    }
+   },
+   "kind": "plain"
+  }
+ ],
+ "claims": [
+  {
+   "claim_id": "v3feat_010_fig1a_c0",
+   "sentence": "ViT-S achieves 58.6% validation accuracy on CIFAR-10, while ResNet-18 obtains 81.4% validation accuracy on MNIST.",
+   "figure_id": "fig1a",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "ViT-S",
+   "x": "CIFAR-10",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 58.6,
+   "claimed_value": 58.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig1a_c1_b",
+   "sentence": "ViT-S achieves 58.6% validation accuracy on CIFAR-10, while ResNet-18 obtains 81.4% validation accuracy on MNIST.",
+   "figure_id": "fig1a",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "ResNet-18",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 76.4,
+   "claimed_value": 81.4,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.05,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 1,
+   "feature": "two_numbers",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig1b_c0",
+   "sentence": "As shown in Figure 1(b), on SST-2, Ours obtains a F1 score of between 79% and 86%.",
+   "figure_id": "fig1b",
+   "kind": "range_correct",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "SST-2",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 81.6,
+   "claimed_value": 79.0,
+   "tolerance": 0.5,
+   "relation": "between",
+   "delta": null,
+   "span": 96.28799999999998,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "range",
+   "claimed_high": 86.0,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig1b_c1",
+   "sentence": "Ours scores 25.7 points higher on SST-2 than on MNIST (Figure 1(b)).",
+   "figure_id": "fig1b",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "Ours",
+   "x": "SST-2",
+   "series_b": "Ours",
+   "x_b": "MNIST",
+   "true_value": 27.6,
+   "claimed_value": 25.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.02,
+   "span": 96.28799999999998,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig1b_c2",
+   "sentence": "Ours achieves 54.0% F1 score on MNIST (Figure 1(b)).",
+   "figure_id": "fig1b",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "Ours",
+   "x": "MNIST",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 54.0,
+   "claimed_value": 54.0,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 96.28799999999998,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "panels",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig2_c0",
+   "sentence": "EfficientNet achieves between 93% and 99% F1 score on AG News.",
+   "figure_id": "fig2",
+   "kind": "range_correct",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 96.5,
+   "claimed_value": 93.0,
+   "tolerance": 0.5,
+   "relation": "between",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "range",
+   "claimed_high": 99.0,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig2_c1",
+   "sentence": "EffNet scores 0.9 points higher on AG News than on IMDB (Figure 2).",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "difference",
+   "series": "EfficientNet",
+   "x": "AG News",
+   "series_b": "EfficientNet",
+   "x_b": "IMDB",
+   "true_value": 5.9,
+   "claimed_value": 0.9,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": -0.05,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig3_c0",
+   "sentence": "VGG16 reaches 105.7% validation accuracy on IMDB.",
+   "figure_id": "fig3",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 85.7,
+   "claimed_value": 105.7,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": 0.2,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig3_c1",
+   "sentence": "VGG-16 achieves 60.3% validation accuracy on AG News.",
+   "figure_id": "fig3",
+   "kind": "correct_exact",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.3,
+   "claimed_value": 60.3,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "plain",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig3_c2",
+   "sentence": "VGG16 achieves about 60% validation accuracy on AG News (Figure 3).",
+   "figure_id": "fig3",
+   "kind": "correct_rounded",
+   "gold": "correct",
+   "claim_type": "point",
+   "series": "VGG-16",
+   "x": "AG News",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 60.3,
+   "claimed_value": 60.0,
+   "tolerance": 5.0,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": true,
+   "atom": 0,
+   "feature": "alias",
+   "claimed_high": null,
+   "wrong_citation": null
+  },
+  {
+   "claim_id": "v3feat_010_fig2_cap",
+   "sentence": "EfficientNet achieves 110.6% F1 score on IMDB.",
+   "figure_id": "fig2",
+   "kind": "planted",
+   "gold": "error",
+   "claim_type": "point",
+   "series": "EfficientNet",
+   "x": "IMDB",
+   "series_b": null,
+   "x_b": null,
+   "true_value": 90.6,
+   "claimed_value": 110.6,
+   "tolerance": 0.05,
+   "relation": "approx",
+   "delta": null,
+   "span": 100.0,
+   "cites_figure": false,
+   "atom": 0,
+   "feature": "caption",
+   "claimed_high": null,
+   "wrong_citation": null
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+# v3feat_sim.yaml with every v3 switch off (the v2 system on the same simulated readers), for comparison
+agent:
+  check_captions: false
+  cross_chart: false
+  fixed_order:
+  - ocr_pixel
+  - sim_deplot
+  - sim_vlm_table
+  - sim_vlm_crop
+  hand_off_rejected: true
+  hand_off_unsupported: false
+  policy: fixed_order
+calibration:
+  splits:
+  - calib
+  - calib_easy
+claims:
+  extremum: false
+  log_values: false
+  ranges: false
+  split_multi: false
+  unit_convert: false
+decision:
+  min_group_size: 30
+generator:
+  reports:
+    calib: 12
+    dev: 0
+    style_shift: 0
+    test: 20
+    v3feat: 0
+ingest:
+  axis_modes:
+  - linear
+  detect_kinds: false
+  ocr_scanned: false
+  split_panels: false
+  two_column: false
+  vector_figures: false
+paths:
+  cache_db: cache/v3feat_sim.sqlite
+  calibration_dir: calibration_tables/v3feat_sim
+  data_dir: data/local/generated
+  runs_dir: runs/v3feat
+  splits_dir: data/local/splits
+retrieval:
+  aliases: {}
+  cited_first: true
+  equivalent_metrics: false
+  legend_names: false
+tools:
+  enabled:
+  - ocr_pixel
+  - sim_deplot
+  - sim_vlm_table
+  - sim_vlm_crop

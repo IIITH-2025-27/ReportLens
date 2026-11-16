@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api, pdfUrl } from "../api";
+import Activity from "../components/Activity";
 import ClaimCard from "../components/ClaimCard";
 import { ErrorNote, RunBadge, VERDICT_ORDER, VerdictBadge, isActive, size, verdictLabel, when } from "../components/bits";
 
@@ -151,9 +152,11 @@ export default function Report() {
               <span className="spinner" aria-hidden="true" />{" "}
               {run.status === "queued"
                 ? `Waiting for the worker${run.queue_position > 1 ? ` (${run.queue_position - 1} report${run.queue_position === 2 ? "" : "s"} ahead)` : ""}…`
-                : "Reading charts. This can take a minute or more per report; the first run also loads the models."}
+                : "Reading charts. This can take a minute or more per report; the first run also loads the models. Each step appears below as it happens."}
             </p>
           )}
+
+          {run.status !== "queued" && <Activity runId={run.id} status={run.status} />}
 
           {run.status === "failed" && (
             <div className="error" role="alert">
@@ -182,13 +185,13 @@ export default function Report() {
                 <button className={`chip ${filter === "ALL" ? "on" : ""}`} aria-pressed={filter === "ALL"} onClick={() => setFilter("ALL")}>
                   All chart claims <span className="count">{claims.filter((c) => c.verdict !== "SKIPPED").length}</span>
                 </button>
-                {VERDICT_ORDER.filter((v) => counts[v]).map((v) => (
+                {VERDICT_ORDER.filter((v) => v !== "SKIPPED" && counts[v]).map((v) => (
                   <button key={v} className={`chip ${filter === v ? "on" : ""}`} aria-pressed={filter === v} onClick={() => setFilter(v)}>
                     {verdictLabel(v)} <span className="count">{counts[v]}</span>
                   </button>
                 ))}
               </div>
-              {shown.length === 0 && <p className="empty">{claims.length === 0 ? "The verifier found no sentences with numbers in this report." : "Nothing with this verdict."}</p>}
+              {shown.length === 0 && <p className="empty">{claims.every((c) => c.verdict === "SKIPPED") ? "The verifier found no chart claims in this report." : "Nothing with this verdict."}</p>}
               <ul className="claims">
                 {shown.map((c) => (
                   <ClaimCard key={c.id} claim={c} runId={run.id} figures={run.figures} />

@@ -34,12 +34,14 @@ class RuleConfig:
                    d.get("max_accept_margin", 0.03), d.get("by_tool_set", False), d.get("drop_tied_legs", True))
 
 
-def claim_gap(claimed: float, est: float, relation: str) -> float:
+def claim_gap(claimed: float, est: float, relation: str, high: float | None = None) -> float:
     """How far the claim is from the estimate, in the claim's own direction."""
     if relation == "greater":          # claim: true value > claimed
         return max(0.0, claimed - est)
     if relation == "less":             # claim: true value < claimed
         return max(0.0, est - claimed)
+    if relation == "between":          # v3 (A6): claim: claimed <= true value <= high
+        return max(0.0, claimed - est, est - (claimed if high is None else high))
     return abs(claimed - est)
 
 
@@ -53,14 +55,16 @@ def decide(claim: ClaimSpec, tool_values: dict[str, float], chart_type: str, spa
     est, dis = estimate(values), disagreement(values)
     scale = dis + rc.eps * span                     # disagreement with a floor
     tools = list(tool_values) if rc.by_tool_set else None
-    group, q_flag = table.cutoff(chart_type, claim.claim_type, k, rc.level_flag, tools)
-    _, q_acc = table.cutoff(chart_type, claim.claim_type, k, rc.level_accept, tools)
+    # a peak claim (v3) is each tool's value at x minus its highest value elsewhere: a difference of two readings
+    ctype = "difference" if claim.claim_type == "peak" else claim.claim_type
+    group, q_flag = table.cutoff(chart_type, ctype, k, rc.level_flag, tools)
+    _, q_acc = table.cutoff(chart_type, ctype, k, rc.level_accept, tools)
     m_flag, m_acc = q_flag * scale, q_acc * scale
-    gap = claim_gap(claim.claimed_value, est, claim.relation)
+    gap = claim_gap(claim.claimed_value, est, claim.relation, claim.claimed_high)
     tol = claim.tolerance
 
     score = max(gap - tol, 0.0) / scale             # same scale as the calibration ratios
-    p = table.p_value(chart_type, claim.claim_type, k, score, tools)
+    p = table.p_value(chart_type, ctype, k, score, tools)
 
     common = dict(estimate=est, disagreement=dis, gap=gap, margin_flag=m_flag, margin_accept=m_acc,
                   p_value=p, n_readings=k, calibration_group=group)

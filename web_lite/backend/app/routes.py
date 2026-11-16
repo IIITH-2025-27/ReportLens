@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session, selectinload
 
 from . import config, serialize, verifier_service
 from .db import get_db
-from .models import Report, VerificationRun
+from .models import Report, RunEvent, VerificationRun
 
 router = APIRouter(prefix="/api")
 ACTIVE = ("queued", "running")
@@ -122,6 +122,15 @@ def get_run(rid: int, db: Session = Depends(get_db)):
         out["queue_position"] = db.scalar(select(func.count()).select_from(VerificationRun).where(
             VerificationRun.status.in_(ACTIVE), VerificationRun.id <= run.id))
     return out
+
+
+@router.get("/runs/{rid}/events")
+def get_run_events(rid: int, after: int = 0, db: Session = Depends(get_db)):
+    """The agent's activity feed for a run, oldest first. `after` = the last `seq` the page already has."""
+    run = _run(db, rid)
+    rows = db.scalars(select(RunEvent).where(RunEvent.run_id == run.id, RunEvent.seq > after)
+                      .order_by(RunEvent.seq).limit(1000))
+    return {"status": run.status, "events": [serialize.event(e) for e in rows]}
 
 
 @router.get("/runs/{rid}/figures/{figure_id}")

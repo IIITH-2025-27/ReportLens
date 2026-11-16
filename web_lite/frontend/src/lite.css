@@ -1,4 +1,37 @@
-/* Additions to web/frontend/src/styles.css for the lite app. Same tokens, nothing redefined. */
+/* Additions to web/frontend/src/styles.css for the lite app. It redefines the colour tokens (below) for its own
+   theme; the full web app keeps the shared ones. Every text / background pair here is at least 4.5:1. */
+
+/* Lite theme: warm ivory and deep ink with a bronze accent; in dark mode graphite with champagne gold.
+   Both blocks are needed: this file loads after styles.css, so its light block would otherwise win in dark mode. */
+:root {
+  --bg: #f6f4ef; --surface: #fffdf9; --sunk: #eeeae2; --ink: #1b1d23; --muted: #5d6069; --line: #e2ddd2;
+  --accent: #7a5c24; --accent-ink: #fffdf9; --accent-soft: #f3ead6;
+  --ok: #2d6a4c; --ok-bg: #e3efe7; --bad: #a3372e; --bad-bg: #f7e4e0; --warn: #9a560a; --warn-bg: #f8ead6;
+  --info: #33557f; --info-bg: #e3e9f3; --wait-bg: #ece8e0;
+  --shadow: 0 1px 2px rgba(27, 29, 35, 0.04), 0 4px 16px rgba(27, 29, 35, 0.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1013; --surface: #17181c; --sunk: #1f2026; --ink: #ece8df; --muted: #a19e96; --line: #2c2d33;
+    --accent: #d4b46e; --accent-ink: #1a1408; --accent-soft: #2a2416;
+    --ok: #82d0a2; --ok-bg: #15291f; --bad: #f19c91; --bad-bg: #371c19; --warn: #efa65c; --warn-bg: #34240f;
+    --info: #9cb9e2; --info-bg: #172336; --wait-bg: #24262c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+    color-scheme: dark;
+  }
+}
+/* A few finishing touches that go with the palette */
+.card { border-radius: 10px; box-shadow: var(--shadow); }
+.topbar { background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: saturate(1.4) blur(8px); }
+.brand { letter-spacing: -0.02em; }
+.portal { color: var(--accent); letter-spacing: 0.14em; }
+.btn { border-radius: 8px; transition: border-color 0.15s, background-color 0.15s, color 0.15s; }
+.btn.primary:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 88%, var(--ink)); border-color: transparent; }
+.chip.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); color: var(--ink); }
+.tile { background: var(--surface); border-radius: 8px; }
+::selection { background: var(--accent-soft); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+
 .nav { display: flex; gap: 4px; }
 .nav a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; font-weight: 500; }
 .nav a:hover { color: var(--ink); }
@@ -19,3 +52,65 @@
 .search { max-width: 320px; }
 .actions { text-align: right; width: 1%; white-space: nowrap; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Agent activity feed (components/Activity.jsx): one group per checked sentence, a timeline of steps inside */
+.activity { margin-top: 12px; }
+.activity > summary { cursor: pointer; font-weight: 600; }
+.activity-now { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--ink); overflow-wrap: anywhere; }
+.activity-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin: 10px 0 0; color: var(--muted); }
+.activity-tools label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.activity-tools input { width: auto; }
+.activity-tools .btn { font-size: 0.84rem; padding: 4px 8px; }
+.agroups { list-style: none; margin: 8px 0 0; padding: 0; max-height: 560px; overflow-y: auto; overscroll-behavior: contain;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.agroup + .agroup { border-top: 1px solid var(--line); }
+.agroup-head { all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; cursor: pointer; }
+.agroup-head:hover { background: var(--accent-soft); }
+.agroup-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.agroup-caret { color: var(--muted); width: 1em; flex: none; }
+.agroup-title { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: 0.92rem; }
+.agroup-n { display: inline-block; min-width: 1.6em; margin-right: 6px; color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+.agroup-side { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.agroup-side .spinner { width: 12px; height: 12px; }
+.agroup-current { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+.agroup-skipped .agroup-title { color: var(--muted); }
+.steps { list-style: none; margin: 0; padding: 0 12px 12px 34px; }
+.step { position: relative; display: grid; grid-template-columns: 1.3em 1fr auto; gap: 8px; padding: 6px 0; }
+.step::before { content: ""; position: absolute; left: 0.62em; top: 1.6em; bottom: -0.4em; border-left: 1px solid var(--line); }
+.step:last-child::before { display: none; }
+.step-dot { width: 1.3em; height: 1.3em; border-radius: 50%; display: grid; place-items: center; font-size: 0.72rem;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted); z-index: 1; }
+.step-dot .spinner { width: 10px; height: 10px; }
+.step-tool .step-dot, .step-repair .step-dot { border-color: var(--accent); color: var(--accent); }
+.step.tone-bad .step-dot { border-color: var(--bad); color: var(--bad); }
+.step-body { min-width: 0; overflow-wrap: anywhere; font-size: 0.9rem; }
+.step-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-weight: 500; }
+.step-tool .step-title { font-weight: 600; }
+.step-meta { font-size: 0.76rem; color: var(--muted); font-weight: 400; border: 1px solid var(--line); border-radius: 999px; padding: 0 6px; }
+.step-line { margin-top: 2px; font-size: 0.86rem; }
+.step.tone-mute .step-title { color: var(--muted); font-weight: 400; }
+.step.tone-warn .step-title { color: var(--warn); }
+.step.tone-bad .step-line:first-of-type { color: var(--bad); }
+.step-time { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); padding-top: 2px; white-space: nowrap; }
+@media (max-width: 560px) {
+  .steps { padding-left: 12px; }
+  .step { grid-template-columns: 1.3em 1fr; }
+  .step-time { display: none; }
+}
+
+/* Batch upload (pages/Upload.jsx) */
+.batch { list-style: none; margin: 12px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; max-height: 420px; overflow-y: auto; }
+.batch-row { display: flex; align-items: center; gap: 12px; padding: 8px 12px; }
+.batch-row + .batch-row { border-top: 1px solid var(--line); }
+.batch-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.batch-name a { color: var(--ink); font-weight: 500; }
+.batch-state { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.batch-state .btn { font-size: 0.84rem; padding: 2px 6px; }
+.batch-uploading { background: var(--accent-soft); }
+.batch-error { color: var(--bad); margin-top: 2px; }
+.batch-actions { align-items: center; }
+.batch-verify { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--muted); }
+.batch-verify input { width: auto; }
+/* checkbox labels: styles.css stacks every label as a column (for form fields); these sit on one line */
+.batch-verify, .activity-tools label { flex-direction: row; margin-top: 0; font-weight: 400; font-size: inherit; }

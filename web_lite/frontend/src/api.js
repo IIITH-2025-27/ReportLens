@@ -39,6 +39,7 @@ export const api = {
   remove: (id) => request(`/api/reports/${id}`, { method: "DELETE" }),
   verify: (id) => request(`/api/reports/${id}/verify`, { method: "POST" }),
   run: (id) => request(`/api/runs/${id}`),
+  events: (id, after = 0) => request(`/api/runs/${id}/events?after=${after}`),
 };
 
 export const pdfUrl = (reportId) => `${BASE}/api/reports/${reportId}/pdf`;

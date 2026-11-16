@@ -31,6 +31,8 @@ decision:
   by_tool_set: false      # U14 (rejected): margins fitted on the exact tools used. Replay: dev wrong flags 1.4 -> 4.1%, margin check 98.8 -> 93.2%.
                           # A pair that stopped early *because it agreed* is a selected sample; the pooled margin is the buffer against that.
   drop_tied_legs: true    # U10: a tool that reads both legs of a difference / relative change as one number gives no reading
+  no_flag_without_axis: false  # v4: a figure whose y-axis could not be read is never flagged (31 of 231 such flags were
+                          # wrong, 13% vs 2.8% with a readable axis); accepts still stand
 
 retrieval:
   ref_bonus: 10.0         # explicit "Figure N" in the sentence
@@ -41,13 +43,26 @@ retrieval:
   cited_first: false      # v2: a cited "Figure N" that matches all but the (OCR-misread) series beats an uncited figure
   ambiguity_ratio: 0.8    # several figures show the claim: check the top two if the second scores >= ratio x the first
                           # (v2: 0.0 = always check two, because two charts can share a caption, e.g. "Training loss")
+  equivalent_metrics: false   # v3 (B9): an error-rate claim may be checked on an accuracy chart (as 100 - accuracy)
+  aliases: {}             # v3 (B9): other names of a series, e.g. {RN50: ResNet-50}; used only when no figure shows the name
+  strict_names: false     # v4: "ResNet-18" never matches "ResNet-50", "CIFAR-100" never "CIFAR-10", "BERT-base" never "BERT-large"
+  split_aware: false      # v4: a "test accuracy" claim is not checked on a chart of validation (or training) accuracy
 
 agent:
   policy: fixed_order     # all_tools | fixed_order | calibration_informed | informed | llm
   fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
   hand_off_rejected: false  # v2: a sentence that looks like a claim but the parser rejects goes to the TA (not dropped)
+  check_captions: false   # v3 (A4): sentences in captions are checked against their own figure
+  hand_off_unsupported: false  # v3 (B7): claims on charts flagged at ingest (dual y-axes, unsupported kinds) go to the TA
+  cross_chart: false      # v3 (B9): a difference whose two values sit on two different figures of the same kind
   ambiguous_rule: both    # two figures fit a sentence: either | top | both | never (see scripts/analysis/ambiguous_rules.py).
                           # Chosen on 14 ambiguous claims (test + dev): either/top accepted 5, one of them wrong; both/never 0 missed errors
+  ambiguous_flag: never   # v5: never | both. "both": a claim that is a MISMATCH on every figure that fits is flagged (wrong
+                          # whichever figure is meant; the weaker flag's p-value goes to the batch check). "never": to the TA
+  interpolation_error: null  # v5: e.g. 0.048. Before a hand-off on a line chart with no reading at all, an x without a
+                          # tick label is read off a straight line between DePlot's labelled neighbours and checked against
+                          # vlm_crop; a flag must also clear this bend error (fraction of the axis; 95th percentile on the
+                          # calibration charts, scripts/analysis/interp_fallback.py), halved after averaging. null = off
   informed:               # the informed policy (agent/planner.py); every number is read from the tool profile
     min_answer: 0.10        # a tool that answers < 10% of the time here would almost surely refuse: skip it
     max_wrong_agree: 0.05   # half the 10% wrong-flag target: a pair that agrees wrongly more often is no cross-check
@@ -57,6 +72,28 @@ agent:
     min_repair_success: 0.5 # a repair is proposed only if it fixed at least this share of such failures in calibration
     big_error: 0.05         # "badly wrong" = off by more than 5% of the axis range (the usual ChartQA tolerance)
     never_pair: []          # tools that share one model and so are never each other's cross-check, e.g. [[vlm_table, vlm_crop]]
+
+claims:                   # v3 switches (results/run_log.md, section H); all off here, on in configs/exp/v3.yaml
+  ranges: false           # A6: "between 85% and 90%" is one claim with two bounds
+  split_multi: false      # B2: a sentence with several numbers gives one claim per number
+  extremum: false         # B3: "peaks at 91.2% at epoch 14" = the value at 14 + "14 is the highest point"
+  unit_convert: false     # A5: a % claim on a 0-1 axis (or a fraction on a 0-100 axis) is compared after converting
+  log_values: false       # B4: a point claim on a log-scale axis is compared in log10 units
+  number_words: false     # H23: numbers written in words ("ninety-one percent", "ninety-one point two") are read as digits
+  more_phrasings: false   # v4: past tense, "~ ≈ > ≥ ±", "90-92%", "after 14 epochs", "X's accuracy is", AUC / BLEU / mAP ...
+  directions: false       # v4: "decreases by 40%" = -40, "A is 3 points lower than B" = B - A; negated sentences go to the TA
+  ambiguous_percent: false  # v4: "improves by 12%" (no "relative") is flagged only if wrong as a relative change AND as points
+
+ingest:                   # v3 switches for reading the PDF (a parse with other settings is cached separately)
+  two_column: false       # A7: two-column pages are read column by column; captions matched within their column
+  vector_figures: false   # B1: vector drawings above a "Figure N" caption are rendered to an image
+  split_panels: false     # B5: a figure with several plot panels becomes one figure per panel (fig3a, fig3b)
+  detect_kinds: false     # B7: flag dual y-axes and chart kinds the tools cannot read (scatter, box, heatmap, histogram)
+  ocr_scanned: false      # C5: a page with no text layer is OCR'd with Tesseract
+  axis_modes: [linear]    # B4: [linear, log, inverted] lets the y-axis fit try a log scale and a downward axis; v4: "inward"
+                          # also reads ticks drawn inside the frame (pgfplots), where none stick out
+  clean_text: false       # v4: PDF ligatures (ﬁ), words hyphenated across lines, sentence splits after "Dr." / "vs." / "Eq."
+  caption_formats: false  # v4: "Fig 3:", "FIGURE 3 -", "Figure 3(a):", "Figure 3 Accuracy", captions above the figure
 
 calibration:
   splits: [calib]
@@ -71,5 +108,7 @@ models:
   vlm_fallback: Qwen/Qwen2.5-VL-7B-Instruct
   deplot: google/deplot
   lora_adapter: null                    # path after fine-tuning; null = base model
+  vlm2: null                            # a second model family for tools vlm2_crop / vlm2_table (run_log section I)
+  vlm2_dtype: bfloat16
   remote_url: null                      # model server URL (web/model_server); null = load the models here
   dtype: float16                        # T4 has no bf16

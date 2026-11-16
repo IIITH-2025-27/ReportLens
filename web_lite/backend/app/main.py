@@ -23,6 +23,8 @@ async def lifespan(app: FastAPI):
     if VERSION_TABLE not in inspect(engine).get_table_names():
         raise RuntimeError("The lite tables do not exist yet. Run `alembic upgrade head` in web_lite/backend first.")
     verifier_service.fail_interrupted()
+    if config.PRELOAD:
+        verifier_service.preload()
     yield
 
 
@@ -33,4 +35,4 @@ app.include_router(router)
 
 @app.get("/api/health")
 def health():
-    return {"ok": True}
+    return {"ok": True, "models": verifier_service.models_state}

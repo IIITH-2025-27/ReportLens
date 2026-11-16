@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import functools
 import itertools
+import math
 import re
 from dataclasses import dataclass, field
 
@@ -39,15 +40,16 @@ class PlotArea:
 
 @dataclass
 class YFit:
-    a: float          # value = a * y_pixel + b
+    a: float          # value = a * y_pixel + b  (log axis: log10(value) = a * y_pixel + b)
     b: float
     ticks: list[tuple[float, float]]
+    log: bool = False         # v3 (B4): a log-scale axis
 
     def value(self, y: float) -> float:
-        return self.a * y + self.b
+        return 10.0 ** (self.a * y + self.b) if self.log else self.a * y + self.b
 
     def pixel(self, v: float) -> float:
-        return (v - self.b) / self.a
+        return ((math.log10(v) if self.log else v) - self.b) / self.a
 
 
 @dataclass
@@ -160,8 +162,9 @@ def _clusters(idx: list[int], gap: int = 2) -> list[float]:
     return out
 
 
-def tick_positions(img: np.ndarray, area: PlotArea, s: int = 1) -> tuple[list[float], list[float]]:
-    """Tick marks just outside the bottom / left edge. `s` = how much the image was upscaled."""
+def tick_positions(img: np.ndarray, area: PlotArea, s: int = 1, inward: bool = False) -> tuple[list[float], list[float]]:
+    """Tick marks just outside the bottom / left edge. `s` = how much the image was upscaled. v4 (`inward`, axis mode
+    "inward"): where fewer than two ticks stick out, ticks drawn inside the frame (pgfplots' default) are used."""
     dark = _dark(img, 165)            # thin ticks in small / JPEG charts are light grey, not black
     h, w = img.shape[:2]
     # windows start right next to the axis line (where thin ticks are darkest) and grow with the upscale
@@ -169,6 +172,19 @@ def tick_positions(img: np.ndarray, area: PlotArea, s: int = 1) -> tuple[list[fl
     xt = [x + area.left - 1 for x in _clusters(list(np.where(below)[0]), gap=2 * s)]
     left = dark[area.top - 1:area.bottom + 2, max(0, area.left - 6 * s):max(1, area.left - 2)].any(axis=1)
     yt = [y + area.top - 1 for y in _clusters(list(np.where(left)[0]), gap=2 * s)]
+    if inward:
+        # ticks inside the frame (dark, short) and grid lines across the plot (light, long) both mark tick positions;
+        # labels are OCR'd at each, and the robust fit drops a position that has no label or a misread one
+        region = img[area.top + 2:area.bottom - 1, area.left + 2:area.right - 1].astype(int)
+        line = (region.max(axis=2) < 235) & (region.max(axis=2) - region.min(axis=2) < 30)
+        if len(yt) < 2:
+            inner = dark[area.top + 2:area.bottom - 1, area.left + 2:area.left + 2 + 4 * s].all(axis=1)
+            rows = set(np.where(inner)[0]) | set(np.where(line.mean(axis=1) > 0.7)[0])
+            yt = [y + area.top + 2 for y in _clusters(sorted(int(r) for r in rows), gap=2 * s)]
+        if len(xt) < 2:
+            inner = dark[area.bottom - 1 - 4 * s:area.bottom - 1, area.left + 2:area.right - 1].all(axis=0)
+            cols = set(np.where(inner)[0]) | set(np.where(line.mean(axis=0) > 0.7)[0])
+            xt = [x + area.left + 2 for x in _clusters(sorted(int(c) for c in cols), gap=2 * s)]
     return xt, yt
 
 
@@ -213,27 +229,49 @@ def fit_x(ticks: list[tuple[float, str]], tol_px: float = 3.0) -> tuple[float, f
     return float(a), float(b)
 
 
-def fit_y(ticks: list[tuple[float, float]], tol_px: float = 3.0) -> YFit:
-    """Robust line fit: try every pair of ticks, keep the fit most ticks agree with."""
-    if len(ticks) < 2:
-        raise ChartReadError("too_few_y_ticks")
+def _robust_fit(ticks: list[tuple[float, float]], tol_px: float, upward: bool = True):
+    """Try every pair of ticks, keep the line most ticks agree with: (a, b, inliers) or (None, None, [])."""
     best, best_in = None, []
     for (y1, v1), (y2, v2) in itertools.combinations(ticks, 2):
         if abs(y1 - y2) < 3 or v1 == v2:
             continue
         a = (v1 - v2) / (y1 - y2)
-        if a >= 0:                                     # values must grow upwards
+        if (a >= 0) if upward else (a <= 0):           # values must grow upwards (downwards for an inverted axis)
             continue
         b = v1 - a * y1
         inl = [(y, v) for y, v in ticks if abs((v - b) / a - y) < tol_px]
         if len(inl) > len(best_in):
             best, best_in = (a, b), inl
+    return best, best_in
+
+
+def fit_y(ticks: list[tuple[float, float]], tol_px: float = 3.0, modes: tuple = ("linear",)) -> YFit:
+    """Robust line fit: try every pair of ticks, keep the fit most ticks agree with.
+
+    v3 (B4): with "inverted" in `modes` a downward axis is accepted, and with "log" a log-scale axis (fitted on
+    log10 of the tick values, needing 3 agreeing ticks). Both are tried only after the ordinary fit fails, so with
+    `modes=("linear",)` (the default) the result is exactly the frozen one."""
+    if len(ticks) < 2:
+        raise ChartReadError("too_few_y_ticks")
+    best, best_in = _robust_fit(ticks, tol_px)
     # two misread ticks can agree by chance, three rarely do: if 3+ ticks were read, 3 must agree
-    if best is None or len(best_in) < min(3, len(ticks)):
-        raise ChartReadError("y_fit_failed")
-    ys, vs = np.array([p[0] for p in best_in]), np.array([p[1] for p in best_in])
-    a, b = np.polyfit(ys, vs, 1)
-    return YFit(float(a), float(b), best_in)
+    if best is not None and len(best_in) >= min(3, len(ticks)):
+        ys, vs = np.array([p[0] for p in best_in]), np.array([p[1] for p in best_in])
+        a, b = np.polyfit(ys, vs, 1)
+        return YFit(float(a), float(b), best_in)
+    if "inverted" in modes:
+        best, best_in = _robust_fit(ticks, tol_px, upward=False)
+        if best is not None and len(best_in) >= min(3, len(ticks)):
+            a, b = np.polyfit([p[0] for p in best_in], [p[1] for p in best_in], 1)
+            return YFit(float(a), float(b), best_in)
+    if "log" in modes:
+        pos = [(y, math.log10(v)) for y, v in ticks if v > 0]
+        if len(pos) >= 3:
+            best, best_in = _robust_fit(pos, tol_px)
+            if best is not None and len(best_in) >= 3:
+                a, b = np.polyfit([p[0] for p in best_in], [p[1] for p in best_in], 1)
+                return YFit(float(a), float(b), [(y, 10.0 ** v) for y, v in best_in], log=True)
+    raise ChartReadError("y_fit_failed")
 
 
 # ----------------------------------------------------------------- colour
@@ -409,15 +447,31 @@ def n_colours(img: np.ndarray, area: PlotArea) -> int:
     return int((hist > 0.06 * m.sum()).sum())
 
 
+# ----------------------------------------------------------------- v4: axis multiplier
+# matplotlib writes "1e-5" or "+1e3" above the y-axis when the tick labels alone would be too long; Excel writes
+# "x 10^3". The tick labels then show 7.0 for 7e-05, and every reader (the VLMs too) tends to report 7.0.
+MULTIPLIER_RE = re.compile(r"(?:^|[\s+\-−])[1lI|]{1,2}\s?[eE]\s?[+\-−—–]{0,2}\s?\d|[x×]\s?10\b|\b10\s?\^")
+
+
+def axis_multiplier(img: np.ndarray, area: PlotArea) -> str | None:
+    """The multiplier text above the top-left of the y-axis, or None."""
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    fpx = max(10, round(0.032 * img.shape[0]))
+    if area.top < 0.8 * fpx:
+        return None
+    text = _ocr_crop(gray, area.left - 3 * fpx, max(0, area.top - 2.2 * fpx), area.left + 8 * fpx, area.top - 1, False)
+    return text if MULTIPLIER_RE.search(text) else None
+
+
 # ----------------------------------------------------------------- main entry
 @functools.lru_cache(maxsize=256)
-def analyse(path: str) -> Geometry:
+def analyse(path: str, modes: tuple = ("linear",)) -> Geometry:
     img = load_bgr(path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape
     fpx = max(10, round(0.032 * h))
     area = find_plot_area(img)
-    xt, yt = tick_positions(img, area, upscale_factor(path))
+    xt, yt = tick_positions(img, area, upscale_factor(path), "inward" in modes)
 
     dark = _dark(img, 120)
     tick_len = 2
@@ -431,7 +485,7 @@ def analyse(path: str) -> Geometry:
         v = _num(_ocr_crop(gray, max(0, area.left - 7 * fpx), y - 0.8 * fpx, area.left - gap, y + 0.8 * fpx, True))
         if v is not None:
             yticks.append((y, v))
-    yfit = fit_y(yticks)
+    yfit = fit_y(yticks, modes=modes)
 
     half = 0.48 * (min(np.diff(xt)) if len(xt) > 1 else 3 * fpx)
     boxes = [(x - half, area.bottom + gap, x + half, area.bottom + gap + 1.8 * fpx) for x in xt]
@@ -448,11 +502,21 @@ def analyse(path: str) -> Geometry:
                     swatches=legend_swatches(img, area, fpx))
 
 
+def _pick_name(series: str, names: list[str]) -> tuple[str, float]:
+    """The legend entry for a series and its match score. v4 (retrieval.strict_names): no other family member
+    ("ResNet-18" is not "ResNet-50") and no guess between equally good entries (score 0 then)."""
+    from . import base
+    if base.STRICT_NAMES:
+        m, _ = base.strict_match(series, names)
+        return (m, 100.0) if m else (names[0] if names else "", 0.0)
+    return max(((n, fuzz.token_set_ratio(n.lower(), series.lower())) for n in names), key=lambda p: p[1])
+
+
 def _colour_from_names(geo: Geometry, series: str, names: list[str]) -> np.ndarray:
     """Repair (U7): legend names read by a VLM, paired with the legend handles by vertical order."""
     if len(names) != len(geo.swatches):
         raise ChartReadError("legend_mismatch")           # cannot pair names with handles: do not guess
-    name, score = max(((n, fuzz.token_set_ratio(n.lower(), series.lower())) for n in names), key=lambda p: p[1])
+    name, score = _pick_name(series, names)
     if score < 70:
         raise ChartReadError("series_not_found")
     i = names.index(name)
@@ -470,8 +534,7 @@ def series_colour(img: np.ndarray, geo: Geometry, series: str, names: list[str] 
     if names and geo.swatches and not geo.legend:
         return _colour_from_names(geo, series, names)
     if geo.legend:
-        name, score = max(((n, fuzz.token_set_ratio(n.lower(), series.lower())) for n in geo.legend),
-                          key=lambda p: p[1])
+        name, score = _pick_name(series, list(geo.legend))
         if score < 70:
             if names and geo.swatches:
                 return _colour_from_names(geo, series, names)

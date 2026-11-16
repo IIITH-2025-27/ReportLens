@@ -2,10 +2,12 @@
 from __future__ import annotations
 
 import json
+import os
 import random
 from pathlib import Path
 
 from .agent.controller import ClaimController
+from .agent.events import emit
 from .agent.policies import (TOOL_DESCRIPTIONS, AllToolsPolicy, CalibrationInformedPolicy, FixedOrderPolicy,
                              LLMPolicy, Policy)
 from .agent.report_agent import ReportAgent, finalize
@@ -42,23 +44,45 @@ class Context:
     def llm(self):
         if self._llm is None:
             m = self.cfg["models"]
+            if m.get("helper") == "vlm2":   # I3: the non-tool model calls (legend reading) go to the second model
+                self._llm = self.llm2
+                return self._llm
             if self.offline:
                 from .models.vlm import OfflineLLM
                 self._llm = OfflineLLM(m["vlm"] + (f"+{m['lora_adapter']}" if m.get("lora_adapter") else ""), m["vlm"])
             elif self.server is not None:
                 from .models.remote import RemoteVLM
                 self._llm = RemoteVLM(self.server, m["vlm"], m.get("lora_adapter"))
-            else:
-                from .models.vlm import VLM
-                self._llm = VLM(m["vlm"], m.get("dtype", "float16"), m.get("lora_adapter"))
+            else:                           # loads on its first uncached call (run_log I0)
+                from .models.vlm import LazyLLM
+                self._llm = LazyLLM(m["vlm"], m.get("dtype", "float16"), m.get("lora_adapter"))
         return self._llm
+
+    @property
+    def llm2(self):
+        """The second model family (models.vlm2, run_log section I); local only, loaded on its first uncached call."""
+        if getattr(self, "_llm2", None) is None:
+            m = self.cfg["models"]
+            if not m.get("vlm2"):
+                raise ValueError("tools vlm2_crop / vlm2_table need models.vlm2 in the config")
+            if self.offline:
+                from .models.vlm import OfflineLLM
+                self._llm2 = OfflineLLM(m["vlm2"])
+            else:
+                from .models.vlm import LazyLLM
+                self._llm2 = LazyLLM(m["vlm2"], m.get("vlm2_dtype", "bfloat16"))
+        return self._llm2
 
     @property
     def server(self):
         """The remote model server, when models.remote_url (or CCV_REMOTE_URL) is set; None runs models here."""
         if not hasattr(self, "_server"):
-            from .models.remote import server_from_config
-            self._server = None if self.offline else server_from_config(self.cfg["models"])
+            url = os.environ.get("CCV_REMOTE_URL") or self.cfg["models"].get("remote_url")
+            if self.offline or not url:
+                self._server = None        # no import: the remote module needs `requests`, which a local run lacks
+            else:
+                from .models.remote import server_from_config
+                self._server = server_from_config(self.cfg["models"])
         return self._server
 
     def needs_llm(self, tools: list[str], parser: str, policy: str) -> bool:
@@ -66,10 +90,13 @@ class Context:
 
     def tools(self, names: list[str] | None = None):
         names = names or self.cfg["tools"]["enabled"]
+        from .tools import base as tool_base           # v4: strict name matching in every tool (retrieval.strict_names)
+        tool_base.STRICT_NAMES = bool(self.cfg["retrieval"].get("strict_names", False))
         llm = self.llm if any(n in ("vlm_table", "vlm_crop") for n in names) else None
+        llm2 = self.llm2 if any(n.startswith("vlm2_") for n in names) else None
         return build_tools(names, self.cache, llm=llm, truth=self.truth,
                            deplot_model=self.cfg["models"].get("deplot", "google/deplot"), offline=self.offline,
-                           server=self.server)
+                           server=self.server, axis_modes=ingest_options(self.cfg)["axis_modes"], llm2=llm2)
 
 
 # ------------------------------------------------------------------ ingest
@@ -77,16 +104,21 @@ def ingest(ctx: Context, report_dir: Path) -> tuple[Report, dict]:
     """Parse a generated report (cached as JSON) and register its true tables for simulated tools."""
     truth = load_truth(report_dir)
     work = ctx.work / report_dir.parent.name / report_dir.name
-    cached = work / "report.json"
+    opts = ingest_options(ctx.cfg)
+    cached = work / _parse_cache_name(opts)
     if cached.exists():
         report = Report.model_validate_json(cached.read_text())
     else:
-        report = parse_pdf(report_dir / "report.pdf", work, truth["report_id"])
+        report = parse_pdf(report_dir / "report.pdf", work, truth["report_id"], **opts)
         cached.write_text(report.model_dump_json())
-    by_num = {f["number"]: f for f in truth["figures"]}
+    by_num = {(f["number"], f.get("panel")): f for f in truth["figures"]}
     for fig in report.figures:
-        if fig.number in by_num:
-            ctx.truth.add(fig.image_path, ChartTable.from_dict(by_num[fig.number]["table"]))
+        if (fig.number, fig.panel) in by_num:
+            g = by_num[(fig.number, fig.panel)]
+            t = ChartTable.from_dict(g["table"])
+            if g.get("kind") == "log":                  # v3feat: simulated readers err in log units there
+                t.meta["log_y"] = True
+            ctx.truth.add(fig.image_path, t)
     return report, truth
 
 
@@ -253,38 +285,111 @@ def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None
     pol = make_policy(ctx, policy or cfg["agent"]["policy"], table, tools, profile)
     rc = RuleConfig.from_cfg(cfg)
     repairs = make_repairs(ctx) if (profile or {}).get("repairs") else None
-    controller = ClaimController(tools, pol, table, rc, cfg["decision"]["max_tool_calls"], profile, repairs)
+    cl = cfg.get("claims") or {}
+    controller = ClaimController(tools, pol, table, rc, cfg["decision"]["max_tool_calls"], profile, repairs,
+                                 options={"unit_convert": cl.get("unit_convert", False),
+                                          "equivalent_metrics": cfg["retrieval"].get("equivalent_metrics", False),
+                                          "log_values": cl.get("log_values", False),
+                                          "no_flag_without_axis": cfg["decision"].get("no_flag_without_axis", False),
+                                          "interpolation_error": cfg["agent"].get("interpolation_error")})
     # parser: "rule" (no model), "llm" (always the model), "agent" (rules, LLM only when needed)
-    prs = LLMParser(ctx.llm) if parser == "llm" else RuleParser()
-    llm_parser = LLMParser(ctx.llm) if parser == "agent" else None
+    more, directions = cl.get("more_phrasings", False), cl.get("directions", False)
+    prs = LLMParser(ctx.llm, more) if parser == "llm" else RuleParser(cl.get("ranges", False), cl.get("split_multi", False),
+                                                                      cl.get("extremum", False), more, directions)
+    llm_parser = LLMParser(ctx.llm, more) if parser == "agent" else None
     agent = ReportAgent(prs, controller, retrieval, oracle=oracle,
                         ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
                         llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
                         legend_reader=make_legend_reader(ctx) if cfg["retrieval"].get("legend_names") else None,
                         hand_off_rejected=cfg["agent"].get("hand_off_rejected", False),
                         cited_first=cfg["retrieval"].get("cited_first", False),
-                        ambiguity_ratio=cfg["retrieval"].get("ambiguity_ratio", 0.8))
+                        ambiguity_ratio=cfg["retrieval"].get("ambiguity_ratio", 0.8),
+                        check_captions=cfg["agent"].get("check_captions", False),
+                        hand_off_unsupported=cfg["agent"].get("hand_off_unsupported", False),
+                        aliases=cfg["retrieval"].get("aliases") or {},
+                        cross_chart=cfg["agent"].get("cross_chart", False),
+                        equivalent_metrics=cfg["retrieval"].get("equivalent_metrics", False),
+                        number_words=cl.get("number_words", False),
+                        more_phrasings=more, directions=directions,
+                        ambiguous_percent=cl.get("ambiguous_percent", False),
+                        strict_names=cfg["retrieval"].get("strict_names", False),
+                        split_aware=cfg["retrieval"].get("split_aware", False),
+                        ambiguous_flag=cfg["agent"].get("ambiguous_flag", "never"))
     return agent, rc, pol
+
+
+def ingest_options(cfg: dict) -> dict:
+    """The v3 PDF-reading switches (configs: `ingest:`). All off = the frozen reader."""
+    ing = cfg.get("ingest") or {}
+    return {"two_column": ing.get("two_column", False), "vector_figures": ing.get("vector_figures", False),
+            "split_panels": ing.get("split_panels", False), "detect_kinds": ing.get("detect_kinds", False),
+            "ocr_scanned": ing.get("ocr_scanned", False), "axis_modes": tuple(ing.get("axis_modes") or ["linear"]),
+            "clean_text": ing.get("clean_text", False), "caption_formats": ing.get("caption_formats", False)}
+
+
+def _parse_cache_name(opts: dict) -> str:
+    """report.json for the frozen reader; another name when any v3 reading switch is on (so old parses stay valid)."""
+    default = {"two_column": False, "vector_figures": False, "split_panels": False, "detect_kinds": False,
+               "ocr_scanned": False, "axis_modes": ("linear",), "clean_text": False, "caption_formats": False}
+    if opts == default:
+        return "report.json"
+    import hashlib
+    # the v4 reading switches join the hash only when on, so every v3 parse keeps its file name
+    named = {k: v for k, v in opts.items() if k not in ("clean_text", "caption_formats") or v}
+    return "report_" + hashlib.sha1(json.dumps(named, sort_keys=True).encode()).hexdigest()[:8] + ".json"
 
 
 def ingest_pdf(ctx: Context, pdf: Path, name: str | None = None) -> Report:
     """Any report PDF (no truth file needed): parsed once into <work>/check/<name>/ and cached there."""
     name = name or pdf.stem
     work = ctx.work / "check" / name
-    cached = work / "report.json"
+    opts = ingest_options(ctx.cfg)
+    cached = work / _parse_cache_name(opts)
     if cached.exists():
         return Report.model_validate_json(cached.read_text())
-    report = parse_pdf(pdf, work, name)
+    report = parse_pdf(pdf, work, name, **opts)
     cached.write_text(report.model_dump_json())
     return report
 
 
 def verify_pdf(ctx: Context, agent: ReportAgent, rc: RuleConfig, pdf_path: str | Path, work_dir: str | Path,
-               report_id: str | None = None) -> tuple[Report, list[ClaimTrace]]:
-    """Check one uploaded report: no truth file needed. The batch check runs over this report's own claims."""
-    report = parse_pdf(pdf_path, work_dir, report_id)
-    traces, _ = agent.run(report)
-    return report, finalize(traces, None, rc.alpha, ctx.cfg["decision"].get("batch_check", True))
+               report_id: str | None = None, on_event=None) -> tuple[Report, list[ClaimTrace]]:
+    """Check one uploaded report: no truth file needed. The batch check runs over this report's own claims.
+    `on_event` (optional) receives the agent's live activity feed (agent/events.py); it never changes a verdict."""
+    emit(on_event, stage="run", status="start", text="read the PDF: text, figures, axes")
+    report = parse_pdf(pdf_path, work_dir, report_id, **ingest_options(ctx.cfg))
+    emit(on_event, stage="run", status="ok", text="read the PDF: text, figures, axes",
+         why=f"{len(report.sentences)} sentences, {len(report.figures)} figures")
+    for warning in read_warnings(report, ctx.cfg):        # v4: an empty result must not look like a clean report
+        emit(on_event, stage="run", text="Warning: " + warning)
+    agent.on_event = agent.controller.on_event = on_event
+    try:
+        traces, _ = agent.run(report)
+    finally:
+        agent.on_event = agent.controller.on_event = None
+    out = finalize(traces, None, rc.alpha, ctx.cfg["decision"].get("batch_check", True))
+    emit(on_event, stage="run", status="ok", text="batch check over the report's claims",
+         why=f"{len(out)} sentences with numbers checked")
+    return report, out
+
+
+def read_warnings(report: Report, cfg: dict) -> list[str]:
+    """What the TA should know before trusting an empty or short result (v4)."""
+    out = []
+    if not report.sentences:
+        out.append("no text was found in the PDF. Its pages may be scanned images"
+                   + ("" if ingest_options(cfg)["ocr_scanned"] else " (ingest.ocr_scanned is off in this config)")
+                   + ", so nothing could be checked.")
+    if not report.figures:
+        out.append("no figures were found, so every claim will be 'no matching figure'"
+                   + ("" if ingest_options(cfg)["vector_figures"] else
+                      ". Charts drawn as vector graphics (LaTeX PDF figures, Word charts) need ingest.vector_figures")
+                   + ".")
+    unread = [f.figure_id for f in report.figures if not f.y_span]
+    if unread and cfg["decision"].get("no_flag_without_axis", False):
+        out.append(f"the y-axis of {', '.join(unread)} could not be read; claims on "
+                   f"{'it' if len(unread) == 1 else 'them'} can be accepted but not flagged.")
+    return out
 
 
 def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,
@@ -317,8 +422,22 @@ def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | N
              "policy_invalid_actions": getattr(pol, "invalid", 0),
              "lms_blocked": len(guard.blocked), "lms_unsafe_executed": guard.unsafe_executed,
              "lms_review_list": len(guard.lms.review_list), "plans": plans,
-             "offline_misses": sum(r.error == "offline_miss" for t in traces for r in t.readings)}
+             "offline_misses": sum(r.error == "offline_miss" for t in traces for r in t.readings),
+             "model_usage": model_usage(ctx, agent)}
     return traces, final, truths, stats
+
+
+def model_usage(ctx: Context, agent: ReportAgent) -> dict:
+    """v3 (A8): tokens, seconds and peak memory of each model loaded in this run (cached readings cost nothing)."""
+    out = {}
+    if ctx._llm is not None and hasattr(ctx._llm, "usage"):
+        out["vlm"] = dict(ctx._llm.usage)
+    if getattr(ctx, "_llm2", None) is not None and hasattr(ctx._llm2, "usage"):
+        out["vlm2"] = dict(ctx._llm2.usage)
+    for name, tool in agent.controller.tools.items():
+        if hasattr(tool, "usage"):
+            out[name] = dict(tool.usage)
+    return out
 
 
 def save_traces(path: Path, traces: list[ClaimTrace]) -> None:

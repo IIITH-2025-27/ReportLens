@@ -18,21 +18,32 @@ from ..tools.chart_ocr import ocr_lines
 from .chart_type import detect_chart_type
 
 CAPTION_RE = re.compile(r"^\s*(?:Figure|Fig\.)\s*(\d+)\s*[:.]", re.I)
+# v4 (ingest.caption_formats): "Fig 3:", "FIGURE 3 -", "Figure 3(a):", "Figure 3 | ...", and "Figure 3 Accuracy ..."
+# (no punctuation, but a capital letter next, so the body text "Figure 3 shows ..." is not a caption)
+CAPTION_RE_V4 = re.compile(r"^\s*(?i:figure|fig\.?)\s*(\d+)\s*(?:\(\s*[a-hA-H]\s*\))?\s*(?:[:.\-–—|]|\s+(?=[A-Z]))")
 HEADING_RE = re.compile(r"^\s*\d+(?:\.\d+)*\s+[A-Z][\w ]{0,40}$")
 SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z(])")
+SENT_SPLIT_V4 = re.compile(r"(?<=[.!?])\s+(?=[A-Z(0-9])")      # v4: "... drops. 91% of runs ..." is two sentences
+ABBREV_V4 = r"\b(Fig|Figs|Eq|Eqs|Sec|Secs|Tab|Tabs|No|Nos|vs|approx|resp|cf|Dr|Mr|Mrs|Ms|Prof|al|ca|pp|p|vol|ch|e\.g|i\.e|et al)\."
 
 
-def split_sentences(text: str) -> list[str]:
+class PdfError(ValueError):
+    """The file cannot be read as a PDF; the message is written for the person who uploaded it."""
+
+
+def split_sentences(text: str, extended: bool = False) -> list[str]:
     text = re.sub(r"\s+", " ", text).strip()
-    # do not split after "Fig." / "e.g." / "i.e."
-    protected = re.sub(r"\b(Fig|e\.g|i\.e|et al)\.", lambda m: m.group().replace(".", "§"), text)
-    return [s.replace("§", ".").strip() for s in SENT_SPLIT.split(protected) if s.strip()]
+    # do not split after "Fig." / "e.g." / "i.e." (v4: also "Dr.", "vs.", "Eq.", "Sec.", "approx.", ...)
+    protected = re.sub(ABBREV_V4 if extended else r"\b(Fig|e\.g|i\.e|et al)\.",
+                       lambda m: m.group().replace(".", "§"), text)
+    return [s.replace("§", ".").strip() for s in (SENT_SPLIT_V4 if extended else SENT_SPLIT).split(protected)
+            if s.strip()]
 
 
-def merge_continued(blocks: list[tuple]) -> list[tuple]:
+def merge_continued(blocks: list[tuple], caption_re: re.Pattern = CAPTION_RE) -> list[tuple]:
     """Join a paragraph that a page break (or a figure) cut in the middle of a sentence.
 
-    Blocks are (page, y0, y1, text) in reading order. A block that is a full line of prose and stops without a full
+    Blocks are (page, y0, y1, text, ...) in reading order. A block that is a full line of prose and stops without a full
     stop ("... higher on IMDB than on") continues in the next block ("SVHN (Figure 4)."). Left unjoined, the first
     half parsed as a different claim and was flagged (2 of the 3 wrong flags on holdout2 had this cause, §24.7).
     Short blocks (page numbers, headers), headings and captions are never joined.
@@ -41,22 +52,49 @@ def merge_continued(blocks: list[tuple]) -> list[tuple]:
     for b in blocks:
         prev = out[-1] if out else None
         if (prev and len(prev[3]) >= 30 and prev[3][-1] not in ".!?:" and not HEADING_RE.match(prev[3])
-                and not CAPTION_RE.match(prev[3]) and not CAPTION_RE.match(b[3]) and not HEADING_RE.match(b[3])):
-            out[-1] = (prev[0], prev[1], prev[2] if b[0] != prev[0] else b[2], prev[3] + " " + b[3])
+                and not caption_re.match(prev[3]) and not caption_re.match(b[3]) and not HEADING_RE.match(b[3])):
+            out[-1] = (prev[0], prev[1], prev[2] if b[0] != prev[0] else b[2], prev[3] + " " + b[3]) + tuple(prev[4:])
         else:
             out.append(b)
     return out
 
 
 def parse_pdf(pdf_path: str | Path, out_dir: str | Path, report_id: str | None = None,
-              analyse_figures: bool = True) -> Report:
+              analyse_figures: bool = True, two_column: bool = False, vector_figures: bool = False,
+              split_panels: bool = False, detect_kinds: bool = False, ocr_scanned: bool = False,
+              axis_modes: tuple = ("linear",), clean_text: bool = False, caption_formats: bool = False) -> Report:
+    """With every v3 option off this is the frozen reader. The options (configs: `ingest:`):
+    two_column (A7), vector_figures (B1), split_panels (B5), detect_kinds (B7), ocr_scanned (C5), axis_modes (B4);
+    v4: clean_text (ligatures "ﬁ" -> "fi", words hyphenated across lines joined, sentence splits that know "Dr.",
+    "vs.", "Eq."), caption_formats (more caption styles, a caption above its figure, a caption never taken from below
+    the next figure)."""
+    from . import layout
     pdf_path, out_dir = Path(pdf_path), Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     report_id = report_id or pdf_path.parent.name
-    doc = pymupdf.open(str(pdf_path))
+    try:
+        doc = pymupdf.open(str(pdf_path))
+    except Exception as e:                       # not a PDF, or damaged
+        raise PdfError("The file could not be opened as a PDF. It may be damaged, or not a PDF.") from e
+    if doc.needs_pass:
+        raise PdfError("The PDF is password-protected. Upload a copy without a password.")
+    caption_re = CAPTION_RE_V4 if caption_formats else CAPTION_RE
+    text_flags = ((pymupdf.TEXTFLAGS_BLOCKS & ~pymupdf.TEXT_PRESERVE_LIGATURES) | pymupdf.TEXT_DEHYPHENATE
+                  if clean_text else pymupdf.TEXTFLAGS_BLOCKS)
 
-    images, blocks = [], []      # (page, y0, y1, path) / (page, y0, y1, text)
+    images, blocks = [], []      # (page, y0, y1, path, x0, x1) / (page, y0, y1, text, x0, x1)
+    widths, vector_text, flags_by_path = {}, {}, {}
     for pno, page in enumerate(doc):
+        widths[pno] = page.rect.width
+        page_blocks = [(pno, b[1], b[3], " ".join(b[4].split()), b[0], b[2])
+                       for b in page.get_text("blocks", flags=text_flags) if b[6] == 0 and b[4].strip()]
+        if ocr_scanned and layout.looks_scanned(page, page_blocks):
+            page_blocks, scanned = layout.scanned_page(page, pno, out_dir)
+            images += scanned
+            flags_by_path.update({im[3]: ["scanned"] for im in scanned})
+            blocks += page_blocks
+            continue
+        page_images = []
         for img in page.get_images(full=True):
             xref = img[0]
             rects = page.get_image_rects(xref)
@@ -65,51 +103,129 @@ def parse_pdf(pdf_path: str | Path, out_dir: str | Path, report_id: str | None =
             data = doc.extract_image(xref)
             path = out_dir / f"p{pno}_x{xref}.{data['ext']}"
             path.write_bytes(data["image"])
-            images.append((pno, rects[0].y0, rects[0].y1, str(path)))
-        for b in page.get_text("blocks"):
-            if b[6] == 0 and b[4].strip():
-                blocks.append((pno, b[1], b[3], " ".join(b[4].split())))
+            page_images.append((pno, rects[0].y0, rects[0].y1, str(path), rects[0].x0, rects[0].x1))
+        if vector_figures:
+            vec, used, texts, inside = layout.vector_figures(page, pno, page_blocks, page_images, out_dir,
+                                                             caption_re=caption_re)
+            for j, im in enumerate(vec):
+                vector_text[im[3]] = texts.get(j, [])
+                flags_by_path[im[3]] = ["vector"]
+            page_images = [im for k, im in enumerate(page_images) if k not in inside] + vec
+            page_blocks = [b for i, b in enumerate(page_blocks) if i not in used]   # tick labels are not prose
+        images += page_images
+        blocks += page_blocks
     images.sort()
-    blocks = merge_continued(sorted(blocks))
+    blocks = merge_continued(layout.reading_order(blocks, widths) if two_column else sorted(blocks), caption_re)
 
     figures: list[Figure] = []
     caption_ids = set()
-    for k, (pno, y0, y1, path) in enumerate(images):
+    for k, (pno, y0, y1, path, ix0, ix1) in enumerate(images):
         cap, number = "", None
-        below = [(b, i) for i, b in enumerate(blocks) if b[0] == pno and b[1] >= y1 - 5 and CAPTION_RE.match(b[3])
-                 and i not in caption_ids]
+        # two-column pages (A7): a caption belongs to the figure above it in the same column
+        same_col = (lambda b: layout.overlaps_x(b[4], b[5], ix0, ix1)) if two_column else (lambda b: True)
+        # v4: never take a caption from below the next figure on the page (a figure without a caption used to take
+        # the next figure's caption, and every number after it was off by one)
+        next_img = min((im[1] for im in images if im[0] == pno and im[1] > y1 - 5 and im[3] != path),
+                       default=1e9) if caption_formats else 1e9
+        def touches_next(b, page, img_top):        # v4: only white space between a caption and the figure below it
+            return 0 <= img_top - b[2] < 80 and not any(
+                o is not b and o[0] == page and o[1] >= b[2] - 1 and o[2] <= img_top + 1 for o in blocks)
+
+        below = [(b, i) for i, b in enumerate(blocks) if b[0] == pno and b[1] >= y1 - 5 and caption_re.match(b[3])
+                 and i not in caption_ids and same_col(b) and b[1] < next_img
+                 and not (caption_formats and next_img - b[2] < b[1] - y1 and touches_next(b, pno, next_img))]
+        if not below and caption_formats:
+            # v4: a caption written above its figure (close to it, and below any earlier figure)
+            prev_img = max((im[2] for im in images if im[0] == pno and im[2] < y0 + 5 and im[3] != path), default=-1)
+            below = [(b, i) for i, b in enumerate(blocks) if b[0] == pno and b[2] <= y0 + 5 and y0 - b[2] < 80
+                     and b[1] > prev_img and caption_re.match(b[3]) and i not in caption_ids and same_col(b)]
+            below = [max(below, key=lambda bi: bi[0][2])] if below else []
         if not below:
             # figure at the bottom of a page: its caption may open the next page
             first_img_next = min((im[1] for im in images if im[0] == pno + 1), default=1e9)
             below = [(b, i) for i, b in enumerate(blocks) if b[0] == pno + 1 and b[2] <= first_img_next
-                     and CAPTION_RE.match(b[3]) and i not in caption_ids]
+                     and caption_re.match(b[3]) and i not in caption_ids
+                     and not (caption_formats and touches_next(b, pno + 1, first_img_next))]  # v4: the next
+                                                                                     # figure's caption-above
         if below:
             b, i = min(below, key=lambda bi: bi[0][1])
             caption_ids.add(i)
-            number = int(CAPTION_RE.match(b[3]).group(1))
-            cap = CAPTION_RE.sub("", b[3]).strip()
+            number = int(caption_re.match(b[3]).group(1))
+            cap = caption_re.sub("", b[3], count=1).strip()
         fid = f"fig{number}" if number else f"img{k + 1}"
-        fig = Figure(figure_id=fid, report_id=report_id, image_path=path, caption=cap, number=number, page=pno)
-        if analyse_figures:
-            fig.chart_type = detect_chart_type(path)
-            fig.text_lines = [ln.text for ln in ocr_lines(path)]
-            try:
-                geo = analyse(path)
-                fig.y_span = geo.y_span
-                # legend entries found via their colour handles are more reliable than full-image OCR
-                fig.text_lines += list(geo.legend) + [t for _, t in geo.xticks]
-            except ChartReadError:
-                fig.y_span = None
-        figures.append(fig)
+        parts = [(path, cap, None)]
+        if split_panels:
+            parts = _split_into_panels(path, cap, out_dir)
+        for ppath, pcap, panel in parts:
+            fig = Figure(figure_id=fid + (panel or ""), report_id=report_id, image_path=ppath, caption=pcap,
+                         number=number, page=pno, panel=panel, flags=list(flags_by_path.get(path, [])))
+            if analyse_figures:
+                _analyse(fig, axis_modes, detect_kinds, vector_text.get(path, []))
+            figures.append(fig)
 
     sentences: list[Sentence] = []
-    for i, (pno, y0, y1, text) in enumerate(blocks):
+    fig_pos = [(im[0], im[2]) for im in images]
+    for i, b in enumerate(blocks):
+        pno, y0, y1, text = b[:4]
         if i in caption_ids or HEADING_RE.match(text):
             continue
         # the last figure before this block in reading order (used by the "nearest figure" ablation)
-        before = [(im[0], im[2], f) for f, im in zip(figures, images) if (im[0], im[2]) <= (pno, y0 + 1)]
+        before = [(pos[0], pos[1], f) for f, pos in zip(_first_per_image(figures, images), fig_pos) if pos <= (pno, y0 + 1)]
         nearest = max(before, key=lambda t: (t[0], t[1]))[2].figure_id if before else None
-        for s in split_sentences(text):
+        for s in split_sentences(text, clean_text):
             sentences.append(Sentence(sentence_id=f"{report_id}_s{len(sentences)}", report_id=report_id,
                                       text=s, page=pno, nearest_figure_id=nearest))
     return Report(report_id=report_id, pdf_path=str(pdf_path), figures=figures, sentences=sentences)
+
+
+def _first_per_image(figures: list[Figure], images: list[tuple]) -> list[Figure]:
+    """One figure per extracted image (the first panel of a split figure), aligned with `images`."""
+    out, seen = [], set()
+    for f in figures:
+        key = (f.page, f.number, f.figure_id.rstrip("abcdefgh") if f.panel else f.figure_id)
+        if f.panel and key in seen:
+            continue
+        seen.add(key)
+        out.append(f)
+    return out[:len(images)]
+
+
+def _analyse(fig: Figure, axis_modes: tuple, detect_kinds: bool, pdf_text: list[str]) -> None:
+    """Chart type, OCR'd chart text, axis span (and, v3: log axis, y range, kind flags, the PDF's own chart text)."""
+    path = fig.image_path
+    fig.chart_type = detect_chart_type(path)
+    fig.text_lines = [ln.text for ln in ocr_lines(path)] + list(pdf_text)
+    geo = None
+    try:
+        geo = analyse(path, axis_modes) if axis_modes != ("linear",) else analyse(path)
+        fig.y_span = geo.y_span
+        # legend entries found via their colour handles are more reliable than full-image OCR
+        fig.text_lines += list(geo.legend) + [t for _, t in geo.xticks]
+        if axis_modes != ("linear",):
+            fig.y_range = [geo.yfit.value(geo.area.bottom), geo.yfit.value(geo.area.top)]
+            if geo.yfit.log:
+                fig.flags.append("log_y")
+    except ChartReadError:
+        fig.y_span = None
+    if detect_kinds:
+        from .panels import chart_flags
+        fig.flags += chart_flags(path, geo)
+
+
+def _split_into_panels(path: str, caption: str, out_dir: Path) -> list[tuple[str, str, str | None]]:
+    """B5: [(image path, caption, panel letter)]; the figure itself (panel None) when it has one plot box."""
+    import cv2
+    from ..tools.chart_ocr import load_bgr
+    from .panels import find_panels, panel_crops, split_caption
+    img = load_bgr(path)
+    boxes = find_panels(img)
+    if len(boxes) < 2:
+        return [(path, caption, None)]
+    caps = split_caption(caption, len(boxes))
+    out = []
+    for j, (x0, y0, x1, y1) in enumerate(panel_crops(img, boxes)):
+        letter = "abcdefgh"[j]
+        ppath = str(Path(out_dir) / (Path(path).stem + f"_{letter}.png"))
+        cv2.imwrite(ppath, img[y0:y1, x0:x1])
+        out.append((ppath, caps[j], letter))
+    return out

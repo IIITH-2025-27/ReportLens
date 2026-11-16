@@ -1,0 +1,52 @@
+# v3_phi (14 Nov, run_log I6/I7): v3.yaml plus two tools on Microsoft Phi-4-multimodal-instruct (5.6B; Phi-4-mini
+# language model + SigLIP vision encoder, no Qwen parts), in the same slots Granite had in v3_vlm2.yaml: vlm2_crop (the
+# vlm_crop question) and vlm2_table (a CSV request). Own calibration and run folders: Granite's tables are untouched.
+generator:
+  reports: {calib: 12, dev: 0, test: 20, style_shift: 0, v3feat: 0}
+decision:
+  min_group_size: 30
+calibration:
+  splits: [calib, calib_easy]
+tools:
+  enabled: [ocr_pixel, deplot, vlm_table, vlm_crop, vlm2_crop, vlm2_table]
+models:
+  vlm2: microsoft/Phi-4-multimodal-instruct@refs/pr/70   # the native transformers format
+  vlm2_dtype: bfloat16
+retrieval:
+  cited_first: true         # G2
+  equivalent_metrics: true  # B9: an error-rate claim may be checked on an accuracy chart (as 100 - accuracy)
+  aliases:                  # B9: used only when no figure shows the name as written but one shows the alias
+    RN18: ResNet-18
+    RN-18: ResNet-18
+    RN50: ResNet-50
+    RN-50: ResNet-50
+    ViT-Small: ViT-S
+    EffNet: EfficientNet
+    VGG16: VGG-16
+    BERT: BERT-base
+claims:
+  ranges: true              # A6
+  split_multi: true         # B2
+  extremum: true            # B3
+  unit_convert: true        # A5
+  log_values: true          # B4
+ingest:
+  two_column: true          # A7
+  vector_figures: true      # B1
+  split_panels: true        # B5
+  detect_kinds: true        # B7
+  ocr_scanned: true         # C5
+  axis_modes: [linear, log, inverted]   # B4
+agent:
+  policy: informed
+  fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  hand_off_rejected: true   # G1
+  check_captions: true      # A4
+  hand_off_unsupported: true  # B7
+  cross_chart: true         # B9
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local_phi
+  runs_dir: runs/v3_phi

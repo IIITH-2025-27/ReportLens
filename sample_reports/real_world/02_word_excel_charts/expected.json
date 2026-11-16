@@ -1,0 +1,137 @@
+{
+ "report": "02_word_excel_charts",
+ "about": "A Word-style report: Excel / Google-Sheets-look charts (no frame, the y-axis cannot be read), caption styles 'Figure 1 –', 'Fig 2:' and a caption above its figure, a figure without a caption, past tense, '~' / '>' / '≈', '(see Table 2)' and 'Dr.' in the text.",
+ "claims": [
+  {
+   "sentence": "All three models were trained for 8 epochs with a learning rate of 0.001 and a batch size of 32.",
+   "truth": "setup",
+   "accept": [
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "training setup"
+  },
+  {
+   "sentence": "BERT-base achieved 92.5% accuracy at epoch 8.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "past tense; 92.5"
+  },
+  {
+   "sentence": "The GRU reached ~85% accuracy at epoch 6.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "hedged '~85%': 84.9"
+  },
+  {
+   "sentence": "LSTM obtained 88.0% accuracy at epoch 8.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "LSTM at epoch 8 is 84.6"
+  },
+  {
+   "sentence": "At epoch 4, BERT-base is 9.5 points higher than LSTM.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "91.4 - 81.9 = 9.5"
+  },
+  {
+   "sentence": "GRU had >85% accuracy at epoch 3.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "GRU at epoch 3 is 81.0, not above 85"
+  },
+  {
+   "sentence": "On SST-2, BERT-base reached an F1 score of 94.1% (see Table 2).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "94.1; a table reference"
+  },
+  {
+   "sentence": "On IMDB, the GRU scored ≈81% F1.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "'≈81%': 81.0"
+  },
+  {
+   "sentence": "On AG News, LSTM obtained an F1 score of 90.0%.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "LSTM on AG News is 83.4"
+  },
+  {
+   "sentence": "The training loss of the LSTM was 0.43 at epoch 8 (Figure 3).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "0.43, caption above the chart"
+  },
+  {
+   "sentence": "From epoch 1 to epoch 8, the training loss of the LSTM fell by 53%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "a fall: 0.92 -> 0.43 = -53.3%"
+  }
+ ]
+}
