@@ -43,7 +43,7 @@ Karan Thayat (2025202008) & \hspace{2em}Vikash Kumar (2025201012)\\ \end{tabular
 \maketitle
 
 \begin{abstract}
-\noindent A TA has to check that the numbers written in a lab report match the report's own charts. A vision-language model (VLM) reads charts only roughly but still gives a verdict every time, so a misread chart becomes a wrong accusation. This work builds a checker that reads each value with up to four different tools and flags a sentence only when its gap to the claim is larger than an error margin measured on charts with known values. Otherwise it accepts the sentence or passes it to the TA. On a held-out test set of 20 reports it decided 84.9\% of 205 claims with 5.6\% wrong flags, against 23\% for the same VLM asked directly. Over all 120 evaluation reports it decided 79.7\% of claims with 3.5\% wrong flags and never accepted a planted error. Readers from other model families did not help. LoRA fine-tuning on 12{,}200 new generated reports did: seven adapters trained in parallel and averaged cut the validation loss from 0.61 to 0.24, and the best adapter returns 88\% of the true chart values against 68\% for the base model, with less than half the median reading error.
+\noindent A TA has to check that the numbers written in a lab report match the report's own charts. A vision-language model (VLM) reads charts only roughly but still gives a verdict every time, so a misread chart becomes a wrong accusation. This work builds a checker that reads each value with up to four different tools and flags a sentence only when its gap to the claim is larger than an error margin measured on charts with known values. Otherwise it accepts the sentence or passes it to the TA. On a held-out test set of 20 reports it decided 84.9\% of 205 claims with 5.6\% wrong flags, against 23\% for the same VLM asked directly. Over all 120 evaluation reports it decided 79.7\% of claims with 3.5\% wrong flags and never accepted a planted error. Readers from other model families did not help. LoRA fine-tuning on 12{,}200 new generated reports did: seven adapters trained in parallel and averaged cut the validation loss from 0.61 to 0.24, and the best adapter returns 88\% of the true chart values against 68\% for the base model, with less than half the median reading error. Inside the checker, however, the better reader decided more claims but made more wrong flags, so it was not kept.
 \end{abstract}
 
 % ============================================================================
@@ -190,10 +190,11 @@ Every run and its keep rule, written beforehand, is in \code{results/run\_log.md
 \textbf{Group} & \textbf{What was run} & \textbf{Outcome}\\
 \midrule
 Main system (B, E, F) & P0, P1, P3 on six sets, B1--B5 on \code{final} & headline results (Section~\ref{sec:eval})\\
-Later changes (G, H) & 26 switches, e.g.\ log axes, scanned PDFs & 15 wrong flags instead of 16\\
+Later changes (G, H) & 27 switches, e.g.\ log axes, scanned PDFs, numbers in words & 15 wrong flags instead of 16\\
 Reader family (I1--I7) & Granite, Qwen3-VL-8B, Phi-4 & none kept (Section~\ref{sec:ablations})\\
 Fine-tuning v1 (C4--C8) & LoRA on 918 charts, in the pipeline & better reading, not fewer wrong flags\\
 Fine-tuning v2 (C9) & 7 LoRA runs merged, 1 trained longer & validation loss 0.61 $\rightarrow$ 0.23\\
+Fine-tuned reader in the checker (C10) & adapter B as \code{vlm\_table}, re-calibrated, six sets & not kept: 21 wrong flags instead of 15\\
 \bottomrule
 \end{tabularx}
 \caption{Experiment runs, grouped as in the run log.}
@@ -287,7 +288,7 @@ B2, confidence threshold & 53.2\% & -- & 11.1\% (2 of 18) & 30.8\% & as B1\\
 B3, five samples, unanimous & 88.3\% & 66.3\% & 19.1\% (9 of 47) & 50.0\% & 28 min\\
 B4, same tools, model judges & 99.5\% & 82.4\% & 25.9\% (36 of 139) & 0.0\% & --\\
 B5, same tools, fixed factor 2 & 83.4\% & -- & 4.7\% & 0.0\% & as P0\\
-\textbf{P3, planner + rule (proposed)} & \textbf{84.9\%} & \textbf{96.6\%} & \textbf{5.6\% (5 of 89)} & \textbf{1.0\%} & \textbf{16.2 min}\\
+\textbf{P3, proposed system} & \textbf{84.9\%} & \textbf{96.6\%} & \textbf{5.6\% (5 of 89)} & \textbf{1.0\%} & \textbf{16.2 min}\\
 \bottomrule
 \end{tabularx}
 \caption{Baselines and the main policy on the held-out test set (205 claims). Model time is calls times measured seconds per call.}
@@ -304,7 +305,7 @@ B5, same tools, fixed factor 2 & 83.4\% & -- & 4.7\% & 0.0\% & as P0\\
 \toprule
 \textbf{Approach (205 claims of \code{final})} & \textbf{Runs on} & \textbf{Model calls} & \textbf{Cost for the set}\\
 \midrule
-\textbf{Proposed: tools + fixed rule, 4B model} & \textbf{laptop} & \textbf{85} & \textbf{electricity only}\\
+\textbf{Proposed system, 4B model} & \textbf{laptop} & \textbf{85} & \textbf{electricity only}\\
 B1: same 4B model asked directly & laptop & 191 & electricity only\\
 Claude Haiku 5.5 asked directly & API & 205 & about \$0.02\\
 Claude Sonnet 5.5 asked directly & API & 205 & about \$0.41\\
@@ -322,6 +323,7 @@ Claude Opus 5.5 asked directly & API & 205 & about \$0.82\\
 \item \textbf{Merging.} All seven adapters finished (8.4--8.6 hours per Kaggle run) and cut the validation loss from 0.605 to about 0.25. Their average (0.244) beat each of them, so it is the rule's choice. TIES (0.279) was worse: trimming half of each update throws away signal when all adapters learn the same task.
 \item \textbf{Test.} The average gives 85.1\% of the true values against 67.5\% for the base model, halves the median error (1.41 $\rightarrow$ 0.68\% of the axis range) and lowers badly wrong values from 28.8\% to 24.7\%. The best single adapter is about level with it (83.9\% given, 23.8\% badly wrong).
 \item \textbf{Longer training} did better still. The continued (A) and restarted (B) adapters tie on validation (0.231) and lead on every test measure: about 88\% of values given, median error 0.60\%, 22--23\% badly wrong. Seven averaged adapters with about 3{,}000 charts each did not match one adapter with about 6{,}400, so averaging is a fast way to use more data, not a substitute for longer training. B is taken forward. It ties with A on validation, and the test charts were never used to choose.
+\item \textbf{Inside the checker.} With adapter B as \code{vlm\_table} and the margins re-fitted, the checker decided more claims over the six sets (79.6\% $\rightarrow$ 83.0\%) but made more wrong flags (15 $\rightarrow$ 21) and missed more errors (4 $\rightarrow$ 8 of 569), so by its keep rule it was not kept. The cause is the one seen with fine-tuning v1. The better table reader agrees wrongly with \code{vlm\_crop} on hard line charts only 4.4\% of the time (base 5.1\%), just under the 5\% gate, so the planner starts using the two Qwen tools as each other's check, and 14 of the 21 wrong flags rest on that pair.
 \end{itemize}
 
 \begin{figure}[H]
@@ -357,7 +359,7 @@ Longer training, continued (A) & 0.231 & 87.4\% & 0.60\% & 67.2\% & 21.7\%\\
 \item \textbf{Synthetic data.} All numbers come from generated reports, with one plotting library in a few styles, template sentences and clean PDFs. The margins hold only for charts like the calibration charts, and \code{holdout} already showed that a shift in the chart mix raises wrong flags. The fine-tuning dataset is wider but still generated, and real reports were not tested.
 \item \textbf{Parsing.} The main runs parse with rules matched to the generator. The LLM parser reached 87--89\% per field on unfamiliar wordings (96--99\% after G4).
 \item \textbf{Small sets.} With 20 reports per set the intervals are wide, and one held-out set of 20 reports is a small confirmation.
-\item \textbf{Fine-tuned reader not yet in the pipeline.} The new adapters were scored as chart readers, but the full run with re-fitted margins was not finished at the time of writing. Fine-tuning v1 showed that better reading can still raise wrong flags.
+\item \textbf{Fine-tuned reader not used.} The better reader did not lower wrong flags inside the checker, because it turned the two Qwen tools into a trusted pair. For the first adapter, a gate that never paired two tools from one model removed such flags but cost coverage, so the main system keeps the base model.
 \item \textbf{Compute.} T4 GPUs report bf16 as supported through slow emulation, so the seven parallel runs were about eight times slower than needed (fp16 later trained 2{,}317 charts in 45 minutes). Qwen3-VL-8B did not fit on the laptop.
 \item \textbf{Scope.} Only value, difference and relative-change claims on line and bar charts are verified.
 \end{itemize}
@@ -365,7 +367,7 @@ Longer training, continued (A) & 0.231 & 87.4\% & 0.60\% & 67.2\% & 21.7\%\\
 % ============================================================================
 \section{Conclusions}\label{sec:conclusion}
 
-Flagging only when the gap is larger than the measured reading error makes far fewer wrong flags than letting the model judge: on the held-out test set 5.6\% of the system's flags were wrong, against 23\% for the VLM asked directly and 26\% for the VLM judging the same readings, while 84.9\% of claims were decided without the TA. It did not beat the same tools with a fixed margin (B5), so the gain comes from different kinds of tools, a margin that grows with their disagreement and abstention, not from calibration itself. The planner cuts cost, and readers from other families did not help, because a new reader also brings new disagreements. Fine-tuning gives a clearly better reader (88\% of the true values against 68\%). Parallel training with averaging made a 21{,}000-chart run fit in a day, though one adapter trained longer was better still. Whether the better reader lowers wrong flags is the open question, and the project's main lesson applies to it: agreement between readers is evidence only when they make different mistakes.
+Flagging only when the gap is larger than the measured reading error makes far fewer wrong flags than letting the model judge: on the held-out test set 5.6\% of the system's flags were wrong, against 23\% for the VLM asked directly and 26\% for the VLM judging the same readings, while 84.9\% of claims were decided without the TA. It did not beat the same tools with a fixed margin (B5), so the gain comes from different kinds of tools, a margin that grows with their disagreement and abstention, not from calibration itself. The planner cuts cost, and readers from other families did not help, because a new reader also brings new disagreements. Fine-tuning gives a clearly better reader (88\% of the true values against 68\%). Parallel training with averaging made a 21{,}000-chart run fit in a day, though one adapter trained longer was better still. Inside the checker, however, the better reader decided more claims but made more wrong flags, because the two Qwen tools began to agree on the same wrong values. That is the project's main lesson once more: agreement between readers is evidence only when they make different mistakes.
 
 \textbf{Reproducibility.} The code, configurations, run log and data generators are at \url{https://github.com/IIITH-2025-27/ReportLens}, and the README lists the commands that reproduce each table from the reading cache. The fine-tuning bundle (the 12{,}200 reports, training code and the train-and-merge notebooks) is the public Kaggle dataset \url{https://www.kaggle.com/datasets/hritik567/reportlens-chart-claims}.
 

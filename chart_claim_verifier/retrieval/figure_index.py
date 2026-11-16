@@ -35,6 +35,14 @@ METRICS = {"accuracy": r"\baccurac", "loss": r"\bloss", "f1": r"\bf1\b", "precis
            "recall": r"\brecall"}
 
 
+# v4 (retrieval.split_aware): a "test accuracy" claim is not checked on a chart of validation accuracy
+SPLITS = {"train": r"\btrain(?:ing)?\b", "val": r"\b(?:val|validation|dev)\b", "test": r"\btest(?:ing)?\b"}
+
+
+def split_words(text: str) -> set[str]:
+    return {k for k, pat in SPLITS.items() if re.search(pat, text, re.I)}
+
+
 def metric_words(text: str, with_error: bool = False) -> set[str]:
     t = text.lower()
     found = {m for m, pat in METRICS.items() if re.search(pat, t)}
@@ -47,13 +55,16 @@ class FigureIndex:
     def __init__(self, figures: list[Figure], ref_bonus: float = 10.0, vocab_match: int = 80,
                  embed: Callable[[str, list[str]], list[float]] | None = None, embed_weight: float = 2.0,
                  ambiguity_ratio: float = 0.8, legend_reader: Callable[[Figure], list[str] | None] | None = None,
-                 cited_first: bool = False, equivalent_metrics: bool = False):
+                 cited_first: bool = False, equivalent_metrics: bool = False, strict_names: bool = False,
+                 split_aware: bool = False):
         self.figures = figures
         self.legend_reader = legend_reader              # VLM legend names, asked only when OCR text finds nothing (U11b)
         self.rescued: dict[tuple[str, str], str] = {}   # (figure_id, series) -> how the figure was found despite OCR
         self.ref_bonus, self.vocab_match, self.ambiguity_ratio = ref_bonus, vocab_match, ambiguity_ratio
         self.cited_first = cited_first      # v2: a cited "Figure N" that OCR cannot fully read beats an uncited figure
         self.equivalent_metrics = equivalent_metrics   # v3 (B9): an error-rate claim may be checked on an accuracy chart
+        self.strict_names = strict_names    # v4: "ResNet-18" is not found in a figure that only shows "ResNet-50"
+        self.split_aware = split_aware      # v4: train / validation / test must not contradict
         self.embed, self.embed_weight = embed, embed_weight
         docs = [tokenize(figure_text(f)) or ["_"] for f in figures]
         self.bm25 = BM25Plus(docs) if figures else None      # BM25Plus: no negative scores on tiny corpora
@@ -79,8 +90,33 @@ class FigureIndex:
         if len(term) <= 4:                                # "SVM" must not match "SVHN"
             tokens = set(tokenize(" ".join(vocab)))
             return all(t in tokens for t in tokenize(term))
+        if self.strict_names:
+            return self._present_strict(vocab, term)
         # default=0: a figure with no caption and no readable text shows no name (it used to crash on v3feat)
         return max((fuzz.partial_ratio(term.lower(), v.lower()) for v in vocab if v), default=0) >= self.vocab_match
+
+    def _present_strict(self, vocab: list[str], term: str) -> bool:
+        """The same fuzzy test, but the words it lines up with must not be another family member ("ResNet-50" for
+        "ResNet-18", "CIFAR-10" for "CIFAR-100")."""
+        from ..tools.base import names_conflict
+        for v in vocab:
+            if not v:
+                continue
+            al = fuzz.partial_ratio_alignment(term.lower(), v.lower())
+            if al is None or al.score < self.vocab_match:
+                continue
+            a, b = al.dest_start, al.dest_end
+            while a > 0 and (v[a - 1].isalnum() or v[a - 1] in "-_."):
+                a -= 1
+            while b < len(v) and (v[b].isalnum() or v[b] in "-_."):
+                b += 1
+            token = v[a:b]
+            # only a clean name can be another family member ("ResNet-50"); OCR that ran labels together
+            # ("CIFAR-1LOFashion-MNISTAG") says nothing either way, so the fuzzy match stands
+            clean = len(token) <= len(term) + 4 and re.fullmatch(r"[A-Za-z][\w.]*(?:[-\s]\w+)*", token)
+            if not (clean and names_conflict(term, token)):
+                return True
+        return False
 
     def shows(self, term: str | None) -> bool:
         """Does any figure show this name? (v3, B9: used before reading a name through the alias table)"""
@@ -96,6 +132,10 @@ class FigureIndex:
         said, shown = metric_words(claim.sentence, eq), metric_words(figure_text(f), eq)
         if said and shown and not (said & shown):         # "accuracy" claim vs a loss chart
             if not (eq and said == {"error"} and "accuracy" in shown):     # B9: error rate = 100 - accuracy
+                return False
+        if self.split_aware:
+            said_split, shown_split = split_words(claim.sentence), split_words(figure_text(f))
+            if said_split and shown_split and not (said_split & shown_split):
                 return False
         for x in {claim.x, claim.x_b or claim.x}:
             if _is_number(x):

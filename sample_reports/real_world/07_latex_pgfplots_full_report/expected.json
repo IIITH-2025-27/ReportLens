@@ -1,0 +1,137 @@
+{
+ "report": "07_latex_pgfplots_full_report",
+ "about": "A three-page LaTeX article whose charts are drawn by pgfplots (vector graphics with real text labels), with setup numbers that must be skipped, 'Figs. 1 and 2' citations, a repeated sentence, claims in captions and a mix of true and false statements.",
+ "claims": [
+  {
+   "sentence": "All models were trained for 20 epochs on 4 GPUs with a batch size of 256.",
+   "truth": "setup",
+   "accept": [
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "setup"
+  },
+  {
+   "sentence": "The learning rate was reduced by 10% every 5 epochs.",
+   "truth": "setup",
+   "accept": [
+    "SKIPPED",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "setup with 'reduced by 10%': not a chart claim"
+  },
+  {
+   "sentence": "ResNet-50 achieved 91.2% validation accuracy at epoch 20.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "91.2"
+  },
+  {
+   "sentence": "ViT-S reached 90.0% validation accuracy at epoch 20.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "87.4"
+  },
+  {
+   "sentence": "At epoch 10, ViT-S is 4.3 points lower than ResNet-50.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "84.6 - 80.3 = 4.3"
+  },
+  {
+   "sentence": "From epoch 2 to epoch 20, the training loss of ViT-S fell by 71%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "2.20 -> 0.64 = -70.9%"
+  },
+  {
+   "sentence": "The training loss of ResNet-50 is 0.46 at epoch 20.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "0.46"
+  },
+  {
+   "sentence": "On SVHN, ViT-S achieves 93.8% test accuracy.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "93.8"
+  },
+  {
+   "sentence": "On CIFAR-10, ResNet-50 is 6.0 points better than ViT-S.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "91.2 - 87.4 = 3.8"
+  },
+  {
+   "sentence": "ViT-S does not reach the accuracy of ResNet-50 at any epoch, staying below 88%.",
+   "truth": "negated",
+   "accept": [
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "negated"
+  },
+  {
+   "sentence": "ResNet-50 reaches 91.2% at epoch 20.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "a claim inside a caption (v3 A4)"
+  }
+ ]
+}

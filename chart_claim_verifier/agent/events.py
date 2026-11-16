@@ -11,6 +11,15 @@ An event is a plain dict:
     status    "start" (a call has begun), "ok", "error", or None
     sentence  the sentence being checked, if any
     tool      the tool's name, for tool and repair events
+    detail    structured facts for the page to word plainly (all optional):
+              plan    figure, number, chart_type, looks_like, callable, skipped {tool: rate}, pairs
+              parse   parser ("rule" | "llm"), claim_type, series, x, series_b, x_b, claimed, claimed_high, unit,
+                      relation, tolerance, figure_hint, operands [[series, x], ...]
+              figure  chosen [figure_id, ...], candidates [[figure_id, score], ...], hint
+              tool    figures, operands, cost, calls_used, budget (start); value, raw, cached, seconds,
+                      error, readings, status (end)
+              decide  verdict, claimed, estimate, gap, tolerance, margin_flag, margin_accept, disagreement,
+                      n_readings, tool_values, unit, figure
 """
 from __future__ import annotations
 

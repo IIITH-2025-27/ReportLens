@@ -29,12 +29,15 @@ elif DATABASE_URL.startswith("postgresql://"):
 
 # Kept apart from web/backend/storage: the lite app has its own report ids.
 STORAGE_DIR = _path(os.environ.get("LITE_STORAGE_DIR", "storage"), BACKEND_DIR)
-VERIFIER_CONFIG = _path(os.environ.get("VERIFIER_CONFIG", "configs/exp/local_real.yaml"), REPO_ROOT)
+# The lite app runs v5 (v4's real-world fixes, run_log J, plus fewer hand-offs to the TA, run_log K) unless
+# LITE_VERIFIER_CONFIG says otherwise.
+# It no longer follows VERIFIER_CONFIG from web/backend/.env, which still points the full web app at local_real.yaml.
+VERIFIER_CONFIG = _path(os.environ.get("LITE_VERIFIER_CONFIG", "configs/exp/v5.yaml"), REPO_ROOT)
 VERIFIER_POLICY = os.environ.get("VERIFIER_POLICY", "informed")
 VERIFIER_PARSER = os.environ.get("VERIFIER_PARSER", "agent")
 CORS_ORIGINS = [o.strip() for o in os.environ.get("LITE_CORS_ORIGINS", "http://localhost:5174").split(",") if o.strip()]
 MAX_UPLOAD_MB = int(os.environ.get("MAX_UPLOAD_MB", "25"))
-MAX_QUEUED_RUNS = int(os.environ.get("LITE_MAX_QUEUED_RUNS", "10"))   # open to everyone: cap the waiting line
+MAX_QUEUED_RUNS = int(os.environ.get("LITE_MAX_QUEUED_RUNS", "25"))   # open to everyone: cap the waiting line
 # load the models when the server starts (1, default) or on the first run (0)
 PRELOAD = os.environ.get("LITE_PRELOAD", "1") != "0"
 

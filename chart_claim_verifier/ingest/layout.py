@@ -74,7 +74,8 @@ def _clusters(rects: list, gap: float) -> list[list]:
 
 
 def vector_figures(page, pno: int, page_blocks: list[tuple], raster: list[tuple], out_dir: Path,
-                   dpi: int = 200) -> tuple[list[tuple], set[int], dict[int, list[str]], set[int]]:
+                   dpi: int = 200, caption_re: re.Pattern = CAPTION_RE
+                   ) -> tuple[list[tuple], set[int], dict[int, list[str]], set[int]]:
     """Charts drawn as vector paths on this page.
 
     Returns (images, indices of the page's text blocks that belong to a figure, {image index: those blocks' text},
@@ -93,10 +94,15 @@ def vector_figures(page, pno: int, page_blocks: list[tuple], raster: list[tuple]
         rects.append((r.x0, r.y0, r.x1, r.y1))
     images, used, texts, inside = [], set(), {}, set()
     for g in _clusters(rects, 8.0):
-        if len(g) < 15:
-            continue
         x0, y0 = min(q[0] for q in g), min(q[1] for q in g)
         x1, y1 = max(q[2] for q in g), max(q[3] for q in g)
+        # v4: a simple chart (a few bars) has fewer than 15 paths; it still counts when a caption opens right below it
+        caps = [b[1] for b in page_blocks if caption_re is not CAPTION_RE and caption_re.match(b[3])
+                and 0 <= b[1] - y1 < 60 and b[4] < x1 and b[5] > x0]
+        captioned = bool(caps)
+        reach = max(y1 + 25, min(caps) - 1) if caps else y1 + 25    # a legend placed under the plot belongs to it
+        if len(g) < (4 if captioned else 15):
+            continue
         if x1 - x0 < 0.25 * W or y1 - y0 < 0.10 * H:
             continue
         touch = [k for k, im in enumerate(raster)
@@ -106,15 +112,20 @@ def vector_figures(page, pno: int, page_blocks: list[tuple], raster: list[tuple]
         if touch and len(enclosed) < len(touch):
             continue
         inside.update(enclosed)
+        gy1 = y1                                   # bottom of the drawing cluster itself
         mine = []
         for i, b in enumerate(page_blocks):
-            if CAPTION_RE.match(b[3]) or len(b[3]) > 60:
+            if caption_re.match(b[3]) or len(b[3]) > 60:
                 continue
-            if b[4] >= x0 - 25 and b[5] <= x1 + 25 and b[1] >= y0 - 25 and b[2] <= y1 + 25:
+            if b[4] >= x0 - 25 and b[5] <= x1 + 25 and b[1] >= y0 - 25 and b[2] <= reach:
                 mine.append(i)
         for i in mine:
             b = page_blocks[i]
             x0, y0, x1, y1 = min(x0, b[4]), min(y0, b[1]), max(x1, b[5]), max(y1, b[2])
+        if captioned:                              # and so do the legend swatches drawn there
+            for q in rects:
+                if q[1] >= gy1 - 2 and q[3] <= reach and q[0] >= x0 - 25 and q[2] <= x1 + 25:
+                    x0, y0, x1, y1 = min(x0, q[0]), min(y0, q[1]), max(x1, q[2]), max(y1, q[3])
         import pymupdf
         clip = pymupdf.Rect(x0 - 2, y0 - 2, x1 + 2, y1 + 2)
         path = Path(out_dir) / f"p{pno}_vec{len(images)}.png"

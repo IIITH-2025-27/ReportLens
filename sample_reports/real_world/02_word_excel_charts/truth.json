@@ -1,0 +1,110 @@
+{
+ "report": "02_word_excel_charts",
+ "title": "Lab 3: Text Classification with Recurrent Networks",
+ "figures": [
+  {
+   "number": 1,
+   "panel": null,
+   "kind": "line",
+   "x_values": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "series": {
+    "LSTM": [
+     71.2,
+     76.5,
+     79.8,
+     81.9,
+     83.0,
+     83.8,
+     84.3,
+     84.6
+    ],
+    "GRU": [
+     72.8,
+     78.1,
+     81.0,
+     82.9,
+     84.1,
+     84.9,
+     85.4,
+     85.7
+    ],
+    "BERT-base": [
+     85.1,
+     88.9,
+     90.6,
+     91.4,
+     91.9,
+     92.2,
+     92.4,
+     92.5
+    ]
+   },
+   "note": "Excel look: axis not readable"
+  },
+  {
+   "number": 2,
+   "panel": null,
+   "kind": "grouped_bar",
+   "x_values": [
+    "IMDB",
+    "AG News",
+    "SST-2"
+   ],
+   "series": {
+    "LSTM": [
+     80.1,
+     83.4,
+     86.0
+    ],
+    "GRU": [
+     81.0,
+     84.2,
+     86.9
+    ],
+    "BERT-base": [
+     90.3,
+     92.8,
+     94.1
+    ]
+   },
+   "note": "Excel look: axis not readable"
+  },
+  {
+   "number": 3,
+   "panel": null,
+   "kind": "line",
+   "x_values": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+   ],
+   "series": {
+    "LSTM": [
+     0.92,
+     0.71,
+     0.6,
+     0.53,
+     0.49,
+     0.46,
+     0.44,
+     0.43
+    ]
+   },
+   "note": "ordinary matplotlib chart, caption written ABOVE it"
+  }
+ ]
+}

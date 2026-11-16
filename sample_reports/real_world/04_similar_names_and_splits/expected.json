@@ -1,0 +1,130 @@
+{
+ "report": "04_similar_names_and_splits",
+ "about": "Model and dataset names that differ by a number (ResNet-18 / ResNet-34 / ResNet-50 / ResNet-101, CIFAR-10 / CIFAR-100, VGG-16 / VGG-19) and separate training, validation and test charts.",
+ "claims": [
+  {
+   "sentence": "ResNet-18 reaches 94.1% training accuracy at epoch 10.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "Figure 1, not Figure 2"
+  },
+  {
+   "sentence": "ResNet-18 reaches 84.0% validation accuracy at epoch 10.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "Figure 2, not Figure 1"
+  },
+  {
+   "sentence": "ResNet-50 reaches 96.4% validation accuracy at epoch 10.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "96.4 is the TRAINING value; validation is 88.5"
+  },
+  {
+   "sentence": "ResNet-34 reaches 86.0% validation accuracy at epoch 10.",
+   "truth": "no_figure",
+   "accept": [
+    "NO_FIGURE",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "ResNet-34 is not plotted (the old matching read ResNet-18 or ResNet-50 instead)"
+  },
+  {
+   "sentence": "VGG-19 reaches 79.5% validation accuracy at epoch 10.",
+   "truth": "no_figure",
+   "accept": [
+    "NO_FIGURE",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "VGG-19 is not plotted, only VGG-16 (whose value is 79.5)"
+  },
+  {
+   "sentence": "ResNet-50 reaches 89.0% test accuracy at epoch 10.",
+   "truth": "no_figure",
+   "accept": [
+    "NO_FIGURE",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "no test curve: the curves are training and validation"
+  },
+  {
+   "sentence": "On CIFAR-100, ResNet-50 achieves 78.2% test accuracy.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "CIFAR-100 bar"
+  },
+  {
+   "sentence": "On CIFAR-100, ResNet-18 achieves 92.1% test accuracy.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "92.1 is CIFAR-10; CIFAR-100 is 70.3 (the old matching read the CIFAR-10 bar)"
+  },
+  {
+   "sentence": "On CIFAR-10, ResNet-101 is 0.7 points better than ResNet-50.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "95.3 - 94.6 = 0.7"
+  },
+  {
+   "sentence": "On CIFAR-10, ResNet-152 achieves 96.0% test accuracy.",
+   "truth": "no_figure",
+   "accept": [
+    "NO_FIGURE",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "ResNet-152 is not plotted"
+  }
+ ]
+}

@@ -198,7 +198,7 @@ def chart_kind(img: np.ndarray, area, legend_box=None) -> str | None:
 
 
 def chart_flags(path: str, geo: Geometry | None) -> list[str]:
-    """Flags for a figure: "dual_y", "unsupported:<kind>"."""
+    """Flags for a figure: "dual_y", "unsupported:<kind>", v4: "axis_multiplier"."""
     from ..tools.chart_ocr import load_bgr
     img = load_bgr(path)
     flags = []
@@ -211,4 +211,7 @@ def chart_flags(path: str, geo: Geometry | None) -> list[str]:
         flags.append(f"unsupported:{kind}")
     if geo is not None and _right_axis_numbers(img, geo) >= 3:
         flags.append("dual_y")
+    from ..tools.axis import axis_multiplier
+    if axis_multiplier(img, area):                     # v4: "1e-5" / "+1e3" / "x10^3" above the y-axis
+        flags.append("axis_multiplier")
     return flags

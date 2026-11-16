@@ -90,5 +90,6 @@ class RunEvent(Base):
     why: Mapped[str | None] = mapped_column(Text, nullable=True)
     tool: Mapped[str | None] = mapped_column(String(64), nullable=True)
     sentence: Mapped[str | None] = mapped_column(Text, nullable=True)
+    detail: Mapped[dict | None] = mapped_column(Json, nullable=True)   # structured facts (events.py), worded by the page
 
     run: Mapped[VerificationRun] = relationship(back_populates="events")

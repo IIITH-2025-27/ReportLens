@@ -113,7 +113,8 @@ class _Feed:
         self.seq += 1
         self.db.add(RunEvent(run_id=self.run_id, seq=self.seq, stage=str(e.get("stage", ""))[:16],
                              status=e.get("status"), text=str(e.get("text", "")), why=e.get("why"),
-                             tool=e.get("tool"), sentence=e.get("sentence")))
+                             tool=e.get("tool"), sentence=e.get("sentence"),
+                             detail=jsonable(e["detail"]) if isinstance(e.get("detail"), dict) else None))
         try:
             self.db.commit()
         except Exception:                                          # the feed must never stop a run

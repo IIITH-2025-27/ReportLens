@@ -29,6 +29,7 @@ claims:
   extremum: true            # B3
   unit_convert: true        # A5
   log_values: true          # B4
+  number_words: true        # H23
 ingest:
   two_column: true          # A7
   vector_figures: true      # B1

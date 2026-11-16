@@ -16,7 +16,8 @@ from ..decide.rule import RuleConfig, decide
 from ..measure.aggregate import tool_value
 from ..claims.units import log_transform, metric_transform, unit_scale
 from ..schemas import ClaimSpec, Decision, Figure, PointQuery, Reading
-from ..tools.base import TableTool, Tool, ToolError, lookup, match_name
+from ..models.vlm import OfflineMiss
+from ..tools.base import TableTool, Tool, ToolError, interpolate, lookup, match_name
 from .events import emit
 from .memory import ReportMemory
 from .policies import Policy
@@ -185,6 +186,10 @@ class ClaimController:
             if action["action"] != "read":
                 if action.get("why"):
                     res.decision.reason = "handed off: " + action["why"]
+                if (self.options.get("interpolation_error") and self.policy.stops_early
+                        and len({f.figure_id for f in op_figs}) == 1
+                        and self._interpolated_pair(claim, fig, dclaim, convert, span, res, mem)):
+                    break
                 self._emit(stage="stop", text=f"stop reading ({action['action']})", why=action.get("why"),
                            sentence=claim.sentence)
                 break
@@ -200,15 +205,24 @@ class ClaimController:
             label = f"{name} on {' + '.join(sorted({f.figure_id for f in op_figs}))}: " + \
                 ", ".join(f"{s} @ {x}" for s, x in ops)
             self._emit(stage="tool", status="start", text=label, why=action.get("why"), tool=name,
-                       sentence=claim.sentence)
+                       sentence=claim.sentence,
+                       detail={"figures": sorted({f.figure_id for f in op_figs}), "operands": [list(o) for o in ops],
+                               "cost": cost, "calls_used": res.calls, "budget": self.max_calls,
+                               "claim_type": claim.claim_type})
             reads = [tool.read(f, PointQuery(series=s, x=x)) for (s, x), f in zip(ops, op_figs)]
 
-            def finished(status: str, label=label, name=name, step=step) -> None:
+            def finished(status: str, label=label, name=name, step=step, reads=reads) -> None:
                 r = step.get("result")
                 shown = f"read {r}" if isinstance(r, (int, float)) else str(r)
                 if step.get("status"):
                     shown += f" -> {step['status']} after {len(res.tool_values)} reading(s)"
-                self._emit(stage="tool", status=status, text=label, why=shown, tool=name, sentence=claim.sentence)
+                self._emit(stage="tool", status=status, text=label, why=shown, tool=name, sentence=claim.sentence,
+                           detail={"value": r if isinstance(r, (int, float)) else None,
+                                   "raw": [x.value for x in reads], "cached": all(x.cached for x in reads),
+                                   "seconds": round(sum(x.latency_s for x in reads), 2),
+                                   "error": None if isinstance(r, (int, float)) else str(r).removeprefix("error: "),
+                                   "readings": len(res.tool_values), "status": step.get("status"),
+                                   "claim_type": claim.claim_type})
 
             res.readings.extend(reads)
             res.calls += cost
@@ -261,11 +275,134 @@ class ClaimController:
 
         if not self.policy.stops_early and len(res.tool_values) >= self.rc.min_readings:
             res.status, res.decision = decide(dclaim, res.tool_values, fig.chart_type, span, self.table, self.rc)
+        if (self.options.get("no_flag_without_axis") and res.status == "MISMATCH_CANDIDATE"
+                and not all(f.y_span for f in op_figs)):
+            # v4: without a readable y-axis the margin has no scale (span falls back to 1.0, so two tools that agree
+            # on a rounded value flag a true claim). In every run so far, 31 of 231 such flags were wrong (13%, vs
+            # 2.8% with a readable axis), so a mismatch there goes to the TA; an accept still stands.
+            why = "the chart's y-axis could not be read, so a mismatch has no scale to be judged against"
+            res.status = "UNCLEAR"
+            res.decision.verdict = "NOT_SURE"
+            res.decision.reason = "handed off: " + why
+            res.notes.append(why)
+            self._emit(stage="stop", text="hand off to the TA", why=why, sentence=claim.sentence)
         if res.status in ("UNCLEAR", "TOO_FEW"):
             res.decision.verdict = "NOT_SURE"
             if res.status == "TOO_FEW" and not res.decision.reason.startswith("handed off"):
                 res.decision.reason = f"only {len(res.tool_values)} successful reading(s)"
         return res
+
+
+    def _interpolated_pair(self, claim: ClaimSpec, fig: Figure, dclaim: ClaimSpec, convert, span: float,
+                           res: ClaimResult, mem: ReportMemory) -> bool:
+        """v5 (agent.interpolation_error): the last step before a hand-off on a line chart, when no tool has given a
+        value. If an x has no tick label, DePlot's values at the labelled x on either side are joined by a straight line
+        and paired with vlm_crop's direct reading. Measured on the calibration charts (scripts/analysis/
+        interp_fallback.py): the bend of the curve between two ticks puts the straight line off by up to
+        `interpolation_error` of the axis (95th percentile), so a mismatch must clear the flag margin by that much too
+        (half of it after averaging with vlm_crop). Accepts use the ordinary rule. True if a decision was made."""
+        frac = float(self.options["interpolation_error"])
+        dp, crop = self.tools.get("deplot"), self.tools.get("vlm_crop")
+        if (dp is None or crop is None or fig.chart_type != "line" or res.tool_values or claim.claim_type == "peak"
+                or not isinstance(dp, TableTool)):
+            return False
+        ops = claim.operands()
+        table_cost = self._cost("deplot", fig, len(ops), mem)
+        if res.calls + table_cost + len(ops) > self.max_calls:
+            return False
+        try:
+            tab = dp.table(fig)
+        except ToolError:
+            return False
+        except OfflineMiss:                    # replay without the model: counted like any other offline miss
+            res.readings.append(Reading(tool=dp.name, value=None, ok=False, error="offline_miss", latency_s=0.0,
+                                        cached=False, query=PointQuery(series=ops[0][0], x=ops[0][1])))
+            return False
+        values, joined = [], []
+        for s, x in ops:
+            try:
+                values.append(lookup(tab, s, x))
+                joined.append(None)
+            except ToolError as e:
+                hit = interpolate(tab, s, x) if e.code == "x_not_found" else None
+                if hit is None:
+                    return False
+                values.append(hit[0])
+                joined.append(hit)
+        if all(j is None for j in joined):     # nothing to interpolate: the planner had its reasons for this pair
+            return False
+        res.calls += table_cost
+        mem.calls["deplot"] += table_cost
+        mem.tables_used.add(("deplot", fig.figure_id))
+        how = "; ".join(f"x = {x} has no tick label, so DePlot's values at {j[1]} and {j[2]} were joined by a straight "
+                        f"line ({j[0]:.4g})" for (_, x), j in zip(ops, joined) if j)
+        start = {"figures": [fig.figure_id], "operands": [list(o) for o in ops], "calls_used": res.calls,
+                 "budget": self.max_calls, "claim_type": claim.claim_type}
+        self._emit(stage="tool", status="start", text=f"deplot on {fig.figure_id} (interpolated)", tool="deplot",
+                   why=how, sentence=claim.sentence, detail={**start, "cost": table_cost})
+        d_val = tool_value(claim.claim_type, values, self.rc.drop_tied_legs)
+        d_val = convert(d_val) if d_val is not None else None
+        self._emit(stage="tool", status="ok" if d_val is not None else "error", tool="deplot",
+                   text=f"deplot on {fig.figure_id} (interpolated)", sentence=claim.sentence,
+                   why=f"read {round(d_val, 4)}" if d_val is not None else "derived value undefined",
+                   detail={"value": d_val, "raw": values, "cached": True, "interpolated": True,
+                           "claim_type": claim.claim_type})
+        res.steps.append({"available": ["deplot", "vlm_crop"], "readings_so_far": 0,
+                          "action": {"action": "read", "tool": "deplot", "why": "last step before a hand-off: " + how},
+                          "result": round(d_val, 4) if d_val is not None else "error: derived value undefined"})
+        if d_val is None:
+            return False
+
+        self._emit(stage="tool", status="start", text=f"vlm_crop on {fig.figure_id}", tool="vlm_crop",
+                   why="the cross-check for the interpolated DePlot value", sentence=claim.sentence,
+                   detail={**start, "cost": len(ops), "calls_used": res.calls})
+        reads = [crop.read(fig, PointQuery(series=s, x=x)) for s, x in ops]
+        res.readings.extend(reads)
+        res.calls += len(ops)
+        mem.calls["vlm_crop"] += len(ops)
+        c_val = None
+        if all(r.ok for r in reads):
+            c_val = tool_value(claim.claim_type, [r.value for r in reads], self.rc.drop_tied_legs)
+            c_val = convert(c_val) if c_val is not None else None
+        res.steps.append({"available": ["vlm_crop"], "readings_so_far": 1,
+                          "action": {"action": "read", "tool": "vlm_crop",
+                                     "why": "the cross-check for the interpolated DePlot value"},
+                          "result": round(c_val, 4) if c_val is not None else
+                          f"error: {next((r.error for r in reads if not r.ok), 'derived value undefined')}"})
+        if c_val is None:
+            self._emit(stage="tool", status="error", text=f"vlm_crop on {fig.figure_id}", tool="vlm_crop",
+                       why=res.steps[-1]["result"], sentence=claim.sentence)
+            return False
+
+        res.tool_values = {"deplot": d_val, "vlm_crop": c_val}
+        status, dec = decide(dclaim, res.tool_values, fig.chart_type, span, self.table, self.rc)
+        allow, unit = 0.0, (fig.y_span or 1.0) * frac
+        for i, j in enumerate(joined):         # how far the bend could move this claim's value, then halved by averaging
+            if j is None:
+                continue
+            for sign in (-1, 1):
+                moved = list(values)
+                moved[i] += sign * unit
+                v = tool_value(claim.claim_type, moved, self.rc.drop_tied_legs)
+                v = convert(v) if v is not None else None
+                if v is not None:
+                    allow = max(allow, abs(v - d_val) / 2)
+        if status == "MISMATCH_CANDIDATE" and dec.gap <= dclaim.tolerance + dec.margin_flag + allow:
+            status = "UNCLEAR"
+            dec.verdict = "NOT_SURE"
+            dec.reason = (f"between the margins once the interpolation error is allowed for (flag only beyond "
+                          f"{dclaim.tolerance + dec.margin_flag + allow:.3g})")
+        elif status == "MISMATCH_CANDIDATE":
+            dec.reason += f" (also beyond the interpolation allowance of {allow:.3g})"
+        res.status, res.decision = status, dec
+        res.steps[-1]["status"] = status
+        res.notes.append(how + "; checked against vlm_crop")
+        self._emit(stage="tool", status="ok", text=f"vlm_crop on {fig.figure_id}", tool="vlm_crop",
+                   why=f"read {round(c_val, 4)} -> {status} after 2 reading(s)", sentence=claim.sentence,
+                   detail={"value": c_val, "raw": [r.value for r in reads], "cached": all(r.cached for r in reads),
+                           "seconds": round(sum(r.latency_s for r in reads), 2), "readings": 2, "status": status,
+                           "claim_type": claim.claim_type})
+        return True
 
 
 def _same_x(a: str, b: str) -> bool:

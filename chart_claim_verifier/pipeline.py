@@ -90,6 +90,8 @@ class Context:
 
     def tools(self, names: list[str] | None = None):
         names = names or self.cfg["tools"]["enabled"]
+        from .tools import base as tool_base           # v4: strict name matching in every tool (retrieval.strict_names)
+        tool_base.STRICT_NAMES = bool(self.cfg["retrieval"].get("strict_names", False))
         llm = self.llm if any(n in ("vlm_table", "vlm_crop") for n in names) else None
         llm2 = self.llm2 if any(n.startswith("vlm2_") for n in names) else None
         return build_tools(names, self.cache, llm=llm, truth=self.truth,
@@ -287,11 +289,14 @@ def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None
     controller = ClaimController(tools, pol, table, rc, cfg["decision"]["max_tool_calls"], profile, repairs,
                                  options={"unit_convert": cl.get("unit_convert", False),
                                           "equivalent_metrics": cfg["retrieval"].get("equivalent_metrics", False),
-                                          "log_values": cl.get("log_values", False)})
+                                          "log_values": cl.get("log_values", False),
+                                          "no_flag_without_axis": cfg["decision"].get("no_flag_without_axis", False),
+                                          "interpolation_error": cfg["agent"].get("interpolation_error")})
     # parser: "rule" (no model), "llm" (always the model), "agent" (rules, LLM only when needed)
-    prs = LLMParser(ctx.llm) if parser == "llm" else RuleParser(cl.get("ranges", False), cl.get("split_multi", False),
-                                                                cl.get("extremum", False))
-    llm_parser = LLMParser(ctx.llm) if parser == "agent" else None
+    more, directions = cl.get("more_phrasings", False), cl.get("directions", False)
+    prs = LLMParser(ctx.llm, more) if parser == "llm" else RuleParser(cl.get("ranges", False), cl.get("split_multi", False),
+                                                                      cl.get("extremum", False), more, directions)
+    llm_parser = LLMParser(ctx.llm, more) if parser == "agent" else None
     agent = ReportAgent(prs, controller, retrieval, oracle=oracle,
                         ref_bonus=cfg["retrieval"]["ref_bonus"], vocab_match=cfg["retrieval"]["vocab_match"],
                         llm_parser=llm_parser, ambiguous_rule=cfg["agent"].get("ambiguous_rule", "either"),
@@ -303,7 +308,13 @@ def build_agent(ctx: Context, table: CalibrationTable, policy: str | None = None
                         hand_off_unsupported=cfg["agent"].get("hand_off_unsupported", False),
                         aliases=cfg["retrieval"].get("aliases") or {},
                         cross_chart=cfg["agent"].get("cross_chart", False),
-                        equivalent_metrics=cfg["retrieval"].get("equivalent_metrics", False))
+                        equivalent_metrics=cfg["retrieval"].get("equivalent_metrics", False),
+                        number_words=cl.get("number_words", False),
+                        more_phrasings=more, directions=directions,
+                        ambiguous_percent=cl.get("ambiguous_percent", False),
+                        strict_names=cfg["retrieval"].get("strict_names", False),
+                        split_aware=cfg["retrieval"].get("split_aware", False),
+                        ambiguous_flag=cfg["agent"].get("ambiguous_flag", "never"))
     return agent, rc, pol
 
 
@@ -312,17 +323,20 @@ def ingest_options(cfg: dict) -> dict:
     ing = cfg.get("ingest") or {}
     return {"two_column": ing.get("two_column", False), "vector_figures": ing.get("vector_figures", False),
             "split_panels": ing.get("split_panels", False), "detect_kinds": ing.get("detect_kinds", False),
-            "ocr_scanned": ing.get("ocr_scanned", False), "axis_modes": tuple(ing.get("axis_modes") or ["linear"])}
+            "ocr_scanned": ing.get("ocr_scanned", False), "axis_modes": tuple(ing.get("axis_modes") or ["linear"]),
+            "clean_text": ing.get("clean_text", False), "caption_formats": ing.get("caption_formats", False)}
 
 
 def _parse_cache_name(opts: dict) -> str:
     """report.json for the frozen reader; another name when any v3 reading switch is on (so old parses stay valid)."""
     default = {"two_column": False, "vector_figures": False, "split_panels": False, "detect_kinds": False,
-               "ocr_scanned": False, "axis_modes": ("linear",)}
+               "ocr_scanned": False, "axis_modes": ("linear",), "clean_text": False, "caption_formats": False}
     if opts == default:
         return "report.json"
     import hashlib
-    return "report_" + hashlib.sha1(json.dumps(opts, sort_keys=True).encode()).hexdigest()[:8] + ".json"
+    # the v4 reading switches join the hash only when on, so every v3 parse keeps its file name
+    named = {k: v for k, v in opts.items() if k not in ("clean_text", "caption_formats") or v}
+    return "report_" + hashlib.sha1(json.dumps(named, sort_keys=True).encode()).hexdigest()[:8] + ".json"
 
 
 def ingest_pdf(ctx: Context, pdf: Path, name: str | None = None) -> Report:
@@ -346,6 +360,8 @@ def verify_pdf(ctx: Context, agent: ReportAgent, rc: RuleConfig, pdf_path: str |
     report = parse_pdf(pdf_path, work_dir, report_id, **ingest_options(ctx.cfg))
     emit(on_event, stage="run", status="ok", text="read the PDF: text, figures, axes",
          why=f"{len(report.sentences)} sentences, {len(report.figures)} figures")
+    for warning in read_warnings(report, ctx.cfg):        # v4: an empty result must not look like a clean report
+        emit(on_event, stage="run", text="Warning: " + warning)
     agent.on_event = agent.controller.on_event = on_event
     try:
         traces, _ = agent.run(report)
@@ -355,6 +371,25 @@ def verify_pdf(ctx: Context, agent: ReportAgent, rc: RuleConfig, pdf_path: str |
     emit(on_event, stage="run", status="ok", text="batch check over the report's claims",
          why=f"{len(out)} sentences with numbers checked")
     return report, out
+
+
+def read_warnings(report: Report, cfg: dict) -> list[str]:
+    """What the TA should know before trusting an empty or short result (v4)."""
+    out = []
+    if not report.sentences:
+        out.append("no text was found in the PDF. Its pages may be scanned images"
+                   + ("" if ingest_options(cfg)["ocr_scanned"] else " (ingest.ocr_scanned is off in this config)")
+                   + ", so nothing could be checked.")
+    if not report.figures:
+        out.append("no figures were found, so every claim will be 'no matching figure'"
+                   + ("" if ingest_options(cfg)["vector_figures"] else
+                      ". Charts drawn as vector graphics (LaTeX PDF figures, Word charts) need ingest.vector_figures")
+                   + ".")
+    unread = [f.figure_id for f in report.figures if not f.y_span]
+    if unread and cfg["decision"].get("no_flag_without_axis", False):
+        out.append(f"the y-axis of {', '.join(unread)} could not be read; claims on "
+                   f"{'it' if len(unread) == 1 else 'them'} can be accepted but not flagged.")
+    return out
 
 
 def run_split(ctx: Context, split: str, table: CalibrationTable, policy: str | None = None,

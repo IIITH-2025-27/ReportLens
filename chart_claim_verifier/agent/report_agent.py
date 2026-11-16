@@ -13,11 +13,13 @@ from collections import Counter
 from pathlib import Path
 from typing import Callable, Literal
 
+from ..claims.number_words import words_to_digits
+from ..claims.direction import alternative_values, negation, orient, percent_alternative
 from ..claims.finder import is_candidate, strip_figure_refs
 from ..ingest.pdf_parser import split_sentences
 from ..claims.parser import ParseError
 from ..claims.tolerance import find_numbers
-from ..decide.rule import batch_check
+from ..decide.rule import batch_check, decide
 from ..ingest.pdf_parser import parse_pdf
 from ..lms.guard import ActionGuard
 from ..retrieval.figure_index import FigureIndex
@@ -44,6 +46,10 @@ def ambiguous_accepts(rule: str, verdicts: list[str]) -> bool:
     return {"either": any(ok), "top": bool(ok) and ok[0], "both": bool(ok) and all(ok), "never": False}[rule]
 
 
+def _p_or_one(p: float | None) -> float:
+    return 1.0 if p is None or p != p else p
+
+
 def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", s.strip().lower())
 
@@ -65,10 +71,17 @@ class ReportAgent:
                  vocab_match: int = 80, llm_parser=None, ambiguous_rule: str = "either", legend_reader=None,
                  hand_off_rejected: bool = False, cited_first: bool = False, ambiguity_ratio: float = 0.8,
                  check_captions: bool = False, hand_off_unsupported: bool = False, aliases: dict | None = None,
-                 cross_chart: bool = False, equivalent_metrics: bool = False):
+                 cross_chart: bool = False, equivalent_metrics: bool = False, number_words: bool = False,
+                 more_phrasings: bool = False, directions: bool = False, ambiguous_percent: bool = False,
+                 strict_names: bool = False, split_aware: bool = False, ambiguous_flag: str = "never"):
         if ambiguous_rule not in AMBIGUOUS_RULES:
             raise ValueError(f"unknown ambiguous_rule {ambiguous_rule!r}")
+        if ambiguous_flag not in ("never", "both"):
+            raise ValueError(f"unknown ambiguous_flag {ambiguous_flag!r}")
         self.ambiguous_rule = ambiguous_rule
+        # v5: two figures fit the sentence and the claim is wrong on BOTH: wrong whichever figure is meant ("both"),
+        # the mirror of ambiguous_rule "both" for accepts. "never" (the frozen behaviour): such a claim goes to the TA
+        self.ambiguous_flag = ambiguous_flag
         self.parser, self.controller, self.retrieval = parser, controller, retrieval
         self.llm_parser = llm_parser    # escalation target; None = rules only
         self.oracle = oracle            # (report_id, sentence) -> true figure_id; ablation only
@@ -84,14 +97,38 @@ class ReportAgent:
         self.aliases = {k.lower(): v for k, v in (aliases or {}).items()}   # B9: "RN50" -> "ResNet-50"
         self.cross_chart = cross_chart                    # B9: a difference whose two values sit on two figures
         self.equivalent_metrics = equivalent_metrics      # B9: an error-rate claim may be checked on an accuracy chart
+        self.number_words = number_words                  # H23: "ninety-one percent" is read as "91 percent"
+        # v4 switches (16 Nov, real-world reports; all off in the frozen configs)
+        self.more_phrasings = more_phrasings              # more result words and figure citations ("Fig 3", AUC, ...)
+        self.directions = directions                      # "decreases" / "lower than" signs; negated sentences -> TA
+        self.ambiguous_percent = ambiguous_percent        # "improves by 12%": flag only if wrong as % AND as points
+        self.strict_names, self.split_aware = strict_names, split_aware   # retrieval: see FigureIndex
         self.on_event = None                              # optional live activity feed (web app); see events.py
 
     def _emit(self, **event) -> None:
         emit(self.on_event, **event)
 
-    def _emit_stages(self, entries: list[dict], sentence: str) -> None:
+    def _emit_stages(self, entries: list[dict], sentence: str, detail: dict | None = None) -> None:
         for e in entries:
-            self._emit(stage=e.get("stage"), text=str(e.get("decision")), why=e.get("why"), sentence=sentence)
+            self._emit(stage=e.get("stage"), text=str(e.get("decision")), why=e.get("why"), sentence=sentence,
+                       detail=detail)
+
+    def _emit_parsed(self, stages: list[dict], claims, used: str, sent) -> None:
+        """The parse steps; a successful parse is reported with the claim it understood."""
+        if not isinstance(claims, list):
+            self._emit_stages(stages, sent.text)
+            return
+        primary = used == "rule"                  # the first parser succeeded and logged one entry for it
+        self._emit_stages(stages[:-1] if primary else stages, sent.text)
+        parser = "llm" if (self.parser.name == "llm" or not primary) else "rule"
+        for c in claims:
+            self._emit(stage="parse", text=f"understood a {c.claim_type} claim", sentence=sent.text,
+                       why=stages[-1].get("why") if primary and stages else None,
+                       detail={"parser": parser, "claim_type": c.claim_type, "series": c.series, "x": c.x,
+                               "series_b": c.series_b, "x_b": c.x_b, "claimed": c.claimed_value,
+                               "claimed_high": c.claimed_high, "unit": c.unit, "relation": c.relation,
+                               "tolerance": c.tolerance, "figure_hint": c.figure_hint,
+                               "operands": [list(o) for o in c.operands()]})
 
     def ingest(self, pdf_path: str | Path, work_dir: str | Path, report_id: str | None = None) -> Report:
         return parse_pdf(pdf_path, work_dir, report_id)
@@ -176,35 +213,68 @@ class ReportAgent:
         mem = ReportMemory(report, FigureIndex(report.figures, self.ref_bonus, self.vocab_match,
                                                   legend_reader=self.legend_reader, cited_first=self.cited_first,
                                                   ambiguity_ratio=self.ambiguity_ratio,
-                                                  equivalent_metrics=self.equivalent_metrics))
+                                                  equivalent_metrics=self.equivalent_metrics,
+                                                  strict_names=self.strict_names, split_aware=self.split_aware))
         self.plan(mem)
         for fid, entry in mem.plan.items():
             tools = entry.get("callable_tools")
+            f = mem.figure(fid)
             self._emit(stage="plan", text=f"{fid}: looks like {entry.get('looks_like')}",
-                       why=("tools worth calling: " + (", ".join(tools) or "none")) if tools is not None else None)
+                       why=("tools worth calling: " + (", ".join(tools) or "none")) if tools is not None else None,
+                       detail={"figure": fid, "number": f.number, "panel": f.panel, "chart_type": f.chart_type,
+                               "looks_like": entry.get("looks_like"), "callable": tools,
+                               "skipped": entry.get("skipped_tools"), "pairs": entry.get("cross_check_pairs")})
         context = mem.context()
         planned, traces = [], []
         sentences = list(report.sentences) + (self._caption_sentences(report) if self.check_captions else [])
         for sent in sentences:
-            if not find_numbers(strip_figure_refs(sent.text)):
+            original = sent.text
+            if self.number_words:                          # H23: number words -> digits; the TA still sees the original
+                converted = words_to_digits(sent.text)
+                if converted != sent.text:
+                    sent = sent.model_copy(update={"text": converted})
+            if not find_numbers(strip_figure_refs(sent.text, self.more_phrasings)):
                 continue                                   # no number: nothing to check
-            base = dict(report_id=report.report_id, sentence_id=sent.sentence_id, sentence=sent.text,
+            base = dict(report_id=report.report_id, sentence_id=sent.sentence_id, sentence=original,
                         policy=self.controller.policy.name)
-            if not is_candidate(sent.text):
+            if not is_candidate(sent.text, self.more_phrasings):
                 self._emit(stage="parse", text="skip: not a result claim", sentence=sent.text)
                 traces.append(ClaimTrace(**base, decision=Decision(verdict="SKIPPED", reason="not a result claim")))
                 continue
             stages: list[dict] = []
             claims, used = self._parse(sent, context, stages)
-            self._emit_stages(stages, sent.text)
+            if isinstance(claims, list) and original != sent.text:
+                claims = [c.model_copy(update={"sentence": original}) for c in claims]
+            self._emit_parsed(stages, claims, used, sent)
             if claims == "error":
                 traces.append(ClaimTrace(**base, stages=stages,
                                          decision=Decision(verdict="NOT_SURE", reason="could not parse")))
+                self._emit(stage="decide", text="NOT_SURE", why="the language model could not parse the sentence",
+                           sentence=sent.text, detail={"verdict": "NOT_SURE", "unparsed": True})
                 continue
+            if isinstance(claims, list) and self.directions:
+                neg = negation(original)
+                if neg:                                    # v4: only positive statements are verified
+                    why = f"the sentence is negated ('{neg}'): the checker only verifies positive statements"
+                    traces.append(ClaimTrace(**base, claim=claims[0], stages=stages + [
+                        {"stage": "decide", "decision": "NOT_SURE", "why": why}],
+                        decision=Decision(verdict="NOT_SURE", reason="handed off: " + why)))
+                    self._emit(stage="decide", text="NOT_SURE", why=why, sentence=sent.text,
+                               detail={"verdict": "NOT_SURE", "handed_off": True})
+                    continue
+                oriented = [orient(c, original) for c in claims]
+                claims = [c for c, _ in oriented]
+                for c, note in oriented:
+                    if note:
+                        stages.append({"stage": "parse", "decision": "direction", "why": note})
+                        self._emit(stage="parse", text="direction read from the sentence", why=note,
+                                   sentence=sent.text)
             if claims is None:
                 verdict = "NOT_SURE" if self.hand_off_rejected else "SKIPPED"
                 traces.append(ClaimTrace(**base, stages=stages,
                                          decision=Decision(verdict=verdict, reason="parser: not a chart claim")))
+                self._emit(stage="decide", text=verdict, why="the parser found no chart claim in it", sentence=sent.text,
+                           detail={"verdict": verdict, "rejected": True})
                 continue
             for atom, claim in enumerate(claims):
                 abase = {**base, "atom": atom}
@@ -228,6 +298,7 @@ class ReportAgent:
                         figs2, cands2 = self._locate(again, sent, mem)
                         if figs2:
                             claim, figs, cands = again, figs2, cands2
+                            self._emit_parsed([], [claim], "llm", sent)
                 if not figs and self.cross_chart:
                     figs, op_figs = self._locate_across(claim, mem)
                     if figs:
@@ -236,7 +307,9 @@ class ReportAgent:
                 if not figs:
                     st.append({"stage": "figure", "decision": "NO_FIGURE",
                                "why": f"no figure shows series '{claim.series}' at x '{claim.x}'"})
-                    self._emit_stages(st[len(stages):], sent.text)
+                    self._emit_stages(st[len(stages):], sent.text,
+                                      {"chosen": [], "hint": claim.figure_hint,
+                                       "candidates": [[c, round(float(v), 2)] for c, v in cands[:4]]})
                     note = citation_note(claim, None, report.figures)
                     traces.append(ClaimTrace(**abase, claim=claim, figure_candidates=cands, stages=st,
                                              notes=[note] if note else [],
@@ -244,7 +317,9 @@ class ReportAgent:
                     continue
                 if not sent.figure_id and op_figs is None:
                     st.append(self._figure_note(claim, figs, cands, mem))
-                self._emit_stages(st[len(stages):], sent.text)
+                self._emit_stages(st[len(stages):], sent.text,
+                                  {"chosen": [f.figure_id for f in (op_figs or figs)], "hint": claim.figure_hint,
+                                   "candidates": [[c, round(float(v), 2)] for c, v in cands[:4]]})
                 planned.append((figs[0].figure_id, len(planned), abase, claim, figs, cands, st, op_figs))
 
         mem.pending = Counter(p[0] for p in planned)       # claims waiting on each figure: shares a table tool's cost
@@ -254,14 +329,16 @@ class ReportAgent:
                 old = mem.checked[key]
                 traces.append(old.model_copy(update={"sentence_id": base["sentence_id"], "tool_calls": 0}, deep=True))
                 self._emit(stage="decide", text=old.decision.verdict, why="same sentence as an earlier one: answer reused, no calls",
-                           sentence=claim.sentence)
+                           sentence=claim.sentence, detail={"verdict": old.decision.verdict, "reused": True,
+                                                            "claimed": claim.claimed_value, "estimate": old.decision.estimate})
                 mem.pending[fid0] -= 1
                 continue
             why_not = unsupported(figs[0]) if self.hand_off_unsupported else None
             if why_not:                                    # B7: the tools cannot read this kind of chart
                 mem.pending[fid0] -= 1
                 stages = stages + [{"stage": "decide", "decision": "NOT_SURE", "why": why_not}]
-                self._emit_stages(stages[-1:], claim.sentence)
+                self._emit_stages(stages[-1:], claim.sentence, {"verdict": "NOT_SURE", "handed_off": True,
+                                                                 "figure": figs[0].figure_id})
                 note = citation_note(claim, figs[0], report.figures)        # A1: also on a handed-off claim
                 tr = ClaimTrace(**base, claim=claim, figure_id=figs[0].figure_id, figure_candidates=cands,
                                 chart_type=figs[0].chart_type, y_span=figs[0].y_span, stages=stages,
@@ -283,6 +360,11 @@ class ReportAgent:
                                for f, x in runs}
                 if ambiguous_accepts(self.ambiguous_rule, [x.decision.verdict for _, x in runs]):
                     fig, r = next((f, x) for f, x in runs if x.decision.verdict == "CONSISTENT")
+                elif self.ambiguous_flag == "both" and all(x.decision.verdict == "MISMATCH" for _, x in runs):
+                    # the weaker of the two flags speaks for both: its p-value goes to the batch check
+                    fig, r = max(runs, key=lambda p: _p_or_one(p[1].decision.p_value))
+                    r.decision.reason = ("gap > rounding + flag margin on every figure that fits ("
+                                         + ", ".join(f.figure_id for f, _ in runs) + ")")
                 else:
                     r.decision.verdict = "NOT_SURE"
                     r.decision.reason = "ambiguous figure: " + ", ".join(f.figure_id for f, _ in runs)
@@ -292,9 +374,18 @@ class ReportAgent:
                                              if s["action"]["action"] == "repair"
                                              else s["action"].get("tool") or s["action"]["action"]),
                                 "why": s["action"].get("why", ""), "result": s.get("result")} for s in r.steps]
+            alt_note = self._second_reading(claim, fig, r) if self.ambiguous_percent and len(runs) == 1 else None
             stages.append({"stage": "decide", "decision": r.decision.verdict, "why": r.decision.reason})
-            self._emit_stages(stages[-1:], claim.sentence)
-            notes = list(r.notes)
+            d = r.decision
+            self._emit_stages(stages[-1:], claim.sentence,
+                              {"verdict": d.verdict, "claimed": claim.claimed_value, "claimed_high": claim.claimed_high,
+                               "estimate": d.estimate, "gap": d.gap, "tolerance": claim.tolerance,
+                               "margin_flag": d.margin_flag, "margin_accept": d.margin_accept,
+                               "disagreement": d.disagreement, "n_readings": d.n_readings,
+                               "tool_values": {k: round(v, 4) for k, v in r.tool_values.items()},
+                               "unit": claim.unit, "claim_type": claim.claim_type, "figure": fig.figure_id})
+            notes = list(r.notes) + ([alt_note] if alt_note else [])
+            notes += [st["why"] for st in stages if st.get("decision") == "direction"]
             if op_figs is None:
                 if (n := citation_note(claim, fig, report.figures)):
                     notes.append(n)
@@ -310,6 +401,35 @@ class ReportAgent:
         add_conflicts(traces)
         order = {s.sentence_id: i for i, s in enumerate(sentences)}
         return sorted(traces, key=lambda t: (order.get(t.sentence_id, len(order)), t.atom)), mem
+
+    def _second_reading(self, claim: ClaimSpec, fig: Figure, r) -> str | None:
+        """v4: "accuracy improves by 12%" may mean 12 points, "outperforms B by 3%" may mean 3% relative. A mismatch
+        under the reading the parser chose is handed to the TA when the other reading fits (same readings, no calls)."""
+        kind = percent_alternative(claim) if r.decision.verdict == "MISMATCH" else None
+        if kind is None:
+            return None
+        ops = claim.operands()
+        values = alternative_values(kind, r.readings, ops, list(r.tool_values))
+        ctl = self.controller
+        if len(values) < ctl.rc.min_readings:
+            return None
+        if kind == "points":
+            alt = claim.model_copy(update={"claim_type": "difference", "unit": "pct_points", "series_b": claim.series,
+                                           "x": claim.x_b, "x_b": claim.x})
+            if claim.claimed_value < 0:                    # a fall: compare as minus the points
+                values = {t: -v for t, v in values.items()}
+                alt = alt.model_copy(update={"claimed_value": -claim.claimed_value})
+        else:
+            alt = claim.model_copy(update={"claim_type": "relative_change", "unit": "percent"})
+        status, d = decide(alt, values, fig.chart_type, fig.y_span or 1.0, ctl.table, ctl.rc)
+        if status != "CONSISTENT":
+            return None
+        other = "percentage points" if kind == "points" else "a relative change"
+        note = (f"the % is ambiguous: wrong as {'a relative change' if kind == 'points' else 'percentage points'}, "
+                f"but it matches as {other} (estimate {d.estimate:.3g})")
+        r.decision.verdict = "NOT_SURE"
+        r.decision.reason = "handed off: " + note
+        return note
 
     @staticmethod
     def _figure_note(claim, figs, cands, mem) -> dict:
@@ -364,6 +484,9 @@ def unsupported(fig: Figure) -> str | None:
     """B7: why the tools cannot read this chart, or None."""
     if "dual_y" in fig.flags:
         return "the chart has two y-axes, and which series belongs to which axis is not known"
+    if "axis_multiplier" in fig.flags:
+        # v4: "1e-5" / "+1e3" above the axis; the readers report the tick labels (7.0 for 7e-05)
+        return "the y-axis has a multiplier above it (like 1e-5 or +1e3) that the reading tools ignore"
     kinds = [f.split(":", 1)[1] for f in fig.flags if f.startswith("unsupported:")]
     if kinds:
         return f"{kinds[0]} charts are not supported by the reading tools"

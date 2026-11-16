@@ -121,6 +121,20 @@ class OcrPixelTool(Tool):
             key = key[:4] + (q.x + "|legend=" + hashlib.sha1("|".join(hint).encode()).hexdigest()[:8],)
         return key
 
+    def read(self, fig: Figure, q: PointQuery):
+        from . import base
+        if base.STRICT_NAMES:                  # v4: a cached reading taken with loose name matching is not reused
+            try:
+                geo = analyse(fig.image_path, self.axis_modes)
+            except (ChartReadError, OSError):
+                geo = None
+            names = list(geo.legend) if geo is not None and geo.legend else None
+            why = names and base.strict_veto(q.series, names)
+            if why:
+                from ..schemas import Reading
+                return Reading(tool=self.name, value=None, ok=False, error="series_" + why, cached=True, query=q)
+        return super().read(fig, q)
+
     def _read(self, fig: Figure, q: PointQuery) -> float:
         try:
             geo = analyse(fig.image_path, self.axis_modes)

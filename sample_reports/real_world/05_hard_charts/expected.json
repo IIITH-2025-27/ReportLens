@@ -1,0 +1,114 @@
+{
+ "report": "05_hard_charts",
+ "about": "Chart kinds the reading tools cannot judge safely: two y-axes, an axis multiplier (1e-5), a log scale, a seaborn style, horizontal bars, and a two-panel figure. Claims here should be handed to the TA (NOT_SURE) unless they can be measured properly; none may be flagged wrongly.",
+ "claims": [
+  {
+   "sentence": "ResNet-50 reaches 91.2% accuracy at epoch 10 (Figure 1).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "two y-axes: hand to the TA"
+  },
+  {
+   "sentence": "ResNet-50 reaches 70.0% accuracy at epoch 10 (Figure 1).",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "91.2; two y-axes"
+  },
+  {
+   "sentence": "ResNet-50 has a gradient norm of 0.00056 at epoch 10 (Figure 2).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "the axis shows 5.6 with '1e-4' above it: readers report 5.6"
+  },
+  {
+   "sentence": "ResNet-50 has a training loss of 0.005 at epoch 10 (Figure 3).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "log scale"
+  },
+  {
+   "sentence": "VGG-16 reaches 84.7% validation accuracy at epoch 10 (Figure 4).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "seaborn style"
+  },
+  {
+   "sentence": "VGG-16 reaches 89.0% validation accuracy at epoch 10 (Figure 4).",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "84.7; the axis cannot be read, so this must not be flagged by guesswork"
+  },
+  {
+   "sentence": "On SVHN, VGG-16 achieves 93.1% test accuracy (Figure 5).",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "horizontal bars"
+  },
+  {
+   "sentence": "In Figure 6(b), the loss of ResNet-50 is 0.60 at epoch 10.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "panel b"
+  },
+  {
+   "sentence": "In Figure 6(a), ResNet-50 reaches 80.0% accuracy at epoch 10.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "91.2 in panel a"
+  }
+ ]
+}

@@ -21,7 +21,7 @@ from pydantic import BaseModel, ValidationError, field_validator
 from ..models.vlm import LLM, extract_json
 from ..schemas import ClaimSpec
 from .finder import figure_hint, panel_hint, strip_figure_refs
-from .tolerance import NUM_TEXT, find_numbers, find_range
+from .tolerance import NUM_TEXT, clean_chars, find_numbers, find_range
 
 NUM = (r"(?P<num>(?:(?:about|around|roughly|approximately|nearly|over|more than|above|under|below|less than|at least|at most|up to) )?"
        + NUM_TEXT + r"\s?%?)")       # v3 (A5): also 0,912 / 1,000 / 3e-4 / 1.2k
@@ -56,6 +56,105 @@ PEAK_PATTERNS: list[re.Pattern] = [
 CLAUSE_SPLIT = re.compile(r"\s*;\s*|,?\s+(?:and|while|whereas|but)\s+", re.I)
 
 
+# ------------------------------------------------------------------ v4 phrasings (claims.more_phrasings / directions)
+# Real reports are written in the past tense, with "~91%", ">90%", "91.2 ± 0.3%", "90-92%", "after 14 epochs",
+# "The accuracy of X at epoch 14 is ...", "X's accuracy is ...". A sentence is first rewritten into the present-tense
+# wording the patterns know (`_normalise_v4`); the claim keeps the sentence as written.
+NUM_V4 = (r"(?P<num>(?:(?:about|around|roughly|approximately|nearly|almost|close to|circa|over|more than|greater than|"
+          r"above|under|below|less than|fewer than|at least|at most|up to|just under|just over|just above|just below|"
+          r"slightly above|slightly below|slightly over|slightly under|in excess of|no more than|no less than) |"
+          r"(?:[~≈≃]|>=|<=|[><≥≤])\s?)?" + NUM_TEXT + r"\s?(?:%|percent\b|per ?cent\b)?)"
+          r"(?:\s?(?:±|\+/-|\+-)\s?\d+(?:\.\d+)?\s?%?)?")
+VERB_V4 = r"(?:reaches|achieves|attains|obtains|scores|has|gets|yields|records|delivers|posts|registers|shows|gives)"
+X_AT = r"(?:at epoch|after epoch|on|at|for|in)"
+UP_REL = r"(?:improves|increases|grows|rises|goes up|climbs|jumps|gains)"
+DOWN_REL = r"(?:decreases|drops|falls|declines|reduces|goes down|shrinks|dips|worsens|degrades)"
+UP_CMP = r"(?:better than|higher than|ahead of)"
+DOWN_CMP = r"(?:worse than|lower than|behind)"
+UP_VERB = r"(?:outperforms|beats|surpasses|exceeds|leads)"
+DOWN_VERB = r"(?:trails|lags behind|underperforms)"
+PAST = {"achieved": "achieves", "reached": "reaches", "attained": "attains", "obtained": "obtains", "scored": "scores",
+        "had": "has", "got": "gets", "yielded": "yields", "recorded": "records", "delivered": "delivers",
+        "posted": "posts", "registered": "registers", "showed": "shows", "gave": "gives",
+        "outperformed": "outperforms", "beat": "beats", "surpassed": "surpasses", "exceeded": "exceeds", "led": "leads",
+        "trailed": "trails", "lagged": "lags", "underperformed": "underperforms", "improved": "improves",
+        "increased": "increases", "grew": "grows", "rose": "rises", "climbed": "climbs", "jumped": "jumps",
+        "gained": "gains", "decreased": "decreases", "dropped": "drops", "fell": "falls", "declined": "declines",
+        "reduced": "reduces", "shrank": "shrinks", "dipped": "dips", "worsened": "worsens", "degraded": "degrades",
+        "was": "is", "were": "are", "performed": "performs"}
+REACH = re.compile(r"\b(?:gets to|got to|hits|hit|climbs to|climbed to|rises to|rose to|goes up to|went up to|"
+                   r"converges to|converged to|ends at|ended at|stands at|stood at|sits at|sat at|settles at|settled at|"
+                   r"tops out at|topped out at|levels off at|levelled off at|leveled off at|is at|was at|comes in at|"
+                   r"came in at|stays at|stayed at|remains at|remained at)\b", re.I)
+
+
+def _normalise_v4(s: str) -> str:
+    s = REACH.sub("reaches", s)
+    s = re.sub(r"\b(" + "|".join(PAST) + r")\b", lambda m: _case(m.group(0), PAST[m.group(0).lower()]), s, flags=re.I)
+    s = re.sub(r"\bafter (\d+(?:\.\d+)?) (?:training )?epochs\b", r"at epoch \1", s, flags=re.I)
+    s = re.sub(r"\bat the (\d+)(?:st|nd|rd|th) epoch\b", r"at epoch \1", s, flags=re.I)
+    s = re.sub(r"\b(?:in|by|during|after|at the end of) epoch\b", "at epoch", s, flags=re.I)
+    s = re.sub(r"^At epoch", "At epoch", s, flags=re.I)
+    return s
+
+
+def _case(old: str, new: str) -> str:
+    return new[0].upper() + new[1:] if old[:1].isupper() else new
+
+
+def _v4_patterns(directions: bool) -> list[tuple[str, re.Pattern]]:
+    rel = f"(?:{UP_REL}|{DOWN_REL})" if directions else UP_REL
+    cmp_ = f"(?:{UP_CMP}|{DOWN_CMP})" if directions else UP_CMP
+    verb = f"(?:{UP_VERB}|{DOWN_VERB})" if directions else UP_VERB
+    hl = "(?:higher|lower|better|worse)" if directions else "(?:higher|better)"
+    N, M, pts = NUM_V4, METRIC, r"(?: (?:percentage )?points?| pp)?"
+    return [
+        ("relative_change", re.compile(
+            rf"^(?:From|Between) epoch (?P<x>\S+) (?:to|and) epoch (?P<xb>[^,\s]+),? (?:the {M} of )?(?P<s>.+?)"
+            rf"(?:'s {M})? {rel} by (?:a relative )?{N}\.?$", re.I)),
+        ("relative_change", re.compile(
+            rf"^(?:The {M} of )?(?P<s>.+?)(?:'s {M})? {rel} by (?:a relative )?{N} (?:from|between) epoch (?P<x>\S+) "
+            rf"(?:to|and) epoch (?P<xb>\S+?)\.?$", re.I)),
+        ("difference_x", re.compile(
+            rf"^(?P<s>.+?) (?:scores|is|performs) {N}{pts} {hl} on (?P<x>.+?) than on (?P<xb>.+?)\.?$", re.I)),
+        ("difference", re.compile(rf"^(?P<s>.+?) {verb} (?P<sb>.+?) by {N}{pts} {X_AT} (?P<x>.+?)\.?$", re.I)),
+        ("difference", re.compile(rf"^(?:At epoch|On|At|For) (?P<x>[^,]+), (?P<s>.+?) {verb} (?P<sb>.+?) by {N}{pts}\.?$",
+                                  re.I)),
+        ("difference", re.compile(
+            rf"^(?:At epoch|On|At|For) (?P<x>[^,]+), (?P<s>.+?) (?:is|scores|performs|has) {N}{pts} {cmp_} "
+            rf"(?P<sb>.+?)\.?$", re.I)),
+        ("difference", re.compile(
+            rf"^(?P<s>.+?) (?:is|scores|performs) {N}{pts} {cmp_} (?P<sb>.+?) {X_AT} (?P<x>.+?)\.?$", re.I)),
+        ("point", re.compile(
+            rf"^(?:At epoch|On|At|After epoch|For) (?P<x>[^,]+), (?:the {M} of )?(?P<s>.+?) (?:{VERB_V4}|is)(?: an?)?"
+            rf"(?: {M} of)? {N}(?: {M})?\.?$", re.I)),
+        ("point", re.compile(
+            rf"^At epoch (?P<x>\d+(?:\.\d+)?) (?:the {M} of )?(?P<s>.+?) (?:{VERB_V4}|is)(?: an?)?(?: {M} of)? {N}"
+            rf"(?: {M})?\.?$", re.I)),
+        ("point", re.compile(
+            rf"^The {M} of (?P<s>.+?) (?:at epoch|on|at|for) (?P<x>[^,]+?),? (?:is|reaches|equals) {N}\.?$", re.I)),
+        ("point", re.compile(
+            rf"^(?P<s>.+?)'s {M} (?:is|reaches|equals) {N}(?: {M})? {X_AT} (?P<x>.+?)\.?$", re.I)),
+        ("point", re.compile(
+            rf"^(?:The {M} of )?(?P<s>.+?) (?:{VERB_V4}|is)(?: an?)?(?: {M} of)? {N}(?: {M})? {X_AT} (?P<x>.+?)\.?$",
+            re.I)),
+    ]
+
+
+def _clean_v4(s: str) -> str:
+    """Leftovers of a removed figure reference and references to tables / citations around the claim."""
+    s = re.sub(r"^(?:As\s+(?:can\s+be\s+)?(?:seen|shown|illustrated|depicted|reported)\s+in|As\s+shows?|"
+               r"In|From|According\s+to|See)\s*,\s*", "", s, flags=re.I)
+    s = re.sub(r"^As\s+shows?\s+", "", s, flags=re.I)
+    s = re.sub(r"\s*\((?:see|cf\.?|refer to)\b[^)]*\)", "", s, flags=re.I)
+    s = re.sub(r"\s*\[\d+(?:\s*[,–-]\s*\d+)*\]", "", s)
+    s = re.sub(r",?\s*as\s+(?:can\s+be\s+)?(?:seen|shown|illustrated|depicted|reported)(?:\s+in)?\s*(?=\.?$)", "", s,
+               flags=re.I)
+    s = re.sub(r"\s*\(\s*\)", "", s)
+    s = re.sub(r"\s+([.,;])", r"\1", s)
+    return re.sub(r"\s{2,}", " ", s).strip()
+
+
 def _number_at(sentence: str, num_text: str, pos: int | None = None):
     """The tolerance-aware reading of the number as written in the sentence.
 
@@ -74,9 +173,21 @@ def _number_at(sentence: str, num_text: str, pos: int | None = None):
     return None
 
 
-def _clean(sentence: str) -> str:
-    s = strip_figure_refs(sentence).strip()
+LEAD_IN_V4 = re.compile(r"^(?:(?:As\s+(?:can\s+be\s+)?(?:seen|shown|illustrated|depicted|reported)\s+in|In|From|According\s+to|"
+                        r"See)\s+)?(?:Figures?|Figs?\.?)\s*\d+[a-h]?(?:\s*\([^)]*\))?"
+                        r"(?:\s+(?:shows|illustrates|depicts|indicates|presents))?\s*,\s*", re.I)
+LEAD_AS_V4 = re.compile(r"^As\s+(?:Figures?|Figs?\.?)\s*\d+[a-h]?(?:\s*\([^)]*\))?\s+(?:shows|illustrates|depicts|"
+                        r"indicates|presents)\s*,?\s*", re.I)
+
+
+def _clean(sentence: str, extended: bool = False) -> str:
+    s = clean_chars(sentence)
+    if extended:                                  # v4: "In Fig. 3, ..." / "As Figure 3 shows, ..." before the ref goes
+        s = LEAD_AS_V4.sub("", LEAD_IN_V4.sub("", s.strip()))
+    s = strip_figure_refs(s, extended).strip()
     s = re.sub(r"^As shown in\s*,?\s*", "", s, flags=re.I)
+    if extended:
+        s = _normalise_v4(_clean_v4(s))
     s = re.sub(r"\s+\.$", ".", s)
     s = re.sub(r"\s{2,}", " ", s)
     return s[0].upper() + s[1:] if s else s
@@ -85,14 +196,23 @@ def _clean(sentence: str) -> str:
 class RuleParser:
     name = "rule"
 
-    def __init__(self, ranges: bool = False, split_multi: bool = False, peaks: bool = False):
+    def __init__(self, ranges: bool = False, split_multi: bool = False, peaks: bool = False,
+                 more_phrasings: bool = False, directions: bool = False):
         # v3 switches (claims.ranges / claims.split_multi / claims.extremum); all off = the frozen parser
         self.ranges, self.split_multi, self.peaks = ranges, split_multi, peaks
+        # v4 switches (claims.more_phrasings / claims.directions): a wider pattern set; decreases and "lower than" are
+        # parsed only with `directions`, because only then does the agent give them the right sign (claims.direction)
+        self.more_phrasings, self.directions = more_phrasings, directions
+        self.extended = more_phrasings or directions
+        self.patterns = _v4_patterns(directions) if self.extended else PATTERNS
+
+    def _c(self, sentence: str) -> str:
+        return _clean(sentence, self.extended)
 
     def parse(self, sentence: str, claim_id: str, context: str = "") -> ClaimSpec | None:
-        rng = find_range(_clean(sentence)) if self.ranges else None
+        rng = find_range(self._c(sentence), dash=self.extended) if self.ranges else None
         if rng is not None:                        # "between 85% and 90%": parse with the low bound, then widen
-            s0 = _clean(sentence)
+            s0 = self._c(sentence)
             low_text = s0[rng.low.start:rng.low.end].strip()
             rest = s0[rng.end:].lstrip()           # the high bound's span may end with the space before the next word
             sep = "" if rest[:1] in ("", ".", ",", ";", ":", ")") else " "
@@ -102,18 +222,19 @@ class RuleParser:
             return c.model_copy(update={"relation": "between", "claimed_value": rng.low.value,
                                         "claimed_high": rng.high.value, "tolerance": rng.tolerance,
                                         "unit": "percent" if rng.percent else c.unit})
-        return self._parse(_clean(sentence), claim_id, sentence)
+        return self._parse(self._c(sentence), claim_id, sentence)
 
     def parse_all(self, sentence: str, claim_id: str, context: str = "") -> list[ClaimSpec]:
         """Every claim of a sentence (v3): a peak phrasing gives two, a sentence joined by "and" / ";" one per part."""
-        s = _clean(sentence)
+        s = self._c(sentence)
         if self.peaks:
             for pat in PEAK_PATTERNS:
                 m = pat.match(s)
                 if m and (n := _number_at(s, m.group("num"), m.start("num"))) is not None:
                     common = dict(sentence=sentence, series=m.group("s").strip(),
                                   x=re.sub(r"^epoch\s+", "", m.group("x").strip(), flags=re.I),
-                                  figure_hint=figure_hint(sentence), panel_hint=panel_hint(sentence))
+                                  figure_hint=figure_hint(sentence, self.extended),
+                                  panel_hint=panel_hint(sentence, self.extended))
                     return [ClaimSpec(claim_id=claim_id, claim_type="point", claimed_value=n.value,
                                       unit="percent" if n.percent else "abs", relation=n.relation,
                                       tolerance=n.tolerance, **common),
@@ -139,14 +260,15 @@ class RuleParser:
                 prev = out[-1]
                 where = f"at epoch {prev.x}" if _is_num(prev.x) else f"on {prev.x}"
                 tries += [f"{prev.series} reaches {part}", f"{part} {where}", f"{prev.series} reaches {part} {where}"]
-            c = next((c for t in tries if (c := self._parse(_clean(t), cid, sentence)) is not None), None)
+            c = next((c for t in tries if (c := self._parse(self._c(t), cid, sentence)) is not None), None)
             if c is None:
                 return []
-            out.append(c.model_copy(update={"figure_hint": figure_hint(sentence), "panel_hint": panel_hint(sentence)}))
+            out.append(c.model_copy(update={"figure_hint": figure_hint(sentence, self.extended),
+                                            "panel_hint": panel_hint(sentence, self.extended)}))
         return out
 
     def _parse(self, s: str, claim_id: str, sentence: str) -> ClaimSpec | None:
-        for ctype, pat in PATTERNS:
+        for ctype, pat in self.patterns:
             m = pat.match(s)
             if not m:
                 continue
@@ -158,14 +280,23 @@ class RuleParser:
                 return None          # a comparison cut short ("... higher on IMDB than on"), not a value at a point
             series, x = g["s"].strip(), g["x"].strip()
             sb, xb = (g.get("sb") or None), (g.get("xb") or None)
+            if self.extended:                     # v4: "step 1,400" -> "1400", "the 14th" -> "14"
+                x, xb = _x_v4(x), xb and _x_v4(xb)
             if ctype == "difference_x":
                 ctype, sb = "difference", series
             unit = "percent" if n.percent and ctype != "difference" else ("pct_points" if ctype == "difference" else "abs")
             return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type=ctype, series=series,
                              x=re.sub(r"^epoch\s+", "", x, flags=re.I), series_b=sb and sb.strip(),
                              x_b=xb and xb.strip(), claimed_value=n.value, unit=unit, relation=n.relation,
-                             tolerance=n.tolerance, figure_hint=figure_hint(sentence), panel_hint=panel_hint(sentence))
+                             tolerance=n.tolerance, figure_hint=figure_hint(sentence, self.extended),
+                                  panel_hint=panel_hint(sentence, self.extended))
         return None
+
+
+def _x_v4(x: str) -> str:
+    x = re.sub(r"^(?:the\s+)?(?:epoch|step|iteration|round|layer)s?\s+", "", x.strip(), flags=re.I)
+    x = re.sub(r"^(?:the\s+)?(\d+)(?:st|nd|rd|th)(?:\s+epoch)?$", r"\1", x, flags=re.I)
+    return re.sub(r"^(\d{1,3}(?:,\d{3})+)$", lambda m: m.group(1).replace(",", ""), x)
 
 
 def _is_num(s: str | None) -> bool:
@@ -220,8 +351,9 @@ Return only JSON with these keys:
 class LLMParser:
     name = "llm"
 
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: LLM, extended: bool = False):
         self.llm = llm
+        self.extended = extended              # v4 (claims.more_phrasings): "Fig 3" / "Figs. 2 and 3" as figure hints
         self.last_raw: list[str] = []
         self.last_errors: list[str] = []      # why each attempt was rejected (for the parse evaluation, U16)
 
@@ -247,8 +379,8 @@ class LLMParser:
                     return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type="point", series=form.series,
                                      x=re.sub(r"^epoch\s+", "", form.x, flags=re.I), claimed_value=rng.low.value,
                                      claimed_high=rng.high.value, relation="between", tolerance=rng.tolerance,
-                                     unit="percent" if rng.percent else "abs", figure_hint=figure_hint(sentence),
-                                     panel_hint=panel_hint(sentence))
+                                     unit="percent" if rng.percent else "abs", figure_hint=figure_hint(sentence, self.extended),
+                                     panel_hint=panel_hint(sentence, self.extended))
                 n = _number_at(sentence, form.number_as_written)
                 if n is None:
                     raise ValueError(f"'{form.number_as_written}' does not appear in the sentence")
@@ -257,8 +389,8 @@ class LLMParser:
                 return ClaimSpec(claim_id=claim_id, sentence=sentence, claim_type=ctype, series=form.series,
                                  x=re.sub(r"^epoch\s+", "", form.x, flags=re.I), series_b=form.series_b,
                                  x_b=form.x_b, claimed_value=n.value, unit=unit, relation=n.relation,
-                                 tolerance=n.tolerance, figure_hint=figure_hint(sentence),
-                                 panel_hint=panel_hint(sentence))
+                                 tolerance=n.tolerance, figure_hint=figure_hint(sentence, self.extended),
+                                 panel_hint=panel_hint(sentence, self.extended))
             except (ValueError, ValidationError) as e:
                 self.last_errors.append(str(e))
                 error = f"\nYour previous answer was invalid: {str(e)[:200]}. Answer again with valid JSON."

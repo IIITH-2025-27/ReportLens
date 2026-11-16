@@ -26,7 +26,7 @@ def claim(c: ClaimResult) -> dict:
 
 def event(e: RunEvent) -> dict:
     return {"seq": e.seq, "at": e.at, "stage": e.stage, "status": e.status, "text": e.text, "why": e.why,
-            "tool": e.tool, "sentence": e.sentence}
+            "tool": e.tool, "sentence": e.sentence, "detail": e.detail}
 
 
 def run_full(r: VerificationRun) -> dict:

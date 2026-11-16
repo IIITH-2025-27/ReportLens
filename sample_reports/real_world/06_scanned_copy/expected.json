@@ -1,0 +1,299 @@
+{
+ "report": "06_scanned_copy",
+ "about": "Report 03 printed and scanned: every page is one greyscale image, slightly rotated and JPEG compressed, with no text layer. The old web config found 0 sentences and showed an empty, clean-looking result. OCR errors may change words, so sentences are matched loosely.",
+ "claims": [
+  {
+   "sentence": "We trained each network for 10 epochs and repeated every run 3 times.",
+   "truth": "setup",
+   "accept": [
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "setup"
+  },
+  {
+   "sentence": "ResNet-50 does not exceed 92% accuracy at epoch 10.",
+   "truth": "negated",
+   "accept": [
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "negated (true, but not checked)"
+  },
+  {
+   "sentence": "ViT-S never reaches 90% accuracy at epoch 10.",
+   "truth": "negated",
+   "accept": [
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "CONSISTENT",
+    "MISMATCH"
+   ],
+   "why": "negated"
+  },
+  {
+   "sentence": "At epoch 10, ViT-S trails ResNet-50 by 4.0 points.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "91.2 - 87.2 = 4.0"
+  },
+  {
+   "sentence": "At epoch 10, ViT-S trails ResNet-50 by 9.0 points.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "the gap is 4.0"
+  },
+  {
+   "sentence": "From epoch 5 to epoch 10, the accuracy of ResNet-50 improves by 8.2%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "ambiguous %: 8.2 points (true) but 9.9% relative; never a flag"
+  },
+  {
+   "sentence": "From epoch 5 to epoch 10, the accuracy of ResNet-50 improves by a relative 9.9%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "explicitly relative"
+  },
+  {
+   "sentence": "ResNet-50 reaches 83.0% accuracy after 5 epochs.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "'after 5 epochs' = epoch 5"
+  },
+  {
+   "sentence": "VGG-16's accuracy is 70.0% at epoch 3.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "possessive phrasing"
+  },
+  {
+   "sentence": "At epoch 10, VGG-16 reaches 84-86% accuracy.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "range with a dash: 84.7"
+  },
+  {
+   "sentence": "At epoch 10, ResNet-50 reaches between 90% and 92% accuracy.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "range: 91.2"
+  },
+  {
+   "sentence": "ResNet-50 reaches 91.2 ± 0.4% accuracy at epoch 10.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "mean ± sd"
+  },
+  {
+   "sentence": "ViT-S reaches eighty-seven point two percent accuracy at epoch ten.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "number words: 87.2"
+  },
+  {
+   "sentence": "From epoch 1 to epoch 10, the loss of VGG-16 drops by 65%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "a fall: 2.20 -> 0.77 = -65.0%"
+  },
+  {
+   "sentence": "From epoch 1 to epoch 10, the loss of ResNet-50 drops by 30%.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "it drops by 70%"
+  },
+  {
+   "sentence": "From epoch 1 to epoch 10, the loss of ResNet-50 improves by 70%.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "'improves' on a loss means it falls by 70%"
+  },
+  {
+   "sentence": "The loss of VGG-16 is 0.77 at epoch 10.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "0.77"
+  },
+  {
+   "sentence": "On GPU, ResNet-50 reaches about 1000 images per second.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "hedged large number: 1040 is within 5% of 'about 1000' (the old rule allowed only ±5)"
+  },
+  {
+   "sentence": "On CPU, VGG-16 reaches ~35 images per second.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "35"
+  },
+  {
+   "sentence": "On GPU, ViT-S reaches >700 images per second.",
+   "truth": "true",
+   "accept": [
+    "CONSISTENT",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "MISMATCH"
+   ],
+   "why": "760 > 700"
+  },
+  {
+   "sentence": "On GPU, VGG-16 reaches about 600 images per second.",
+   "truth": "false",
+   "accept": [
+    "MISMATCH",
+    "NOT_SURE",
+    "NO_FIGURE",
+    "SKIPPED"
+   ],
+   "wrong": [
+    "CONSISTENT"
+   ],
+   "why": "870 is far from 600"
+  }
+ ]
+}

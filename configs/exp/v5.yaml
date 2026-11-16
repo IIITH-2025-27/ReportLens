@@ -1,0 +1,60 @@
+# v5 (16 Nov): v4 plus two measured ways to send fewer claims to the TA (results/run_log.md, section K). Both switches
+# are off in configs/default.yaml, so v4.yaml and the earlier configs behave exactly as before. This is the config the
+# lite web app uses. Readings, calibration table and tool profile are the same as v3's and v4's.
+generator:
+  reports: {calib: 12, dev: 0, test: 20, style_shift: 0, v3feat: 0}
+decision:
+  min_group_size: 30
+  no_flag_without_axis: true   # v4
+calibration:
+  splits: [calib, calib_easy]
+tools:
+  enabled: [ocr_pixel, deplot, vlm_table, vlm_crop]
+retrieval:
+  cited_first: true
+  equivalent_metrics: true
+  strict_names: true        # v4
+  split_aware: true         # v4
+  aliases:
+    RN18: ResNet-18
+    RN-18: ResNet-18
+    RN50: ResNet-50
+    RN-50: ResNet-50
+    ViT-Small: ViT-S
+    EffNet: EfficientNet
+    VGG16: VGG-16
+    BERT: BERT-base
+claims:
+  ranges: true
+  split_multi: true
+  extremum: true
+  unit_convert: true
+  log_values: true
+  number_words: true
+  more_phrasings: true      # v4
+  directions: true          # v4
+  ambiguous_percent: true   # v4
+ingest:
+  two_column: true
+  vector_figures: true
+  split_panels: true
+  detect_kinds: true        # v3; in v4 it also flags a multiplier above the y-axis ("1e-5", "+1e3")
+  ocr_scanned: true
+  axis_modes: [linear, log, inverted, inward]   # v4 adds "inward": ticks drawn inside the frame (pgfplots)
+  clean_text: true          # v4
+  caption_formats: true     # v4
+agent:
+  policy: informed
+  fixed_order: [ocr_pixel, deplot, vlm_table, vlm_crop]
+  hand_off_rejected: true
+  check_captions: true
+  hand_off_unsupported: true
+  cross_chart: true
+  ambiguous_flag: both          # v5 (K2): wrong on every figure that fits -> flagged
+  interpolation_error: 0.048    # v5 (K1): unlabelled x on a line chart, DePlot interpolated + vlm_crop
+paths:
+  data_dir: data/local/generated
+  splits_dir: data/local/splits
+  cache_db: cache/local.sqlite
+  calibration_dir: calibration_tables/local
+  runs_dir: runs/v5
