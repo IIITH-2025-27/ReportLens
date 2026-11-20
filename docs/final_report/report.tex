@@ -214,7 +214,7 @@ Fine-tuned reader in the checker (C10) & adapter B as \code{vlm\_table}, re-cali
 \midrule
 Tool calling & 0 invalid or forbidden calls in 1{,}205 claims, 1.86 calls per claim & model judges with no tools (B1): 23\% wrong flags, with the tool readings (B4): 26\%\\
 Reasoning & parse accuracy 100\% on template sentences, 87--89\% per field on unfamiliar wording & rules alone leave 61\% of the \code{phrasing} claims unparsed\\
-Retrieval & right figure first for 97.4\% of claims, \textsc{no\_figure} right for 89\% & before the figure-finding fixes: 9 retrieval errors on \code{dev} (now 2)\\
+Retrieval & right figure first for 97.4\% of claims, \textsc{no\_figure} right for 89\% & nearest figure instead: 74.6\% decided, 4.6\% wrong flags\\
 Agentic & 178 early hand-offs at no model cost, 16 min per 200 claims & all tools (P0): 2.7$\times$ the model time, VLM as planner (P2): 8.1\% wrong flags on \code{dev}\\
 Safety & 0 unsafe actions in every run, 0 of 210 verdicts changed by hidden instructions & LLM parser on every sentence: 8 claims hidden (fixed by G1)\\
 \bottomrule
@@ -246,7 +246,7 @@ Qwen3-VL-8B (I4) & does not fit in memory & not run & -- & -- & no\\
 \label{tab:family}
 \end{table}
 
-\textbf{Fine-tuning v1 in the pipeline.} The first adapter read better (answers 66 $\rightarrow$ 74\%, badly wrong 26 $\rightarrow$ 17\%) and raised coverage from 79.7\% to 82.3\%, but wrong flags rose from 3.5\% to 4.2\%. The two Qwen tools now passed the gate as each other's check, and 10 of the 16 wrong flags involved that pair. Agreement is only evidence when the readers make different mistakes.
+\textbf{Fine-tuning v1 in the pipeline.} The first adapter read better (answers 66 $\rightarrow$ 74\%, badly wrong 26 $\rightarrow$ 17\%) and raised coverage from 79.7\% to 82.3\%, but wrong flags rose from 3.5\% to 4.2\%. The two Qwen tools now passed the gate as each other's check, and 11 of its 20 wrong flags involved that pair. Agreement is only evidence when the readers make different mistakes.
 
 % ============================================================================
 \section{Evaluations}\label{sec:eval}
@@ -323,7 +323,7 @@ Claude Opus 5.5 asked directly & API & 205 & about \$0.82\\
 \item \textbf{Merging.} All seven adapters finished (8.4--8.6 hours per Kaggle run) and cut the validation loss from 0.605 to about 0.25. Their average (0.244) beat each of them, so it is the rule's choice. TIES (0.279) was worse: trimming half of each update throws away signal when all adapters learn the same task.
 \item \textbf{Test.} The average gives 85.1\% of the true values against 67.5\% for the base model, halves the median error (1.41 $\rightarrow$ 0.68\% of the axis range) and lowers badly wrong values from 28.8\% to 24.7\%. The best single adapter is about level with it (83.9\% given, 23.8\% badly wrong).
 \item \textbf{Longer training} did better still. The continued (A) and restarted (B) adapters tie on validation (0.231) and lead on every test measure: about 88\% of values given, median error 0.60\%, 22--23\% badly wrong. Seven averaged adapters with about 3{,}000 charts each did not match one adapter with about 6{,}400, so averaging is a fast way to use more data, not a substitute for longer training. B is taken forward. It ties with A on validation, and the test charts were never used to choose.
-\item \textbf{Inside the checker.} With adapter B as \code{vlm\_table} and the margins re-fitted, the checker decided more claims over the six sets (79.6\% $\rightarrow$ 83.0\%) but made more wrong flags (15 $\rightarrow$ 21) and missed more errors (4 $\rightarrow$ 8 of 569), so by its keep rule it was not kept. The cause is the one seen with fine-tuning v1. The better table reader agrees wrongly with \code{vlm\_crop} on hard line charts only 4.4\% of the time (base 5.1\%), just under the 5\% gate, so the planner starts using the two Qwen tools as each other's check, and 14 of the 21 wrong flags rest on that pair.
+\item \textbf{Inside the checker.} With adapter B as \code{vlm\_table} and the margins re-fitted, the checker decided more claims over the six sets (79.6\% $\rightarrow$ 83.0\%) but made more wrong flags (15 $\rightarrow$ 21) and missed more errors (4 $\rightarrow$ 8 of 569), so by its keep rule it was not kept. The cause is the one seen with fine-tuning v1. The better table reader agrees wrongly with \code{vlm\_crop} on hard line charts only 4.4\% of the time (base 5.1\%), just under the 5\% gate, so the planner starts using the two Qwen tools as each other's check, and 13 of the 21 wrong flags rest on that pair.
 \end{itemize}
 
 \begin{figure}[H]
